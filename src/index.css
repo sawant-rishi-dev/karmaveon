@@ -1,0 +1,371 @@
+@import "tailwindcss";
+
+/* ============================
+   Global CSS Variables & Base
+   ============================ */
+:root {
+  --bg-base: #fdfbf7;
+  --cyan: #ff5733;
+  --electric-blue: #2563eb;
+  --purple: #7c3aed;
+  --magenta: #db2777;
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(203, 213, 225, 0.6);
+  --circuit-accent: rgba(255, 87, 51, 0.3);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: #0f172a;
+  font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ============================
+   Typography
+   ============================ */
+.gradient-text {
+  background: linear-gradient(135deg, #ff5733, #d97706);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================
+   Glass morphism
+   ============================ */
+.glass {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+}
+
+/* ============================
+   Circuit board accent line
+   ============================ */
+.circuit-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.circuit-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #ff5733, #f59e0b);
+  border-radius: 2px;
+}
+
+/* ============================
+   Glow button styles
+   ============================ */
+.btn-glow {
+  background: linear-gradient(135deg, #ff5733, #e11d48);
+  box-shadow: 0 8px 24px rgba(255, 87, 51, 0.35);
+  color: #ffffff;
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.btn-glow:hover {
+  box-shadow: 0 12px 32px rgba(255, 87, 51, 0.5);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  border: 1px solid #cbd5e1;
+  color: #475569;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-outline:hover {
+  background: #f8fafc;
+  border-color: #ff5733;
+  color: #ff5733;
+  transform: translateY(-2px);
+}
+
+/* ============================
+   Website Falling & Crumbling Glitch (Ultra-Smooth & Slow)
+   ============================ */
+@keyframes websiteCrumble {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  35% {
+    transform: translateY(22px) rotate(-1.8deg);
+  }
+
+  65% {
+    transform: translateY(45px) rotate(2.2deg);
+  }
+
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+@keyframes slowHeadlineFall {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  40% {
+    transform: translateY(35px) rotate(-2.5deg);
+  }
+
+  75% {
+    transform: translateY(70px) rotate(3deg);
+  }
+
+  100% {
+    transform: translateY(90px) rotate(-3.5deg);
+  }
+}
+
+.headline-falling {
+  animation: slowHeadlineFall 4.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.website-falling {
+  animation: websiteCrumble 4s ease-in-out infinite;
+}
+
+.website-falling .service-card,
+.website-falling .process-step,
+.website-falling .terminal-card {
+  animation: cardFallGlitch 2s ease-in-out infinite;
+}
+
+/* ============================
+   Typing cursor animation
+   ============================ */
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.2em;
+  background: var(--cyan);
+  vertical-align: middle;
+  margin-left: 2px;
+  animation: blink 0.8s step-end infinite;
+  box-shadow: 0 0 8px var(--cyan);
+}
+
+/* ============================
+   RGB Key glow animation
+   ============================ */
+@keyframes keyGlow {
+  0% {
+    opacity: 0;
+    box-shadow: none;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    box-shadow: none;
+  }
+}
+
+.key-lit {
+  animation: keyGlow var(--glow-duration, 1.5s) ease forwards;
+}
+
+/* ============================
+   Keyboard key base styles
+   ============================ */
+.kb-key {
+  background: rgba(10, 30, 80, 0.85);
+  border: 1px solid rgba(0, 150, 255, 0.45);
+  border-radius: 6px 6px 4px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(130, 190, 255, 0.85);
+  cursor: default;
+  user-select: none;
+  transition: background 0.12s ease, box-shadow 0.12s ease, transform 0.12s ease;
+  position: relative;
+  overflow: hidden;
+  text-shadow: 0 0 6px rgba(0, 150, 255, 0.5);
+  /* height is now controlled by the flex row in RGBKeyboard */
+  min-height: 0;
+}
+
+.kb-key::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+  pointer-events: none;
+}
+
+.kb-key.lit::before {
+  opacity: 1;
+}
+
+/* ============================
+   Wave animation
+   ============================ */
+@keyframes rgbWave {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.9),
+      0 0 0 0 rgba(0, 128, 255, 0.7),
+      0 0 0 0 rgba(128, 0, 255, 0.5);
+  }
+
+  100% {
+    box-shadow: 0 0 0 60px rgba(0, 255, 255, 0),
+      0 0 0 120px rgba(0, 128, 255, 0),
+      0 0 0 180px rgba(128, 0, 255, 0);
+  }
+}
+
+.wave-origin {
+  animation: rgbWave 1.5s ease-out forwards;
+}
+
+/* ============================
+   Scrollbar
+   ============================ */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050510;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 128, 255, 0.4);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 200, 255, 0.6);
+}
+
+/* ============================
+   Page section utilities
+   ============================ */
+.section-pad {
+  padding: 80px 24px;
+}
+
+@media (max-width: 768px) {
+  .section-pad {
+    padding: 48px 16px;
+  }
+}
+
+/* ============================
+   Terminal card style
+   ============================ */
+.terminal-card {
+  background: rgba(5, 10, 35, 0.85);
+  border: 1px solid rgba(0, 128, 255, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.terminal-header {
+  background: rgba(0, 30, 80, 0.8);
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-bottom: 1px solid rgba(0, 128, 255, 0.15);
+}
+
+.terminal-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+/* ============================
+   Fade-in animation
+   ============================ */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.7s ease forwards;
+}
+
+/* ============================
+   Service card hover
+   ============================ */
+.service-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(0, 128, 255, 0.2), 0 0 30px rgba(0, 200, 255, 0.1);
+  border-color: rgba(0, 200, 255, 0.4);
+}
+
+/* ============================
+   Process step hover
+   ============================ */
+.process-step {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  cursor: default;
+}
+
+.process-step:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 128, 255, 0.2);
+  border-color: rgba(0, 200, 255, 0.5);
+}
