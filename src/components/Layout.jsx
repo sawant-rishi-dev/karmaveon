@@ -3,10 +3,16 @@ import { Outlet } from 'react-router-dom'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import BackgroundGlitchEffect from './BackgroundGlitchEffect'
+import BookingModal from './BookingModal'
+import ScrollToTop from './ScrollToTop'
 import { KeyboardContext } from '../context/KeyboardContext'
 
 export default function Layout() {
   const [litKeys, setLitKeys] = useState({})
+  const [isBookingOpen, setIsBookingOpen] = useState(false)
+
+  const openBookingModal = useCallback(() => setIsBookingOpen(true), [])
+  const closeBookingModal = useCallback(() => setIsBookingOpen(false), [])
 
   // Dummy handlers for context compatibility
   const triggerCascade = useCallback(() => { }, [])
@@ -14,7 +20,18 @@ export default function Layout() {
   const triggerAmbient = useCallback(() => { }, [])
 
   return (
-    <KeyboardContext.Provider value={{ litKeys, triggerCascade, triggerWave, triggerAmbient }}>
+    <KeyboardContext.Provider
+      value={{
+        litKeys,
+        triggerCascade,
+        triggerWave,
+        triggerAmbient,
+        isBookingOpen,
+        openBookingModal,
+        closeBookingModal,
+      }}
+    >
+      <ScrollToTop />
       {/* ── Fixed Cozy Off-White Dot Grid Background ── */}
       <div
         style={{
@@ -49,6 +66,10 @@ export default function Layout() {
         </main>
         <Footer />
       </div>
+
+      {/* ── Global Strategy Call Booking Modal ── */}
+      <BookingModal isOpen={isBookingOpen} onClose={closeBookingModal} />
     </KeyboardContext.Provider>
   )
 }
+

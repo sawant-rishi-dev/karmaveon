@@ -5,6 +5,10 @@ export const KeyboardContext = createContext({
   triggerCascade: () => {},
   triggerWave: () => {},
   triggerAmbient: () => {},
+  isBookingOpen: false,
+  openBookingModal: () => {},
+  closeBookingModal: () => {},
 })
 
 export const useKeyboardContext = () => useContext(KeyboardContext)
+

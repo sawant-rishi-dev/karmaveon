@@ -1,14 +1,75 @@
-import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { useKeyboardContext } from '../context/KeyboardContext'
 
 const PRODUCTS = [
   {
+    title: 'QR Bites',
+    link: '/qr-bites',
+    version: 'v1.0.0 (Featured)',
+    statusColor: '#ff5733',
+    desc: 'Smart digital menu & instant QR ordering ecosystem for restaurants, cafes, and bars. Zero commission, sub-second menu loading, and real-time kitchen order dispatch.',
+    tags: ['React', 'Node.js', 'QR Scanning', 'WebSockets', 'Stripe / UPI'],
+    accentColor: '#ff5733',
+    terminalLines: [
+      '> Initializing QR Bites engine...',
+      '> Generating table QR codes',
+      '> Kitchen KDS WebSocket connected',
+      '> Restaurant portal ready ✓',
+    ],
+    metrics: [
+      { label: 'Scan to Order', value: '<2 sec' },
+      { label: 'Commission', value: '0%' },
+      { label: 'Table Turnaround', value: '+35%' },
+    ],
+  },
+  {
+    title: 'Smart Udhaar App',
+    link: '/smart-udhaar',
+    version: 'v2.1.0 (Featured)',
+    statusColor: '#10b981',
+    desc: 'Offline-first Kirana khata & POS billing app built with React Native & Expo. Features SMS-free PIN login, barcode "Scan & Sell", 1-tap WhatsApp collections, and Udhaar aging analytics.',
+    tags: ['React Native', 'Expo', 'expo-sqlite', 'Supabase', 'expo-camera'],
+    accentColor: '#10b981',
+    terminalLines: [
+      '> Booting Kirana POS engine...',
+      '> Offline SQLite database active',
+      '> Camera barcode scanner ready',
+      '> Auto-sync with Supabase ✓',
+    ],
+    metrics: [
+      { label: 'Offline Speed', value: '100%' },
+      { label: 'WhatsApp Reminders', value: '1-Tap' },
+      { label: 'Collections', value: '+42%' },
+    ],
+  },
+  {
+    title: 'Kwiee — Smart Desktop Buddy',
+    link: '/kwiee',
+    version: 'v1.0.0 (Hardware · New)',
+    statusColor: '#059669',
+    desc: 'A smart handheld device that keeps an eye on you — showing live temperature, time, atmospheric pressure, distance telemetry, and short push notifications (WhatsApp, Gmail, Slack) on its TFT screen. Powered by ESP32 + Arduino firmware.',
+    tags: ['Arduino / ESP32', 'TFT Display', 'DHT22 Temp', 'VL53L0X ToF', 'WiFi MQTT', 'ASCII Face UI'],
+    accentColor: '#059669',
+    terminalLines: [
+      '> Kwiee firmware booting...',
+      '> TFT display: OK ✓',
+      '> Sensors: DHT22 + VL53L0X active',
+      '> Push notification bridge: LIVE ✓',
+    ],
+    metrics: [
+      { label: 'Sensor Update', value: '< 1s' },
+      { label: 'Notif Bridge', value: 'WiFi' },
+      { label: 'Offline Ready', value: '100%' },
+    ],
+  },
+  {
     title: 'Custom CRM Portals',
+    link: '/solutions',
     version: 'v2.4.1',
     statusColor: '#10b981',
     desc: 'Tailored dashboards to track your full sales pipeline, customer lifecycle, and team performance in real-time.',
     tags: ['React', 'Node.js', 'PostgreSQL', 'REST API'],
-    accentColor: '#ff5733',
+    accentColor: '#10b981',
     terminalLines: [
       '> Initializing CRM module...',
       '> Connecting to pipeline API',
@@ -23,6 +84,7 @@ const PRODUCTS = [
   },
   {
     title: 'E-Commerce Engines',
+    link: '/solutions',
     version: 'v3.1.0',
     statusColor: '#2563eb',
     desc: 'High-performance storefronts built for scale. Handles thousands of concurrent users with sub-second load times and seamless checkout flows.',
@@ -42,6 +104,7 @@ const PRODUCTS = [
   },
   {
     title: 'Automated Data Pipelines',
+    link: '/solutions',
     version: 'v1.8.3',
     statusColor: '#7c3aed',
     desc: 'n8n-powered workflows that move your data without human error. Sync databases, trigger alerts, and orchestrate your entire data ecosystem.',
@@ -61,6 +124,7 @@ const PRODUCTS = [
   },
   {
     title: 'SaaS Starter Platforms',
+    link: '/solutions',
     version: 'v1.2.0',
     statusColor: '#db2777',
     desc: 'Complete multi-tenant SaaS foundations with auth, billing, user management, and admin dashboards — ready to customize and launch fast.',
@@ -81,22 +145,7 @@ const PRODUCTS = [
 ]
 
 export default function Products() {
-  const { triggerAmbient, triggerCascade } = useKeyboardContext()
-
-  useEffect(() => {
-    let last = 0
-    let timer = null
-    const handler = () => {
-      const delta = Math.abs(window.scrollY - last)
-      last = window.scrollY
-      if (delta > 40) {
-        if (timer) clearTimeout(timer)
-        timer = setTimeout(triggerAmbient, 80)
-      }
-    }
-    window.addEventListener('scroll', handler, { passive: true })
-    return () => window.removeEventListener('scroll', handler)
-  }, [triggerAmbient])
+  const { triggerCascade } = useKeyboardContext()
 
   return (
     <div>
@@ -134,10 +183,10 @@ export default function Products() {
         style={{
           maxWidth: '1200px',
           margin: '0 auto',
-          padding: '0 24px 100px',
+          padding: '0 16px 80px',
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(520px, 1fr))',
-          gap: '28px',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))',
+          gap: '24px',
         }}
       >
         {PRODUCTS.map((product) => (
@@ -297,7 +346,7 @@ export default function Products() {
               </div>
 
               {/* Tags */}
-              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '20px' }}>
                 {product.tags.map((tag) => (
                   <span
                     key={tag}
@@ -316,6 +365,34 @@ export default function Products() {
                   </span>
                 ))}
               </div>
+
+              {/* Know More Action Button */}
+              {product.link && (
+                <Link to={product.link} style={{ textDecoration: 'none' }}>
+                  <button
+                    style={{
+                      width: '100%',
+                      padding: '12px 20px',
+                      borderRadius: '10px',
+                      border: 'none',
+                      background: 'linear-gradient(135deg, #ff5733, #e11d48)',
+                      color: '#ffffff',
+                      fontWeight: 700,
+                      fontSize: '14px',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '8px',
+                      boxShadow: '0 4px 14px rgba(255, 87, 51, 0.25)',
+                      transition: 'transform 0.2s ease',
+                    }}
+                  >
+                    <span>Know More</span>
+                    <span>→</span>
+                  </button>
+                </Link>
+              )}
             </div>
           </div>
         ))}
@@ -335,7 +412,7 @@ export default function Products() {
         <p style={{ color: '#475569', marginBottom: '32px', fontSize: '16px', maxWidth: '500px', margin: '0 auto 32px' }}>
           We build fully custom solutions from scratch. Tell us your vision and we'll engineer it.
         </p>
-        <a href="mailto:hello@karmaveon.tech">
+        <a href="mailto:karmaaveontechnologies@gmail.com">
           <button
             className="btn-outline"
             style={{

@@ -104,14 +104,12 @@ export default function DwarfCharacter({
         pointerEvents: 'none',
       }}
     >
-      {/* Speech / Reaction Bubble */}
       {state === 'alert' && (
         <div
           style={{
             position: 'absolute',
-            top: '-42px',
-            left: facing === 'left' ? 'auto' : '65px',
-            right: facing === 'left' ? '65px' : 'auto',
+            top: '-45px',
+            left: '10px',
             transform: facing === 'left' ? 'scaleX(-1)' : 'none',
             background: '#FF5733',
             color: '#FFF',
@@ -124,7 +122,7 @@ export default function DwarfCharacter({
             zIndex: 10,
           }}
         >
-          Pappu found you! 👀
+          Veon spotted your idea! 💡
         </div>
       )}
 
@@ -147,7 +145,7 @@ export default function DwarfCharacter({
             zIndex: 10,
           }}
         >
-          Pappu is watching... 🕵️‍♂️
+          Veon AI Engineer 💻
         </div>
       )}
 
@@ -169,7 +167,7 @@ export default function DwarfCharacter({
             zIndex: 10,
           }}
         >
-          Pappu's Coffee Break ☕
+          Veon Workstation ☕
         </div>
       )}
 
@@ -191,7 +189,7 @@ export default function DwarfCharacter({
             zIndex: 10,
           }}
         >
-          Pappu gotcha! ✊
+          Veon got your cursor! ✊
         </div>
       )}
 
@@ -213,7 +211,7 @@ export default function DwarfCharacter({
             zIndex: 10,
           }}
         >
-          Pappu leading the way! 🏃‍♂️💨
+          Veon leading to Strategy Call! 🏃‍♂️💨
         </div>
       )}
 
@@ -235,7 +233,7 @@ export default function DwarfCharacter({
             zIndex: 10,
           }}
         >
-          Pappu says click here! 👇✨
+          Veon: Book your call here! 👇✨
         </div>
       )}
 
@@ -260,7 +258,7 @@ export default function DwarfCharacter({
             gap: '6px',
           }}
         >
-          <span>😴 Pappu dropped cursor & resting...</span>
+          <span>😴 Veon resting at workstation...</span>
           <span className="zzz-particle" style={{ right: '-10px', top: '-12px' }}>z Z Z</span>
         </div>
       )}

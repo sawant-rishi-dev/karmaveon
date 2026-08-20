@@ -44,7 +44,7 @@ export default function DwarfDevDesk({ isOccupied = true, deskRef }) {
         }}
       >
         <span>🛠️</span>
-        <span>PAPPU'S DEV STATION</span>
+        <span>VEON'S DEV STATION</span>
         <span
           style={{
             width: '6px',
@@ -56,7 +56,7 @@ export default function DwarfDevDesk({ isOccupied = true, deskRef }) {
         />
       </div>
 
-      {/* Pappu Seated Seated IN the Chair when at Dev Station */}
+      {/* Veon Seated IN the Chair when at Dev Station */}
       {isOccupied && (
         <div
           style={{

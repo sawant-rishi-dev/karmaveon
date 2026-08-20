@@ -17,14 +17,14 @@ export default function CursorHijackEngine({
   isPaused = false,
   onStatusChange,
 }) {
-  // States: 'stalking' | 'run_to_mouse' | 'run' | 'at_desk' | 'going_to_desk' | 'bg_coding' | 'alert' | 'grab' | 'drag' | 'rest' | 'save_mode'
-  const [hijackState, setHijackState] = useState('stalking')
+  // States: 'at_desk' | 'run' | 'bg_coding' | 'alert' | 'grab' | 'drag' | 'celebrate' | 'going_to_desk' | 'save_mode'
+  const [hijackState, setHijackState] = useState('at_desk')
   const [mousePos, setMousePos] = useState({ x: 300, y: 300 })
   const [dwarfPos, setDwarfPos] = useState({ x: 400, y: 300 })
   const [cursorPos, setCursorPos] = useState({ x: 300, y: 300 })
   const [isHijacked, setIsHijacked] = useState(false)
   const [facing, setFacing] = useState('right')
-  const [isAtDesk, setIsAtDesk] = useState(false)
+  const [isAtDesk, setIsAtDesk] = useState(true)
 
   const animTimelineRef = useRef(null)
   const footstepTimerRef = useRef(null)
@@ -36,14 +36,32 @@ export default function CursorHijackEngine({
   const dwarfPosRef = useRef(dwarfPos)
   const isHijackedRef = useRef(isHijacked)
 
+  const onStatusChangeRef = useRef(onStatusChange)
+  useEffect(() => {
+    onStatusChangeRef.current = onStatusChange
+  }, [onStatusChange])
+
   useEffect(() => {
     currentHijackStateRef.current = hijackState
-    if (onStatusChange) onStatusChange(hijackState)
-  }, [hijackState, onStatusChange])
+    if (onStatusChangeRef.current) {
+      onStatusChangeRef.current(hijackState)
+    }
+  }, [hijackState])
 
   useEffect(() => { mousePosRef.current = mousePos }, [mousePos])
   useEffect(() => { dwarfPosRef.current = dwarfPos }, [dwarfPos])
   useEffect(() => { isHijackedRef.current = isHijacked }, [isHijacked])
+
+  // Instant unmount cleanup to eliminate navigation lag
+  useEffect(() => {
+    return () => {
+      if (animTimelineRef.current) animTimelineRef.current.kill()
+      if (idleTimerRef.current) clearInterval(idleTimerRef.current)
+      if (bgCodingTimerRef.current) clearInterval(bgCodingTimerRef.current)
+      if (footstepTimerRef.current) clearInterval(footstepTimerRef.current)
+      document.body.style.cursor = 'default'
+    }
+  }, [])
 
   // Get live Dev Desk coordinates on viewport
   const getDeskCoordinates = () => {
@@ -69,7 +87,18 @@ export default function CursorHijackEngine({
     return { x: window.innerWidth / 2, y: window.innerHeight / 2 }
   }
 
-  // Track Mouse Movements, Keypresses, Scroll & Idle Inactivity
+  // Check if current mouse position is inside the Hero Section box
+  const isMouseInHeroBox = () => {
+    if (heroRef && heroRef.current) {
+      const rect = heroRef.current.getBoundingClientRect()
+      const mx = mousePosRef.current.x
+      const my = mousePosRef.current.y
+      return mx >= rect.left && mx <= rect.right && my >= rect.top && my <= rect.bottom
+    }
+    return false
+  }
+
+  // Track Mouse Movements, Keypresses & Scroll Activity
   useEffect(() => {
     const handleActivity = (e) => {
       if (isPaused) return
@@ -79,16 +108,22 @@ export default function CursorHijackEngine({
       if (e.type === 'mousemove') {
         const mouseX = e.clientX
         const mouseY = e.clientY
-        setMousePos({ x: mouseX, y: mouseY })
+        mousePosRef.current = { x: mouseX, y: mouseY }
 
-        if (!isHijacked) {
-          setCursorPos({ x: mouseX, y: mouseY })
+        // If mouse moves towards top navbar (Y < 75), cancel any hijack immediately
+        if (mouseY < 75 && (isHijackedRef.current || state !== 'at_desk')) {
+          cancelHijack()
+          return
+        }
+
+        // Deactivate immediately if user moves mouse actively while Veon is acting
+        if (isHijackedRef.current || state === 'alert' || state === 'run' || state === 'grab' || state === 'drag') {
+          cancelHijack()
         }
       }
 
-      // Exit Save Mode, Rest Mode, or Celebrate Mode on user activity
-      if (state === 'save_mode' || state === 'rest' || (state === 'celebrate' && !isHijacked)) {
-        resumeStalking()
+      if (state === 'save_mode') {
+        resumeStation()
       }
     }
 
@@ -102,7 +137,7 @@ export default function CursorHijackEngine({
     }
   }, [isHijacked, isPaused])
 
-  // ── 2-SEC IDLE DRAG / 20-SEC SAVE MODE TIMER ───────────────────────────
+  // ── IDLE DRAG / SAVE MODE TIMER ───────────────────────────
   useEffect(() => {
     if (isPaused) {
       if (animTimelineRef.current) animTimelineRef.current.kill()
@@ -113,28 +148,28 @@ export default function CursorHijackEngine({
       const idleDuration = Date.now() - lastMoveTimeRef.current
       const state = currentHijackStateRef.current
 
-      // 1. If 20 seconds of total inactivity -> ENTER SAVE MODE
-      if (idleDuration >= 20000 && state !== 'save_mode' && !isHijacked) {
+      // 1. If 30 seconds of total inactivity -> ENTER SAVE MODE
+      if (idleDuration >= 30000 && state !== 'save_mode' && !isHijacked) {
         if (animTimelineRef.current) animTimelineRef.current.kill()
         setHijackState('save_mode')
         return
       }
 
-      // 2. If 2 seconds idle -> Pappu picks cursor & drags to Let's Talk
+      // 2. If 3.5 seconds idle inside Hero Box -> Veon steps out to guide cursor to Strategy Call CTA
       if (
-        idleDuration >= 2000 &&
-        idleDuration < 20000 &&
+        idleDuration >= 3500 &&
+        idleDuration < 30000 &&
         !isHijacked &&
+        isMouseInHeroBox() &&
         state !== 'save_mode' &&
-        state !== 'rest' &&
         state !== 'alert' &&
         state !== 'run' &&
         state !== 'grab' &&
         state !== 'drag' &&
-        state !== 'going_to_desk' &&
-        state !== 'bg_coding'
+        state !== 'celebrate' &&
+        state !== 'going_to_desk'
       ) {
-        lastMoveTimeRef.current = Date.now() + 15000 // Prevent re-trigger while dragging
+        lastMoveTimeRef.current = Date.now() + 20000 // Prevent re-trigger while dragging
         startHijackSequence(mousePosRef.current.x, mousePosRef.current.y)
       }
     }, 500)
@@ -150,107 +185,24 @@ export default function CursorHijackEngine({
 
     bgCodingTimerRef.current = setInterval(() => {
       const state = currentHijackStateRef.current
-      if (!isHijackedRef.current && state !== 'save_mode' && state !== 'drag' && state !== 'grab' && state !== 'alert') {
-        sendPappuToBenchFor2sCoding()
+      if (!isHijackedRef.current && state === 'at_desk') {
+        setHijackState('bg_coding')
+        setTimeout(() => {
+          setHijackState('at_desk')
+        }, 3500)
       }
-    }, 30000)
+    }, 25000)
 
     return () => {
       if (bgCodingTimerRef.current) clearInterval(bgCodingTimerRef.current)
     }
   }, [isPaused])
 
-  // ── PAPPU STALKING MOUSE PHYSICS LOOP ──────────────────────────────
-  useEffect(() => {
-    let animFrame
-    const tick = () => {
-      animFrame = requestAnimationFrame(tick)
-      if (isPaused) return
-
-      const state = currentHijackStateRef.current
-
-      // In Save Mode, Rest, or Bench Coding: Pappu stays in position!
-      if (state === 'save_mode' || state === 'rest' || state === 'bg_coding' || state === 'at_desk') return
-
-      // Stalking mode: Pappu follows the mouse cursor everywhere!
-      if (state === 'stalking' || state === 'run_to_mouse') {
-        const mouse = mousePosRef.current
-        const curDwarf = dwarfPosRef.current
-
-        // Target offset so Pappu walks right alongside cursor
-        const targetX = mouse.x + (mouse.x < window.innerWidth / 2 ? 45 : -45)
-        const targetY = mouse.y + 15
-
-        const dx = targetX - curDwarf.x
-        const dy = targetY - curDwarf.y
-        const dist = Math.hypot(dx, dy)
-
-        if (dist > 14) {
-          // Smooth Lerp towards Mouse Cursor
-          const newX = curDwarf.x + dx * 0.075
-          const newY = curDwarf.y + dy * 0.075
-          setDwarfPos({ x: newX, y: newY })
-          setFacing(mouse.x < curDwarf.x ? 'left' : 'right')
-
-          if (state !== 'run_to_mouse') {
-            setHijackState('run_to_mouse')
-          }
-        } else {
-          // Reached cursor -> stay in stalking idle stance
-          setFacing(mouse.x < curDwarf.x ? 'left' : 'right')
-          if (state !== 'stalking') {
-            setHijackState('stalking')
-          }
-        }
-      }
-    }
-
-    animFrame = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(animFrame)
-  }, [isPaused])
-
-  // Send Pappu to bench for 2 seconds to code the webpage in background (Runs every 30 seconds)
-  const sendPappuToBenchFor2sCoding = () => {
+  // Reset to Workstation Stance
+  const resumeStation = () => {
     if (animTimelineRef.current) animTimelineRef.current.kill()
-
-    const deskCoords = getDeskCoordinates()
-    setHijackState('going_to_desk')
-    setIsAtDesk(false)
-
-    const startDwarf = { ...dwarfPosRef.current }
-    setFacing(deskCoords.x < startDwarf.x ? 'left' : 'right')
-
-    const progressObj = { p: 0 }
-    gsap.to(progressObj, {
-      p: 1,
-      duration: 0.8,
-      ease: 'power2.inOut',
-      onUpdate: () => {
-        const liveDesk = getDeskCoordinates()
-        const curX = startDwarf.x + (liveDesk.x - startDwarf.x) * progressObj.p
-        const curY = startDwarf.y + (liveDesk.y - startDwarf.y) * progressObj.p
-        setDwarfPos({ x: curX, y: curY })
-      },
-      onComplete: () => {
-        // Pappu sits at bench and codes webpage actively for 2 seconds!
-        setHijackState('bg_coding')
-        setIsAtDesk(true)
-        setFacing('left')
-
-        // Stay at desk for exactly 2 seconds, then return to normal!
-        setTimeout(() => {
-          setIsAtDesk(false)
-          resumeStalking()
-        }, 2000)
-      },
-    })
-  }
-
-  // Resume Stalking Cursor
-  const resumeStalking = () => {
-    if (animTimelineRef.current) animTimelineRef.current.kill()
-    setIsAtDesk(false)
-    setHijackState('stalking')
+    setIsAtDesk(true)
+    setHijackState('at_desk')
   }
 
   // ESC key emergency un-hijack
@@ -271,44 +223,39 @@ export default function CursorHijackEngine({
 
     setIsHijacked(false)
     document.body.style.cursor = 'default'
-    resumeStalking()
+    resumeStation()
   }
 
-  // Dynamic Hijack Sequence Trigger
+  // Dynamic Hijack Sequence Trigger (Veon steps from desk -> grabs cursor -> drags to button -> returns to desk)
   const startHijackSequence = (userMouseX, userMouseY) => {
     if (isHijackedRef.current) return
 
-    // Immediately snap cursor position to exact real mouse coordinates
+    const deskCoords = getDeskCoordinates()
+    setDwarfPos(deskCoords)
+
     setCursorPos({ x: userMouseX, y: userMouseY })
     setIsHijacked(true)
     document.body.style.cursor = 'none'
 
-    // STEP 1: ALERT
+    // STEP 1: ALERT AT DESK
     setHijackState('alert')
-
-    const isTargetLeft = userMouseX < dwarfPosRef.current.x
+    const isTargetLeft = userMouseX < deskCoords.x
     setFacing(isTargetLeft ? 'left' : 'right')
 
-    const tl = gsap.timeline({
-      onComplete: () => {
-        setIsHijacked(false)
-        document.body.style.cursor = 'default'
-        setHijackState('rest')
-      },
-    })
+    const tl = gsap.timeline()
     animTimelineRef.current = tl
 
-    // STEP 2: SPRINT TO USER MOUSE
-    const startDwarfRun = { ...dwarfPosRef.current }
+    // STEP 2: SPRINT FROM DESK TO USER MOUSE
+    const startDwarfRun = { ...deskCoords }
     const runProgress = { p: 0 }
 
-    tl.to({}, { duration: 0.35 })
+    tl.to({}, { duration: 0.4 })
       .add(() => {
         setHijackState('run')
       })
       .to(runProgress, {
         p: 1,
-        duration: 0.75,
+        duration: 0.8,
         ease: 'power2.out',
         onUpdate: () => {
           const targetX = userMouseX - (isTargetLeft ? -35 : 35)
@@ -320,13 +267,13 @@ export default function CursorHijackEngine({
         },
       })
 
-    // STEP 3: GRAB CURSOR AT REAL MOUSE LOCATION
+    // STEP 3: GRAB CURSOR
     tl.add(() => {
       setHijackState('grab')
       setCursorPos({ x: userMouseX, y: userMouseY })
-    }).to({}, { duration: 0.25 })
+    }).to({}, { duration: 0.3 })
 
-    // STEP 4: DRAG CURSOR TO CTA BUTTON
+    // STEP 4: DRAG CURSOR TO STRATEGY CALL CTA BUTTON
     let dragStartCursor = { x: userMouseX, y: userMouseY }
     const dragProgress = { p: 0 }
 
@@ -339,7 +286,7 @@ export default function CursorHijackEngine({
       }
     }).to(dragProgress, {
       p: 1,
-      duration: 1.5,
+      duration: 1.4,
       ease: 'power2.inOut',
       onUpdate: () => {
         const liveBtn = getTargetButtonCoordinates()
@@ -352,19 +299,42 @@ export default function CursorHijackEngine({
       },
     })
 
-    // STEP 5: FINISH
+    // STEP 5: CELEBRATE ON CTA BUTTON
     tl.add(() => {
-      if (footstepTimerRef.current) clearInterval(footstepTimerRef.current)
+      setHijackState('celebrate')
+    }).to({}, { duration: 1.5 })
+
+    // STEP 6: RETURN TO WORKSTATION DESK
+    const returnProgress = { p: 0 }
+    tl.add(() => {
+      setIsHijacked(false)
+      document.body.style.cursor = 'default'
+      setHijackState('run')
+    }).to(returnProgress, {
+      p: 1,
+      duration: 1.0,
+      ease: 'power2.inOut',
+      onUpdate: () => {
+        const liveDesk = getDeskCoordinates()
+        const curX = dwarfPosRef.current.x + (liveDesk.x - dwarfPosRef.current.x) * returnProgress.p
+        const curY = dwarfPosRef.current.y + (liveDesk.y - dwarfPosRef.current.y) * returnProgress.p
+        setDwarfPos({ x: curX, y: curY })
+        setFacing(liveDesk.x < curX ? 'left' : 'right')
+      },
+      onComplete: () => {
+        setHijackState('at_desk')
+        setIsAtDesk(true)
+      },
     })
   }
 
   // Character display state mapping
   const characterDisplayState =
-    hijackState === 'going_to_desk' || hijackState === 'run_to_mouse' ? 'run' : hijackState
+    hijackState === 'going_to_desk' ? 'run' : hijackState
 
   return (
     <>
-      {/* Pappu Positioned Absolutely on Viewport (Hidden when sitting at_desk or bg_coding so he sits in chair) */}
+      {/* Veon Positioned Absolutely on Viewport (Hidden when sitting at_desk or bg_coding so he sits in workstation chair) */}
       {hijackState !== 'at_desk' && hijackState !== 'bg_coding' && (
         <div
           style={{
@@ -386,7 +356,7 @@ export default function CursorHijackEngine({
         </div>
       )}
 
-      {/* Custom Vector Laptop Cursor Pointer Icon during Hijack */}
+      {/* Vector Cursor Pointer Icon during Hijack */}
       {(isHijacked || hijackState === 'celebrate') && (
         <div
           style={{
@@ -398,7 +368,7 @@ export default function CursorHijackEngine({
             transform: 'translate(-2px, -2px)',
           }}
         >
-          {/* Robbery Reaction Tag on Cursor */}
+          {/* Action Tag on Cursor */}
           {hijackState === 'drag' && (
             <div
               style={{
@@ -407,15 +377,15 @@ export default function CursorHijackEngine({
                 left: '18px',
                 background: '#FF5733',
                 color: '#FFF',
-                padding: '3px 8px',
+                padding: '3px 10px',
                 borderRadius: '10px',
-                fontSize: '10px',
+                fontSize: '11px',
                 fontWeight: 800,
                 whiteSpace: 'nowrap',
                 boxShadow: '0 2px 8px rgba(255, 87, 51, 0.5)',
               }}
             >
-              🚨 CURSOR ROBBED BY PAPPU!
+              🚀 GUIDING TO STRATEGY CALL
             </div>
           )}
 
@@ -439,7 +409,7 @@ export default function CursorHijackEngine({
         </div>
       )}
 
-      {/* Visual Tether line connecting Pappu & Cursor during drag */}
+      {/* Visual Tether line connecting Veon & Cursor during drag */}
       {hijackState === 'drag' && (
         <svg
           style={{

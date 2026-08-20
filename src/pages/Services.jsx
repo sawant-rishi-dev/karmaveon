@@ -1,92 +1,726 @@
-import { useEffect, useRef } from 'react'
-import { useKeyboardContext } from '../context/KeyboardContext'
+import { useState } from 'react'
 
 const SERVICES = [
   {
-    icon: (
-      <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-        <rect x="2" y="6" width="36" height="26" rx="4" stroke="#ff5733" strokeWidth="1.5" fill="rgba(255,87,51,0.05)" />
-        <line x1="2" y1="14" x2="38" y2="14" stroke="#ff5733" strokeWidth="1" opacity="0.5" />
-        <circle cx="8" cy="10" r="2" fill="#ff4466" />
-        <circle cx="14" cy="10" r="2" fill="#ffaa00" />
-        <circle cx="20" cy="10" r="2" fill="#00ff88" />
-        <rect x="8" y="20" width="10" height="2" rx="1" fill="#ff5733" opacity="0.8" />
-        <rect x="8" y="25" width="20" height="2" rx="1" fill="#ff5733" opacity="0.4" />
-        <rect x="8" y="28" width="15" height="2" rx="1" fill="#ff5733" opacity="0.3" />
-      </svg>
-    ),
+    id: 'web',
+    icon: '🌐',
     title: 'Website Development',
-    tagline: 'From landing pages to full-scale web applications.',
-    desc: 'We build what your business needs — performant, beautiful, and conversion-optimized. From marketing sites to complex SaaS platforms, we architect with modern stacks.',
-    gradient: '#ffffff',
+    tagline: 'From landing pages to full-scale web applications',
+    desc: 'We build what your business needs — performant, beautiful, and conversion-optimized. From high-converting marketing sites to complex SaaS platforms, we architect with modern stacks.',
     accentColor: '#ff5733',
-    features: ['React / Next.js', 'SEO Optimized', 'Mobile First', 'CMS Integration'],
+    features: ['React / Next.js', 'SEO Optimized', 'Mobile First', 'CMS Integration', 'Sub-Second Speed'],
+    showcase: {
+      url: 'https://thirdeye.fun/',
+      title: 'Third Eye — Production Client Showcase',
+      desc: 'High-impact web application engineered for maximum user engagement and performance.',
+    },
   },
   {
-    icon: (
-      <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-        <rect x="10" y="2" width="20" height="36" rx="4" stroke="#7c3aed" strokeWidth="1.5" fill="rgba(124,58,237,0.05)" />
-        <circle cx="20" cy="35" r="2" fill="#7c3aed" opacity="0.7" />
-        <line x1="16" y1="5" x2="24" y2="5" stroke="#7c3aed" strokeWidth="2" strokeLinecap="round" />
-        <rect x="14" y="10" width="12" height="18" rx="2" fill="rgba(124,58,237,0.15)" stroke="#7c3aed" strokeWidth="0.5" />
-        <rect x="16" y="13" width="4" height="1.5" rx="0.5" fill="#7c3aed" opacity="0.6" />
-        <rect x="16" y="17" width="8" height="1.5" rx="0.5" fill="#7c3aed" opacity="0.4" />
-        <rect x="16" y="21" width="6" height="1.5" rx="0.5" fill="#7c3aed" opacity="0.3" />
-      </svg>
-    ),
+    id: 'mobile',
+    icon: '📱',
     title: 'Mobile App Development',
-    tagline: 'Native and cross-platform apps that deliver.',
-    desc: 'Seamless user experiences on iOS and Android. We design and develop mobile apps that users love — with smooth performance and pixel-perfect UI from day one.',
-    gradient: '#ffffff',
+    tagline: 'Native & cross-platform apps that deliver',
+    desc: 'Seamless user experiences on iOS and Android. We design and develop mobile apps that users love — with smooth performance, offline SQLite capability, and pixel-perfect UI from day one.',
     accentColor: '#7c3aed',
-    features: ['React Native', 'iOS & Android', 'Offline Ready', 'Push Notifications'],
+    features: ['React Native (Expo 51)', 'iOS & Android', 'Offline SQLite Sync', '1-Tap WhatsApp Collections', 'Indian GST Engine'],
+    phoneSimulator: true,
   },
   {
-    icon: (
-      <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-        <circle cx="8" cy="12" r="4" stroke="#db2777" strokeWidth="1.5" fill="rgba(219,39,119,0.1)" />
-        <circle cx="32" cy="12" r="4" stroke="#2563eb" strokeWidth="1.5" fill="rgba(37,99,235,0.1)" />
-        <circle cx="20" cy="32" r="4" stroke="#ff5733" strokeWidth="1.5" fill="rgba(255,87,51,0.1)" />
-        <path d="M12 12 H28" stroke="#db2777" strokeWidth="1.5" strokeDasharray="3 2" />
-        <path d="M10 15 L18 29" stroke="#2563eb" strokeWidth="1.5" strokeDasharray="3 2" />
-        <path d="M30 15 L22 29" stroke="#ff5733" strokeWidth="1.5" strokeDasharray="3 2" />
-      </svg>
-    ),
+    id: 'automation',
+    icon: '⚡',
     title: 'n8n Workflow Automation',
-    tagline: 'Repetitive tasks? We kill them.',
-    desc: 'Automate your business processes end-to-end with n8n workflows. Free your team from manual work and let intelligent automation handle data, emails, CRMs, and more.',
-    gradient: '#ffffff',
+    tagline: 'Repetitive tasks? We kill them',
+    desc: 'Automate your business processes end-to-end with n8n workflows. Free your team from manual work and let intelligent automation handle data pipelines, emails, CRMs, and real-time syncing.',
     accentColor: '#db2777',
-    features: ['n8n Workflows', 'API Integrations', 'Webhook Triggers', 'Error Handling'],
+    features: ['n8n Workflows', 'API Integrations', 'Webhook Triggers', 'Error Handling & Retries', 'Zero-Code Maintenance'],
+    automationCanvas: true,
+  },
+  {
+    id: 'llm',
+    icon: '🧠',
+    title: 'Custom LLMs & AI Agents',
+    tagline: 'Enterprise RAG, Fine-Tuning & Multi-Agent Systems',
+    desc: 'Turn generative AI into real business ROI. We architect domain-specific LLM pipelines, autonomous multi-agent reasoning workflows, semantic search (RAG) over proprietary data, and fine-tuned models with strict enterprise guardrails.',
+    accentColor: '#0284c7',
+    features: ['Custom RAG Pipelines', 'Autonomous Multi-Agents', 'Fine-Tuning (Llama 3 / Mistral)', 'Vector DBs (pgvector / Qdrant)', 'Zero-Hallucination Guardrails'],
+    llmVisualizer: true,
+  },
+  {
+    id: 'hardware',
+    icon: '🔌',
+    title: 'IoT, Arduino & Custom Hardware Engineering',
+    tagline: 'Embedded Systems, Custom PC Builds & Sensor Telemetry',
+    desc: 'Our engineering team designs and builds custom hardware tailored for your requirements: from Arduino and ESP32 microcontroller setups, smart sensors, and IoT cloud telemetry to bespoke high-performance PC workstation builds and GPU rigs for local AI compute.',
+    accentColor: '#059669',
+    features: ['Arduino & ESP32 Microcontrollers', 'Custom Sensor Arrays & PCB Prototyping', 'Real-Time MQTT Cloud Telemetry', 'Bespoke Workstation & GPU Rig Builds', 'Embedded Firmware & Hardware-Cloud Sync'],
+    hardwareVisualizer: true,
   },
 ]
 
+// ── Interactive Kirana POS / Udhaar Mobile Simulator ─────────────
+function KiranaPhoneSimulator() {
+  const [activeTab, setActiveTab] = useState('pos')
+  const [scannedItem, setScannedItem] = useState(false)
+  const [reminderSent, setReminderSent] = useState(false)
+  const [invoicePrinted, setInvoicePrinted] = useState(false)
+
+  const handleScan = () => {
+    setScannedItem(true)
+    setTimeout(() => setScannedItem(false), 3500)
+  }
+
+  const handleSendReminder = () => {
+    setReminderSent(true)
+    setTimeout(() => setReminderSent(false), 3000)
+  }
+
+  const handlePrintInvoice = () => {
+    setInvoicePrinted(true)
+    setTimeout(() => setInvoicePrinted(false), 3000)
+  }
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+        padding: '12px 0',
+      }}
+    >
+      {/* Modern Smartphone Chassis */}
+      <div
+        style={{
+          width: '100%',
+          maxWidth: '260px',
+          height: '460px',
+          background: '#090d16',
+          borderRadius: '36px',
+          border: '5px solid #1e293b',
+          boxShadow: '0 25px 50px -12px rgba(124, 58, 237, 0.22), 0 4px 16px rgba(0, 0, 0, 0.2)',
+          position: 'relative',
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          color: '#f8fafc',
+          fontFamily: "'Inter', system-ui, sans-serif",
+          userSelect: 'none',
+        }}
+      >
+        {/* Dynamic Island / Status Bar */}
+        <div
+          style={{
+            padding: '8px 14px 4px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            background: '#090d16',
+            zIndex: 10,
+            borderBottom: '1px solid rgba(255,255,255,0.05)',
+          }}
+        >
+          <span style={{ fontSize: '10px', fontWeight: 800, color: '#94a3b8' }}>09:41</span>
+          {/* Pill notch */}
+          <div
+            style={{
+              width: '56px',
+              height: '12px',
+              background: '#020617',
+              borderRadius: '12px',
+              border: '1px solid #1e293b',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+              paddingRight: '6px',
+              gap: '4px',
+            }}
+          >
+            <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#10b981' }} />
+            <div style={{ width: '3px', height: '3px', borderRadius: '50%', background: '#334155' }} />
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '9px', color: '#10b981', fontWeight: 700 }}>
+            <span>⚡ SQLite</span>
+          </div>
+        </div>
+
+        {/* Store Title Bar & Auth Indicator */}
+        <div style={{ padding: '6px 12px', background: '#0f172a', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+            <div style={{ fontSize: '11px', fontWeight: 800, color: '#f8fafc', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <span>🏪</span>
+              <span>Sharma Kirana POS</span>
+            </div>
+            <span style={{ fontSize: '9px', background: 'rgba(16,185,129,0.15)', color: '#34d399', padding: '1px 6px', borderRadius: '4px', fontWeight: 700 }}>
+              PIN Auth ✓
+            </span>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '8px', color: '#94a3b8' }}>
+            <span>React Native · Expo 51</span>
+            <span style={{ color: '#38bdf8' }}>☁️ Supabase Cloud</span>
+          </div>
+        </div>
+
+        {/* Mini Tab Switcher */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '3px', padding: '6px 8px', background: '#090d16' }}>
+          {[
+            { id: 'pos', label: '⚡ POS Bill' },
+            { id: 'udhaar', label: '📖 Udhaar' },
+            { id: 'gst', label: '🧾 GST Inv' },
+          ].map((t) => (
+            <button
+              key={t.id}
+              onClick={() => setActiveTab(t.id)}
+              style={{
+                background: activeTab === t.id ? '#7c3aed' : 'rgba(255,255,255,0.05)',
+                color: activeTab === t.id ? '#ffffff' : '#94a3b8',
+                border: 'none',
+                borderRadius: '6px',
+                padding: '4px 2px',
+                fontSize: '9px',
+                fontWeight: 700,
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+              }}
+            >
+              {t.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Screen Content Body */}
+        <div style={{ flex: 1, padding: '8px 10px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          {/* ── TAB 1: OFFLINE-FIRST POS & BARCODE ── */}
+          {activeTab === 'pos' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              {/* Barcode Camera Scanner Viewfinder */}
+              <div
+                onClick={handleScan}
+                style={{
+                  background: '#020617',
+                  border: '1px dashed #7c3aed',
+                  borderRadius: '8px',
+                  padding: '8px',
+                  textAlign: 'center',
+                  cursor: 'pointer',
+                  position: 'relative',
+                }}
+              >
+                <div style={{ fontSize: '9px', color: '#a78bfa', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
+                  <span>📷</span>
+                  <span>{scannedItem ? 'Scanned: Atta 5kg ✓' : 'Tap to Scan Barcode'}</span>
+                </div>
+                <div style={{ fontSize: '7.5px', color: '#64748b', marginTop: '2px' }}>
+                  expo-camera live hardware decoder
+                </div>
+              </div>
+
+              {/* Scanned Cart Items */}
+              <div style={{ background: '#0f172a', borderRadius: '8px', padding: '6px 8px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '9px', fontWeight: 700, marginBottom: '2px' }}>
+                  <span>Aashirvaad Atta 5kg</span>
+                  <span>₹240</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '9px', fontWeight: 700, marginBottom: '2px' }}>
+                  <span>Fortune Mustard Oil 1L</span>
+                  <span>₹160</span>
+                </div>
+                {scannedItem && (
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '9px', fontWeight: 700, color: '#34d399', animation: 'fadeIn 0.2s ease' }}>
+                    <span>+ Tata Salt 1kg</span>
+                    <span>₹28</span>
+                  </div>
+                )}
+              </div>
+
+              {/* GST Tax Calculation Engine */}
+              <div style={{ background: '#1e293b', borderRadius: '8px', padding: '6px 8px', fontSize: '8.5px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', color: '#94a3b8', marginBottom: '2px' }}>
+                  <span>Subtotal (SQLite):</span>
+                  <span>{scannedItem ? '₹428.00' : '₹400.00'}</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', color: '#a78bfa', marginBottom: '2px' }}>
+                  <span>CGST (2.5%) + SGST (2.5%):</span>
+                  <span>{scannedItem ? '₹21.40' : '₹20.00'}</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 800, color: '#f8fafc', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '3px', marginTop: '2px' }}>
+                  <span>Grand Total:</span>
+                  <span style={{ color: '#34d399' }}>{scannedItem ? '₹449.40' : '₹420.00'}</span>
+                </div>
+              </div>
+
+              {/* Fast POS Action */}
+              <button
+                onClick={handlePrintInvoice}
+                style={{
+                  background: 'linear-gradient(135deg, #7c3aed, #a855f7)',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: '8px',
+                  padding: '7px',
+                  fontSize: '9px',
+                  fontWeight: 800,
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 12px rgba(124, 58, 237, 0.4)',
+                }}
+              >
+                {invoicePrinted ? '✓ GST Bill Saved & Printed!' : '⚡ Fast Print & Multi-Format GST'}
+              </button>
+            </div>
+          )}
+
+          {/* ── TAB 2: UDHAAR LEDGER & 1-TAP WHATSAPP ── */}
+          {activeTab === 'udhaar' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              <div style={{ background: '#0f172a', borderRadius: '8px', padding: '8px', border: '1px solid rgba(239, 68, 68, 0.3)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                  <span style={{ fontSize: '10px', fontWeight: 800, color: '#f8fafc' }}>Rajesh Kumar</span>
+                  <span style={{ fontSize: '8px', background: 'rgba(239,68,68,0.15)', color: '#f87171', padding: '1px 5px', borderRadius: '4px', fontWeight: 700 }}>
+                    14 Days Overdue
+                  </span>
+                </div>
+                <div style={{ fontSize: '12px', fontWeight: 900, color: '#f87171', marginBottom: '4px' }}>
+                  ₹2,450 Due
+                </div>
+                <div style={{ fontSize: '7.5px', color: '#94a3b8', marginBottom: '6px' }}>
+                  Last transaction: 08 Aug (Offline SQLite sync)
+                </div>
+
+                {/* 1-Tap WhatsApp Trigger */}
+                <button
+                  onClick={handleSendReminder}
+                  style={{
+                    width: '100%',
+                    background: reminderSent ? '#15803d' : '#16a34a',
+                    color: '#ffffff',
+                    border: 'none',
+                    borderRadius: '6px',
+                    padding: '6px',
+                    fontSize: '8.5px',
+                    fontWeight: 800,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '4px',
+                  }}
+                >
+                  <span>💬</span>
+                  <span>{reminderSent ? '✓ UPI Deep Link Dispatched!' : '1-Tap WhatsApp + Dynamic UPI'}</span>
+                </button>
+              </div>
+
+              {/* Second customer */}
+              <div style={{ background: '#0f172a', borderRadius: '8px', padding: '6px 8px', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '9px', fontWeight: 700 }}>
+                  <span>Vikas Sharma</span>
+                  <span style={{ color: '#34d399' }}>₹320 (Paid ✓)</span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ── TAB 3: MULTI-FORMAT GST INVOICE ENGINE ── */}
+          {activeTab === 'gst' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              <div style={{ background: '#0f172a', borderRadius: '8px', padding: '8px', border: '1px solid rgba(124, 58, 237, 0.3)' }}>
+                <div style={{ fontSize: '9px', fontWeight: 800, color: '#a78bfa', marginBottom: '4px' }}>
+                  📄 GST INVOICE #GST-2026-084
+                </div>
+                <div style={{ fontSize: '8px', color: '#cbd5e1', lineHeight: 1.5, background: '#020617', padding: '6px', borderRadius: '6px', fontFamily: 'monospace' }}>
+                  <div>HSN: 1001 · Rate: 5%</div>
+                  <div>Taxable Value: ₹800.00</div>
+                  <div>CGST (2.5%): ₹20.00</div>
+                  <div>SGST (2.5%): ₹20.00</div>
+                  <div style={{ color: '#34d399', fontWeight: 700 }}>Total: ₹840.00 (PAID)</div>
+                </div>
+                <div style={{ display: 'flex', gap: '4px', marginTop: '6px' }}>
+                  <span style={{ flex: 1, textAlign: 'center', background: '#1e293b', padding: '3px', borderRadius: '4px', fontSize: '7.5px', color: '#94a3b8' }}>
+                    🖨️ Thermal 3"
+                  </span>
+                  <span style={{ flex: 1, textAlign: 'center', background: '#1e293b', padding: '3px', borderRadius: '4px', fontSize: '7.5px', color: '#94a3b8' }}>
+                    📑 A4 PDF
+                  </span>
+                </div>
+              </div>
+
+              {/* Micro-SaaS Model Tag */}
+              <div style={{ background: 'rgba(124,58,237,0.1)', border: '1px solid rgba(124,58,237,0.2)', borderRadius: '6px', padding: '5px 8px', fontSize: '7.5px', color: '#c4b5fd' }}>
+                💎 Micro-SaaS Model · Unlimited Invoices Active
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Phone Bottom Home Bar & Sync Pulse */}
+        <div style={{ padding: '6px 12px 10px', background: '#090d16', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '8px', color: '#64748b' }}>
+            <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 6px #10b981' }} />
+            <span>Local SQLite ⇄ Supabase Cloud Live</span>
+          </div>
+          <div
+            style={{
+              width: '50px',
+              height: '3px',
+              background: 'rgba(255, 255, 255, 0.25)',
+              borderRadius: '3px',
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ── Interactive n8n Workflow Pipeline Canvas ─────────────────────
+function N8nWorkflowVisualizer() {
+  const [activeStep, setActiveStep] = useState(0)
+
+  const steps = [
+    { name: 'Order Webhook', icon: '⚡', desc: 'Instant trigger from app' },
+    { name: 'Data Transform', icon: '⚙️', desc: 'JSON parsing & GST calc' },
+    { name: 'Supabase Sync', icon: '🐘', desc: 'Atomic Postgres transaction' },
+    { name: 'WhatsApp Alert', icon: '💬', desc: '1-Tap UPI receipt sent' },
+  ]
+
+  return (
+    <div
+      style={{
+        background: '#0f172a',
+        borderRadius: '20px',
+        border: '1px solid rgba(219, 39, 119, 0.3)',
+        padding: '24px',
+        boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '16px',
+        width: '100%',
+        maxWidth: '480px',
+        margin: '0 auto',
+      }}
+    >
+      {/* Header */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #1e293b', paddingBottom: '12px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ fontSize: '18px' }}>⚡</span>
+          <div>
+            <div style={{ fontSize: '13px', fontWeight: 800, color: '#f8fafc' }}>n8n Real-Time Automation Pipeline</div>
+            <div style={{ fontSize: '10px', color: '#94a3b8' }}>Zero human error · Sub-second execution</div>
+          </div>
+        </div>
+        <span style={{ fontSize: '10px', background: 'rgba(16,185,129,0.15)', color: '#34d399', padding: '2px 8px', borderRadius: '12px', fontWeight: 800 }}>
+          ● LIVE
+        </span>
+      </div>
+
+      {/* Nodes Flow */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        {steps.map((step, idx) => (
+          <div
+            key={step.name}
+            onClick={() => setActiveStep(idx)}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: '10px 14px',
+              borderRadius: '10px',
+              background: activeStep === idx ? 'rgba(219, 39, 119, 0.15)' : '#1e293b',
+              border: activeStep === idx ? '1px solid #db2777' : '1px solid rgba(255,255,255,0.06)',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <span style={{ fontSize: '16px' }}>{step.icon}</span>
+              <div>
+                <div style={{ fontSize: '12px', fontWeight: 700, color: '#f8fafc' }}>{step.name}</div>
+                <div style={{ fontSize: '10px', color: '#94a3b8' }}>{step.desc}</div>
+              </div>
+            </div>
+            <span style={{ fontSize: '11px', color: '#34d399', fontWeight: 800 }}>
+              {activeStep === idx ? '⚡ Active' : '✓ Ready'}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* Footer Metrics */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', background: '#020617', padding: '10px 14px', borderRadius: '10px', fontSize: '11px' }}>
+        <span style={{ color: '#94a3b8' }}>Average Pipeline Latency:</span>
+        <span style={{ color: '#38bdf8', fontWeight: 800 }}>18ms (99.99% Uptime)</span>
+      </div>
+    </div>
+  )
+}
+
+// ── Interactive Custom LLM & AI Agents Visualizer ────────────────
+function LlmAgentVisualizer() {
+  const [isRunning, setIsRunning] = useState(false)
+  const [activeStep, setActiveStep] = useState(2)
+
+  const handleRunAgent = () => {
+    setIsRunning(true)
+    setActiveStep(0)
+    setTimeout(() => setActiveStep(1), 700)
+    setTimeout(() => setActiveStep(2), 1400)
+    setTimeout(() => setIsRunning(false), 2000)
+  }
+
+  return (
+    <div
+      style={{
+        background: '#090d16',
+        borderRadius: '20px',
+        border: '1px solid rgba(2, 132, 199, 0.35)',
+        padding: '24px',
+        boxShadow: '0 20px 40px rgba(0,0,0,0.18)',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '14px',
+        width: '100%',
+        maxWidth: '480px',
+        margin: '0 auto',
+        fontFamily: "'Inter', system-ui, sans-serif",
+      }}
+    >
+      {/* Header */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '12px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ fontSize: '18px' }}>🧠</span>
+          <div>
+            <div style={{ fontSize: '13px', fontWeight: 800, color: '#f8fafc' }}>Autonomous LLM Agent Reasoning</div>
+            <div style={{ fontSize: '10px', color: '#94a3b8' }}>RAG Engine + Strict Enterprise Guardrails</div>
+          </div>
+        </div>
+        <span style={{ fontSize: '10px', background: 'rgba(2,132,199,0.2)', color: '#38bdf8', padding: '2px 8px', borderRadius: '12px', fontWeight: 800 }}>
+          Llama-3 / Claude
+        </span>
+      </div>
+
+      {/* User Query Prompt Box */}
+      <div style={{ background: '#0f172a', border: '1px solid #1e293b', borderRadius: '10px', padding: '10px 12px' }}>
+        <div style={{ fontSize: '9px', color: '#0284c7', fontWeight: 800, textTransform: 'uppercase', marginBottom: '2px' }}>
+          USER GOAL / AGENT TASK:
+        </div>
+        <div style={{ fontSize: '11px', color: '#f1f5f9', fontWeight: 600 }}>
+          "Analyze 14-day Khata balances, detect revenue leaks, and draft 1-tap WhatsApp collections."
+        </div>
+      </div>
+
+      {/* Reasoning Steps */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+        {[
+          { label: '1. Semantic Vector Search', detail: 'Fetched 8 relevant ledger vectors from pgvector' },
+          { label: '2. Multi-Agent Reasoning', detail: 'Cross-validated GST compliance with local SQLite DB' },
+          { label: '3. Zero-Hallucination Guardrail', detail: '100% verified citation & UPI deep-link generation' },
+        ].map((step, idx) => (
+          <div
+            key={step.label}
+            style={{
+              padding: '6px 10px',
+              borderRadius: '8px',
+              background: activeStep >= idx ? 'rgba(2, 132, 199, 0.12)' : '#0f172a',
+              border: activeStep >= idx ? '1px solid rgba(2, 132, 199, 0.4)' : '1px solid rgba(255,255,255,0.04)',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <div>
+              <div style={{ fontSize: '10.5px', fontWeight: 700, color: activeStep >= idx ? '#38bdf8' : '#64748b' }}>
+                {step.label}
+              </div>
+              <div style={{ fontSize: '9px', color: '#94a3b8' }}>{step.detail}</div>
+            </div>
+            <span style={{ fontSize: '11px', color: activeStep >= idx ? '#34d399' : '#475569', fontWeight: 800 }}>
+              {activeStep >= idx ? '✓' : '...'}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* Output preview */}
+      <div style={{ background: '#020617', padding: '10px 12px', borderRadius: '10px', border: '1px solid rgba(16,185,129,0.2)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+          <span style={{ fontSize: '9px', color: '#34d399', fontWeight: 800 }}>⚡ STRUCTURED OUTPUT READY:</span>
+          <span style={{ fontSize: '9px', color: '#64748b' }}>Confidence: 99.8%</span>
+        </div>
+        <div style={{ fontSize: '10px', color: '#cbd5e1', lineHeight: 1.5, fontFamily: 'monospace' }}>
+          ✓ Generated personalized WhatsApp dispatch for ₹2,450 balance with encoded UPI intent deep-link.
+        </div>
+      </div>
+
+      {/* Action Trigger */}
+      <button
+        onClick={handleRunAgent}
+        disabled={isRunning}
+        style={{
+          background: isRunning ? '#0284c7' : 'linear-gradient(135deg, #0284c7, #0369a1)',
+          color: '#ffffff',
+          border: 'none',
+          borderRadius: '10px',
+          padding: '9px',
+          fontSize: '11px',
+          fontWeight: 800,
+          cursor: 'pointer',
+          boxShadow: '0 4px 14px rgba(2, 132, 199, 0.4)',
+          transition: 'all 0.2s ease',
+        }}
+      >
+        {isRunning ? '⚡ Executing LLM Agent Pipeline...' : '⚡ Test Run Autonomous Agent'}
+      </button>
+    </div>
+  )
+}
+
+// ── Interactive IoT, Arduino & Custom Hardware Visualizer ────────
+function HardwareIotVisualizer() {
+  const [relayOn, setRelayOn] = useState(false)
+  const [temp, setTemp] = useState(24.6)
+  const [activeTab, setActiveTab] = useState('iot')
+
+  const toggleRelay = () => {
+    setRelayOn(!relayOn)
+    setTemp(prev => Number((prev + (relayOn ? -0.4 : 0.8)).toFixed(1)))
+  }
+
+  return (
+    <div
+      style={{
+        background: '#090d16',
+        borderRadius: '20px',
+        border: '1px solid rgba(5, 150, 105, 0.35)',
+        padding: '24px',
+        boxShadow: '0 20px 40px rgba(0,0,0,0.18)',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '14px',
+        width: '100%',
+        maxWidth: '480px',
+        margin: '0 auto',
+        fontFamily: "'Inter', system-ui, sans-serif",
+      }}
+    >
+      {/* Header */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '12px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ fontSize: '18px' }}>🔌</span>
+          <div>
+            <div style={{ fontSize: '13px', fontWeight: 800, color: '#f8fafc' }}>Custom Hardware & Embedded Hub</div>
+            <div style={{ fontSize: '10px', color: '#94a3b8' }}>Arduino · ESP32 · Custom PC Builds</div>
+          </div>
+        </div>
+        <span style={{ fontSize: '10px', background: 'rgba(5,150,105,0.2)', color: '#34d399', padding: '2px 8px', borderRadius: '12px', fontWeight: 800 }}>
+          ⚡ 115200 BAUD LIVE
+        </span>
+      </div>
+
+      {/* Mode Tabs */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
+        <button
+          onClick={() => setActiveTab('iot')}
+          style={{
+            background: activeTab === 'iot' ? '#059669' : '#0f172a',
+            color: '#ffffff',
+            border: '1px solid rgba(255,255,255,0.08)',
+            padding: '6px',
+            borderRadius: '8px',
+            fontSize: '11px',
+            fontWeight: 700,
+            cursor: 'pointer',
+          }}
+        >
+          📡 Arduino & IoT Sensors
+        </button>
+        <button
+          onClick={() => setActiveTab('pc')}
+          style={{
+            background: activeTab === 'pc' ? '#059669' : '#0f172a',
+            color: '#ffffff',
+            border: '1px solid rgba(255,255,255,0.08)',
+            padding: '6px',
+            borderRadius: '8px',
+            fontSize: '11px',
+            fontWeight: 700,
+            cursor: 'pointer',
+          }}
+        >
+          🖥️ Custom PC & GPU Builds
+        </button>
+      </div>
+
+      {activeTab === 'iot' ? (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          {/* Live Sensor Telemetry Gauges */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '8px' }}>
+            <div style={{ background: '#0f172a', border: '1px solid #1e293b', borderRadius: '10px', padding: '8px', textAlign: 'center' }}>
+              <div style={{ fontSize: '8px', color: '#94a3b8', fontWeight: 700 }}>DHT22 TEMP</div>
+              <div style={{ fontSize: '15px', fontWeight: 900, color: '#34d399', marginTop: '2px' }}>{temp}°C</div>
+            </div>
+            <div style={{ background: '#0f172a', border: '1px solid #1e293b', borderRadius: '10px', padding: '8px', textAlign: 'center' }}>
+              <div style={{ fontSize: '8px', color: '#94a3b8', fontWeight: 700 }}>PRESSURE</div>
+              <div style={{ fontSize: '15px', fontWeight: 900, color: '#38bdf8', marginTop: '2px' }}>1014 hPa</div>
+            </div>
+            <div style={{ background: '#0f172a', border: '1px solid #1e293b', borderRadius: '10px', padding: '8px', textAlign: 'center' }}>
+              <div style={{ fontSize: '8px', color: '#94a3b8', fontWeight: 700 }}>RELAY PIN #12</div>
+              <div style={{ fontSize: '15px', fontWeight: 900, color: relayOn ? '#10b981' : '#64748b', marginTop: '2px' }}>
+                {relayOn ? 'ON' : 'OFF'}
+              </div>
+            </div>
+          </div>
+
+          {/* Pinout Status */}
+          <div style={{ background: '#020617', padding: '10px 12px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.06)', fontSize: '10px', fontFamily: 'monospace', color: '#cbd5e1', lineHeight: 1.5 }}>
+            <div style={{ color: '#34d399' }}>[ESP32 FIRMWARE] WiFi connected to MQTT broker ✓</div>
+            <div>[ADC 34] Analog input stream: 2.84V stable</div>
+            <div>[GPIO 12] Hardware switch state: {relayOn ? 'ACTIVE (Relay Closed)' : 'STANDBY (Open)'}</div>
+          </div>
+
+          {/* Hardware Toggle Action */}
+          <button
+            onClick={toggleRelay}
+            style={{
+              background: relayOn ? 'linear-gradient(135deg, #10b981, #059669)' : 'linear-gradient(135deg, #059669, #047857)',
+              color: '#ffffff',
+              border: 'none',
+              borderRadius: '10px',
+              padding: '9px',
+              fontSize: '11px',
+              fontWeight: 800,
+              cursor: 'pointer',
+              boxShadow: '0 4px 14px rgba(5, 150, 105, 0.4)',
+              transition: 'all 0.2s ease',
+            }}
+          >
+            {relayOn ? '⚡ Deactivate Arduino Relay Pin #12' : '⚡ Trigger Arduino Relay Pin #12 (Live Test)'}
+          </button>
+        </div>
+      ) : (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          {/* Custom PC Specs Box */}
+          <div style={{ background: '#0f172a', borderRadius: '10px', border: '1px solid #1e293b', padding: '12px' }}>
+            <div style={{ fontSize: '11px', fontWeight: 800, color: '#f8fafc', marginBottom: '6px' }}>
+              🖥️ Bespoke High-Performance PC Rig Build
+            </div>
+            <div style={{ fontSize: '10px', color: '#cbd5e1', lineHeight: 1.6, fontFamily: 'monospace' }}>
+              <div>• CPU: AMD Ryzen 9 7950X (16 Cores / 32 Threads)</div>
+              <div>• GPU: Dual Nvidia RTX 4090 24GB (AI Compute Rig)</div>
+              <div>• Memory: 128GB DDR5 6000MHz Low-Latency</div>
+              <div>• Cooling: Custom 360mm Liquid Loop · Zero Noise</div>
+            </div>
+          </div>
+          <div style={{ background: '#020617', padding: '8px 12px', borderRadius: '8px', fontSize: '10px', color: '#38bdf8', fontWeight: 700 }}>
+            ⚡ Benchmarked for Local LLMs, 3D Rendering & High-FPS Workstations
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function Services() {
-  const { triggerAmbient } = useKeyboardContext()
-  const lastScrollY = useRef(0)
-  const ambientTimer = useRef(null)
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY
-      const delta = Math.abs(scrollY - lastScrollY.current)
-      lastScrollY.current = scrollY
-
-      if (delta > 30) {
-        if (ambientTimer.current) clearTimeout(ambientTimer.current)
-        ambientTimer.current = setTimeout(() => {
-          triggerAmbient()
-        }, 50)
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-      if (ambientTimer.current) clearTimeout(ambientTimer.current)
-    }
-  }, [triggerAmbient])
-
   return (
     <div>
       {/* ── Page Header ── */}
@@ -114,7 +748,7 @@ export default function Services() {
           <span className="circuit-underline gradient-text">Services</span>
         </h1>
         <p style={{ color: '#475569', fontSize: '18px', lineHeight: 1.7 }}>
-          We specialize in building custom technology solutions that solve real business problems and scale as you grow.
+          We specialize in building custom software and hardware technology solutions that solve real business problems and scale as you grow.
         </p>
       </section>
 
@@ -126,7 +760,7 @@ export default function Services() {
           padding: '0 24px 100px',
           display: 'flex',
           flexDirection: 'column',
-          gap: '32px',
+          gap: '40px',
         }}
       >
         {SERVICES.map((service, idx) => (
@@ -134,77 +768,65 @@ export default function Services() {
             key={service.title}
             className="glass service-card"
             style={{
-              padding: '48px',
-              borderRadius: '20px',
+              padding: '40px',
+              borderRadius: '24px',
               background: '#ffffff',
               border: '1px solid rgba(226, 232, 240, 0.9)',
-              boxShadow: '0 10px 30px rgba(0, 0, 0, 0.03)',
+              boxShadow: '0 12px 36px rgba(0, 0, 0, 0.04)',
               display: 'grid',
-              gridTemplateColumns: 'auto 1fr auto',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 460px), 1fr))',
               gap: '40px',
               alignItems: 'center',
-              direction: idx % 2 === 1 ? 'rtl' : 'ltr',
             }}
           >
-            {/* Icon side */}
-            <div
-              style={{
-                direction: 'ltr',
-                width: '100px',
-                height: '100px',
-                borderRadius: '20px',
-                background: `#f8fafc`,
-                border: `1px solid ${service.accentColor}30`,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: `0 4px 14px ${service.accentColor}15`,
-                flexShrink: 0,
-              }}
-            >
-              {service.icon}
-            </div>
-
-            {/* Text */}
-            <div style={{ direction: 'ltr' }}>
-              <div
-                style={{
-                  display: 'inline-block',
-                  padding: '4px 12px',
-                  borderRadius: '100px',
-                  background: `${service.accentColor}15`,
-                  border: `1px solid ${service.accentColor}40`,
-                  color: service.accentColor,
-                  fontSize: '11px',
-                  letterSpacing: '2px',
-                  fontWeight: 700,
-                  textTransform: 'uppercase',
-                  marginBottom: '12px',
-                }}
-              >
-                {service.tagline}
+            {/* Left Side: Content & Features */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {/* Tagline Badge */}
+              <div>
+                <span
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    padding: '6px 14px',
+                    borderRadius: '100px',
+                    background: `${service.accentColor}15`,
+                    border: `1px solid ${service.accentColor}40`,
+                    color: service.accentColor,
+                    fontSize: '11px',
+                    letterSpacing: '1px',
+                    fontWeight: 800,
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  <span>{service.icon}</span>
+                  <span>{service.tagline}</span>
+                </span>
               </div>
 
-              <h2 style={{ fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: 800, color: '#0f172a', marginBottom: '12px' }}>
+              {/* Title */}
+              <h2 style={{ fontSize: 'clamp(24px, 3.2vw, 36px)', fontWeight: 900, color: '#0f172a', lineHeight: 1.15 }}>
                 {service.title}
               </h2>
 
-              <p style={{ color: '#475569', fontSize: '16px', lineHeight: 1.8, marginBottom: '20px' }}>
+              {/* Description */}
+              <p style={{ color: '#475569', fontSize: '16px', lineHeight: 1.7 }}>
                 {service.desc}
               </p>
 
-              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                {service.features.map(f => (
+              {/* Feature Pills */}
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '4px' }}>
+                {service.features.map((f) => (
                   <span
                     key={f}
                     style={{
-                      padding: '4px 12px',
-                      borderRadius: '6px',
-                      background: '#f1f5f9',
+                      padding: '5px 12px',
+                      borderRadius: '8px',
+                      background: '#f8fafc',
                       border: '1px solid #e2e8f0',
                       color: '#334155',
                       fontSize: '12px',
-                      fontWeight: 600,
+                      fontWeight: 700,
                     }}
                   >
                     {f}
@@ -213,20 +835,121 @@ export default function Services() {
               </div>
             </div>
 
-            {/* Number decoration */}
-            <div
-              style={{
-                direction: 'ltr',
-                fontSize: '80px',
-                fontWeight: 900,
-                color: service.accentColor,
-                opacity: 0.12,
-                lineHeight: 1,
-                userSelect: 'none',
-                flexShrink: 0,
-              }}
-            >
-              0{idx + 1}
+            {/* Right Side: Visual Showcase (Browser / Smartphone / Automation Canvas / LLM Visualizer / Hardware Visualizer) */}
+            <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+              {/* Case 1: Website Browser Showcase */}
+              {service.showcase && (
+                <div
+                  style={{
+                    background: '#0f172a',
+                    borderRadius: '18px',
+                    border: '1px solid rgba(255, 87, 51, 0.3)',
+                    boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
+                    overflow: 'hidden',
+                    width: '100%',
+                    maxWidth: '520px',
+                  }}
+                >
+                  {/* Browser Bar */}
+                  <div
+                    style={{
+                      background: '#1e293b',
+                      padding: '10px 16px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      borderBottom: '1px solid #334155',
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ef4444' }} />
+                      <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#f59e0b' }} />
+                      <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#10b981' }} />
+                    </div>
+
+                    <div
+                      style={{
+                        background: '#0f172a',
+                        borderRadius: '20px',
+                        padding: '4px 14px',
+                        fontSize: '11px',
+                        color: '#94a3b8',
+                        fontWeight: 600,
+                        border: '1px solid #334155',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                      }}
+                    >
+                      <span>🔒</span>
+                      <span style={{ color: '#f8fafc', fontWeight: 700 }}>https://thirdeye.fun/</span>
+                    </div>
+
+                    <a
+                      href={service.showcase.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        textDecoration: 'none',
+                        background: '#ff5733',
+                        color: '#ffffff',
+                        fontSize: '11px',
+                        fontWeight: 800,
+                        padding: '4px 10px',
+                        borderRadius: '6px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                      }}
+                    >
+                      Visit Live ↗
+                    </a>
+                  </div>
+
+                  {/* Browser Live Preview Body */}
+                  <div style={{ position: 'relative', background: '#090d16', minHeight: '260px' }}>
+                    <iframe
+                      src={service.showcase.url}
+                      title={service.showcase.title}
+                      style={{
+                        width: '100%',
+                        height: '260px',
+                        border: 'none',
+                        display: 'block',
+                      }}
+                    />
+                    <div
+                      style={{
+                        padding: '12px 18px',
+                        background: 'rgba(15, 23, 42, 0.95)',
+                        borderTop: '1px solid #334155',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                      }}
+                    >
+                      <div style={{ fontSize: '12px', color: '#10b981', fontWeight: 800 }}>
+                        ⚡ Production Client Showcase: Third Eye
+                      </div>
+                      <div style={{ fontSize: '11px', color: '#94a3b8' }}>
+                        Sub-second load speed · Custom Interactive UI
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Case 2: Mobile App Smartphone Simulator */}
+              {service.phoneSimulator && <KiranaPhoneSimulator />}
+
+              {/* Case 3: n8n Workflow Automation Canvas */}
+              {service.automationCanvas && <N8nWorkflowVisualizer />}
+
+              {/* Case 4: Custom LLM & AI Agents Reasoning Canvas */}
+              {service.llmVisualizer && <LlmAgentVisualizer />}
+
+              {/* Case 5: Custom Hardware, Arduino & IoT Visualizer */}
+              {service.hardwareVisualizer && <HardwareIotVisualizer />}
             </div>
           </div>
         ))}
@@ -246,7 +969,7 @@ export default function Services() {
         <p style={{ color: '#475569', marginBottom: '32px', fontSize: '16px' }}>
           We go beyond the standard to engineer exactly what your business requires.
         </p>
-        <a href="mailto:hello@karmaveon.tech">
+        <a href="mailto:karmaaveontechnologies@gmail.com">
           <button
             className="btn-glow"
             style={{

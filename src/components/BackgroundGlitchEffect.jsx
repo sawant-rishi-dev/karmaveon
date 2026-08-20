@@ -6,11 +6,11 @@ const CODE_SNIPPETS = [
   'npm run dev',
   'git push origin main',
   'n8n.trigger()',
-  'const pappu = true',
+  'const veon = true',
   'function build()',
   '200 OK',
   'ERR_PAGE_FALLING_DOWN',
-  'Pappu.codeOverdrive()',
+  'Veon.codeOverdrive()',
   'React.useMemo()',
   'CRITICAL_LAYOUT_COLLAPSE',
   '{ status: "BROKEN" }',
@@ -28,7 +28,7 @@ export default function BackgroundGlitchEffect({ isGlitching = false, isPaused =
 
   useEffect(() => {
     const canvas = canvasRef.current
-    if (!canvas || isPaused) return
+    if (!canvas || !isGlitching || isPaused) return
     const ctx = canvas.getContext('2d')
 
     let width = (canvas.width = window.innerWidth)
@@ -94,7 +94,7 @@ export default function BackgroundGlitchEffect({ isGlitching = false, isPaused =
 
       ctx.globalAlpha = 1.0
 
-      // Soft ambient glitch lines when Pappu codes at table
+      // Soft ambient glitch lines when Veon codes at table
       if (isGlitching && Math.random() < 0.12) {
         const glitchY = Math.random() * height
         const glitchH = Math.random() * 3 + 1

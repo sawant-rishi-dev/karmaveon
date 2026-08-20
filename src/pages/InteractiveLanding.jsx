@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import confetti from 'canvas-confetti'
 import CursorHijackEngine from '../components/CursorHijackEngine'
@@ -17,26 +17,26 @@ export default function InteractiveLanding() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' })
   const [terminalLogs, setTerminalLogs] = useState([
     '[SYSTEM INIT] Fourth-Wall Engine loaded.',
-    '[DWARF OS] Resting at Dev Workstation Base...',
+    '[VEON OS] Resting at Dev Workstation Base...',
   ])
 
   // Handle status update log output
-  const handleStatusChange = (status) => {
+  const handleStatusChange = useCallback((status) => {
     setDwarfStatus(status)
     const timestamp = new Date().toLocaleTimeString()
     let logMsg = ''
 
-    if (status === 'alert') logMsg = `[${timestamp}] ⚡ Mouse paused 2s! Dwarf spotted cursor!`
-    else if (status === 'run') logMsg = `[${timestamp}] 🏃 Dwarf sprinting from Dev Station to cursor...`
-    else if (status === 'grab') logMsg = `[${timestamp}] ✊ CURSOR HIJACKED! Pointer locked!`
-    else if (status === 'drag') logMsg = `[${timestamp}] 🧲 Dragging cursor across screen to CTA button...`
-    else if (status === 'celebrate') logMsg = `[${timestamp}] ✨ TARGET LOCKED! Cursor placed over Contact button!`
-    else if (status === 'return') logMsg = `[${timestamp}] 🚶 Dwarf walking back to Dev Workstation Base...`
+    if (status === 'alert') logMsg = `[${timestamp}] ⚡ Veon spotted an opportunity!`
+    else if (status === 'run') logMsg = `[${timestamp}] 🏃 Veon stepping out from Dev Station...`
+    else if (status === 'grab') logMsg = `[${timestamp}] ✊ Veon guiding pointer!`
+    else if (status === 'drag') logMsg = `[${timestamp}] 🧲 Guiding cursor to Strategy Call button...`
+    else if (status === 'celebrate') logMsg = `[${timestamp}] ✨ Veon: Strategy Call ready!`
+    else if (status === 'at_desk') logMsg = `[${timestamp}] 💻 Veon working at Dev Workstation...`
 
     if (logMsg) {
       setTerminalLogs((prev) => [logMsg, ...prev.slice(0, 5)])
     }
-  }
+  }, [])
 
   // Handle "Click to Contact" Primary CTA Click
   const handleContactClick = () => {
@@ -122,91 +122,8 @@ export default function InteractiveLanding() {
         const dwarf = new SoftwareEngineer(&#123; glasses: true &#125;);
       </div>
 
-      {/* ── Framed Top Header Navigation ── */}
-      <header
-        style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-          padding: '24px 32px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          position: 'relative',
-          zIndex: 20,
-        }}
-      >
-        {/* Brand Logo */}
-        <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <div
-            style={{
-              width: '38px',
-              height: '38px',
-              borderRadius: '12px',
-              background: 'linear-gradient(135deg, #FF5733, #F59E0B)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#FFF',
-              fontWeight: 800,
-              fontSize: '18px',
-              boxShadow: '0 4px 14px rgba(255, 87, 51, 0.3)',
-            }}
-          >
-            &lt;/&gt;
-          </div>
-          <div>
-            <span style={{ fontWeight: 800, fontSize: '20px', letterSpacing: '-0.5px', color: '#0F172A' }}>
-              Karmaveon
-            </span>
-            <span style={{ fontSize: '10px', display: 'block', color: '#FF5733', fontWeight: 700, letterSpacing: '1px' }}>
-              FOURTH-WALL UX
-            </span>
-          </div>
-        </Link>
-
-        {/* Navigation Links */}
-        <nav style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
-          {['About', 'Services', 'Blog'].map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              style={{
-                textDecoration: 'none',
-                color: '#475569',
-                fontSize: '15px',
-                fontWeight: 600,
-                transition: 'color 0.2s ease',
-              }}
-              onMouseEnter={(e) => (e.target.style.color = '#FF5733')}
-              onMouseLeave={(e) => (e.target.style.color = '#475569')}
-            >
-              {item}
-            </a>
-          ))}
-        </nav>
-
-        {/* Audio Toggle & Sound Controls */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <button
-            onClick={() => setSoundEnabled(!soundEnabled)}
-            style={{
-              background: soundEnabled ? '#F1F5F9' : '#FEE2E2',
-              border: '1px solid #E2E8F0',
-              borderRadius: '20px',
-              padding: '6px 14px',
-              fontSize: '13px',
-              fontWeight: 600,
-              color: soundEnabled ? '#334155' : '#EF4444',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-            }}
-          >
-            {soundEnabled ? '🔊 Sound On' : '🔇 Sound Muted'}
-          </button>
-        </div>
-      </header>
+      {/* ── Padding for Fixed Site Navbar ── */}
+      <div style={{ paddingTop: '40px' }} />
 
       {/* ── Cursor Hijack Engine Integration ── */}
       <CursorHijackEngine
@@ -291,7 +208,7 @@ export default function InteractiveLanding() {
             fontWeight: 400,
           }}
         >
-          Pause your mouse for 2 seconds anywhere in the Hero section! Our dwarf engineer will wake up, lock onto your cursor, smooth-scroll the page, and guide you straight to the contact button.
+          Pause your mouse for 3 seconds anywhere in the Hero section! Veon, our AI engineer, will wake up, guide your cursor, and smooth-scroll the page straight to the Strategy Call button.
         </p>
 
         {/* Target Action Area with Primary CTA Button */}
@@ -323,7 +240,6 @@ export default function InteractiveLanding() {
             />
           )}
 
-          {/* Primary CTA Button: "Click to Contact" */}
           <button
             ref={contactBtnRef}
             onClick={handleContactClick}
@@ -351,14 +267,14 @@ export default function InteractiveLanding() {
               gap: '10px',
             }}
           >
-            <span>Click to Contact</span>
+            <span>📅 Book a Free Strategy Call</span>
             <span style={{ fontSize: '20px' }}>🚀</span>
           </button>
 
           <div style={{ fontSize: '13px', color: '#64748B', fontWeight: 600 }}>
             {dwarfStatus === 'celebrate'
-              ? '✨ Dwarf snapped cursor here! Click now!'
-              : '⏳ Pause mouse for 2 sec in Hero zone to activate Dwarf (resets on mouse move)'}
+              ? '✨ Veon guided cursor here! Click to book!'
+              : '⏳ Pause mouse for 3 sec in Hero zone to activate Veon'}
           </div>
         </div>
       </section>
