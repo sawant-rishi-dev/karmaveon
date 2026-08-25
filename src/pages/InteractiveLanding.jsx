@@ -1,7 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import confetti from 'canvas-confetti'
-import CursorHijackEngine from '../components/CursorHijackEngine'
 import DwarfDevDesk from '../components/DwarfDevDesk'
 import { playClickSuccessSound } from '../utils/soundEffects'
 
@@ -123,16 +122,7 @@ export default function InteractiveLanding() {
       </div>
 
       {/* ── Padding for Fixed Site Navbar ── */}
-      <div style={{ paddingTop: '40px' }} />
-
-      {/* ── Cursor Hijack Engine Integration ── */}
-      <CursorHijackEngine
-        heroRef={heroRef}
-        deskRef={deskRef}
-        targetButtonRef={contactBtnRef}
-        soundEnabled={soundEnabled}
-        onStatusChange={handleStatusChange}
-      />
+      <div style={{ paddingTop: '20px' }} />
 
       {/* ── Main Hero Section ── */}
       <section
@@ -148,7 +138,7 @@ export default function InteractiveLanding() {
       >
         {/* Dwarf Dev Workstation Base (Dwarf's Home on the Page!) */}
         <div style={{ marginBottom: '32px' }}>
-          <DwarfDevDesk deskRef={deskRef} isOccupied={dwarfStatus === 'idle'} />
+          <DwarfDevDesk deskRef={deskRef} isOccupied={true} />
         </div>
 
         {/* Whimsical Badge */}

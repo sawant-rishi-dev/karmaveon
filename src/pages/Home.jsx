@@ -249,7 +249,7 @@ export default function Home() {
         }}
       >
         {/* Veon Workstation Base */}
-        <div style={{ marginBottom: '24px' }}>
+        <div data-veon-desk style={{ marginBottom: '24px' }}>
           <DwarfDevDesk deskRef={deskRef} isOccupied={dwarfStatus === 'at_desk' || dwarfStatus === 'bg_coding'} />
         </div>
 
@@ -342,6 +342,7 @@ export default function Home() {
           {/* Primary CTA - Strategy Call */}
           <button
             ref={contactBtnRef}
+            data-veon-target="cta"
             className="btn-glow"
             onClick={openBookingModal}
             style={{

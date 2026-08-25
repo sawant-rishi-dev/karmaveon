@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const SERVICES = [
   {
@@ -721,6 +721,19 @@ function HardwareIotVisualizer() {
 }
 
 export default function Services() {
+  // Scroll to anchor on mount — supports /services#hardware deep links
+  useEffect(() => {
+    const hash = window.location.hash
+    if (hash) {
+      const el = document.querySelector(hash)
+      if (el) {
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }, 150)
+      }
+    }
+  }, [])
+
   return (
     <div>
       {/* ── Page Header ── */}
@@ -766,6 +779,7 @@ export default function Services() {
         {SERVICES.map((service, idx) => (
           <div
             key={service.title}
+            id={service.id}
             className="glass service-card"
             style={{
               padding: '40px',

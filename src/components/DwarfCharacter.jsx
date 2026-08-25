@@ -1,13 +1,17 @@
 import React, { useEffect, useState, useRef } from 'react'
 
 /**
- * DwarfCharacter - Cute 2D Vector Dwarf Software Engineer
- * Props:
- * - state: 'idle' | 'alert' | 'run' | 'grab' | 'drag' | 'celebrate'
- * - mousePos: { x: number, y: number }
- * - dwarfPos: { x: number, y: number }
- * - facing: 'left' | 'right'
- * - scale: number
+ * DwarfCharacter - Cute 2D Vector Dwarf Software Engineer (VEON)
+ *
+ * States:
+ * - 'idle'      — completely still relaxed posture (zero hand/foot movement)
+ * - 'run'       — lively running stride with arm pump & foot cycle
+ * - 'alert'     — surprised arms & alert badge
+ * - 'grab'      — reaching forward/up
+ * - 'drag'      — leaning back pulling
+ * - 'celebrate' — victory jump with raised arms
+ * - 'at_desk'   — typing / workstation pose
+ * - 'stalking'  — sneaky observing pose
  */
 export default function DwarfCharacter({
   state = 'idle',
@@ -18,79 +22,130 @@ export default function DwarfCharacter({
 }) {
   const [blink, setBlink] = useState(false)
   const [pupilOffset, setPupilOffset] = useState({ x: 0, y: 0 })
-  const [stepCycle, setStepCycle] = useState(0)
+  const [walkPhase, setWalkPhase] = useState(0)
+  const stateRef = useRef(state)
+  stateRef.current = state
 
   // Blinking timer
   useEffect(() => {
     const blinkInterval = setInterval(() => {
       setBlink(true)
       setTimeout(() => setBlink(false), 160)
-    }, 3800 + Math.random() * 2000)
-
+    }, 3200 + Math.random() * 2400)
     return () => clearInterval(blinkInterval)
   }, [])
 
-  // Running & Dragging step animation loop
+  // Smooth walk loop — ONLY runs when state is 'run' or 'drag'
   useEffect(() => {
-    let animationFrame
-    let count = 0
-    const updateSteps = () => {
-      if (state === 'run' || state === 'drag') {
-        count += state === 'run' ? 0.2 : 0.12
-        setStepCycle(Math.sin(count))
-      } else {
-        setStepCycle(0)
-      }
-      animationFrame = requestAnimationFrame(updateSteps)
+    if (state !== 'run' && state !== 'drag') {
+      setWalkPhase(0)
+      return
     }
-    animationFrame = requestAnimationFrame(updateSteps)
-    return () => cancelAnimationFrame(animationFrame)
+
+    let animId
+    let count = 0
+    const stepSpeed = state === 'run' ? 0.20 : 0.12
+
+    const loop = () => {
+      if (stateRef.current === 'run' || stateRef.current === 'drag') {
+        count += stepSpeed
+        setWalkPhase(count)
+        animId = requestAnimationFrame(loop)
+      } else {
+        setWalkPhase(0)
+      }
+    }
+    animId = requestAnimationFrame(loop)
+    return () => {
+      if (animId) cancelAnimationFrame(animId)
+      setWalkPhase(0)
+    }
   }, [state])
 
-  // Calculate Eye Pupil Tracking towards Mouse
+  // Eye pupil tracking
   useEffect(() => {
     if (!mousePos || !dwarfPos) return
     const dx = mousePos.x - dwarfPos.x
     const dy = mousePos.y - dwarfPos.y
     const dist = Math.hypot(dx, dy) || 1
-
-    const maxOffset = 3.5
+    const maxOffset = 3.2
     const px = (dx / dist) * maxOffset
     const py = (dy / dist) * maxOffset
     setPupilOffset({ x: px, y: py })
   }, [mousePos, dwarfPos])
 
-  // Leg angles for running / dragging / idle
-  const legAngleLeft = stepCycle * 25
-  const legAngleRight = -stepCycle * 25
+  // ── Kinematics Calculations ──────────────────────────────────
+  const isMoving = (state === 'run' || state === 'drag') && walkPhase !== 0
+  const isDrag = state === 'drag'
+  const isCelebrate = state === 'celebrate'
+  const isAlert = state === 'alert'
+  const isGrab = state === 'grab'
 
-  // Arm positions based on state
-  let leftArmD = 'M 35 75 Q 20 85 25 100' // idle arm
-  let rightArmD = 'M 85 75 Q 100 85 95 100' // idle arm
+  // Vertical body bob only when actively stepping
+  const bodyBob = isMoving ? Math.abs(Math.sin(walkPhase * 2)) * -5 : 0
 
-  if (state === 'alert') {
-    leftArmD = 'M 35 75 Q 15 65 20 50' // arm raised in surprise
-    rightArmD = 'M 85 75 Q 105 65 100 50'
-  } else if (state === 'grab') {
-    leftArmD = 'M 35 70 Q 30 35 45 15' // reaching high up
-    rightArmD = 'M 85 70 Q 90 35 75 15'
-  } else if (state === 'drag') {
-    leftArmD = 'M 35 75 Q 10 70 5 60' // pulling back hard
-    rightArmD = 'M 85 75 Q 60 70 45 65'
-  } else if (state === 'celebrate') {
-    leftArmD = 'M 35 70 Q 15 45 25 25' // arms raised celebrating
-    rightArmD = 'M 85 70 Q 110 45 95 25' // pointing up/right
-  } else if (state === 'run') {
-    const armSwing = Math.sin(stepCycle * Math.PI) * 20
-    leftArmD = `M 35 75 Q ${20 + armSwing} 90 ${25 + armSwing} 105`
-    rightArmD = `M 85 75 Q ${100 - armSwing} 90 ${95 - armSwing} 105`
+  // Hip / leg stride angles
+  const strideAngle = isMoving ? Math.sin(walkPhase) * (isDrag ? 14 : 22) : 0
+  const leftLegAngle = strideAngle
+  const rightLegAngle = -strideAngle
+
+  // Foot lift
+  const leftFootLift = isMoving && Math.sin(walkPhase) > 0 ? Math.sin(walkPhase) * -4 : 0
+  const rightFootLift = isMoving && Math.sin(walkPhase) < 0 ? -Math.sin(walkPhase) * -4 : 0
+
+  // Arm swing
+  const armSwing = isMoving ? Math.sin(walkPhase) * 16 : 0
+
+  // Arm & Hand pathing
+  let leftArmPath = ''
+  let rightArmPath = ''
+  let leftHand = { x: 28, y: 92 }
+  let rightHand = { x: 92, y: 92 }
+
+  if (isAlert) {
+    leftArmPath = 'M 34 68 Q 18 56 22 42'
+    rightArmPath = 'M 86 68 Q 102 56 98 42'
+    leftHand = { x: 22, y: 42 }
+    rightHand = { x: 98, y: 42 }
+  } else if (isGrab) {
+    leftArmPath = 'M 34 68 Q 30 38 46 20'
+    rightArmPath = 'M 86 68 Q 90 38 74 20'
+    leftHand = { x: 46, y: 20 }
+    rightHand = { x: 74, y: 20 }
+  } else if (isDrag) {
+    leftArmPath = 'M 34 68 Q 14 74 6 62'
+    rightArmPath = 'M 86 68 Q 62 72 44 64'
+    leftHand = { x: 6, y: 62 }
+    rightHand = { x: 44, y: 64 }
+  } else if (isCelebrate) {
+    leftArmPath = 'M 34 68 Q 16 44 26 24'
+    rightArmPath = 'M 86 68 Q 104 44 94 24'
+    leftHand = { x: 26, y: 24 }
+    rightHand = { x: 94, y: 24 }
+  } else if (isMoving) {
+    // Bent-elbow running arm swing
+    const lHandY = 88 - armSwing * 0.6
+    const lHandX = 26 - armSwing * 0.7
+    const rHandY = 88 + armSwing * 0.6
+    const rHandX = 94 + armSwing * 0.7
+
+    leftArmPath = `M 34 68 Q ${24 - armSwing * 0.4} 80 ${lHandX} ${lHandY}`
+    rightArmPath = `M 86 68 Q ${96 + armSwing * 0.4} 80 ${rHandX} ${rHandY}`
+    leftHand = { x: lHandX, y: lHandY }
+    rightHand = { x: rHandX, y: rHandY }
+  } else {
+    // Completely stationary resting arms when idle
+    leftArmPath = 'M 34 68 Q 24 82 28 92'
+    rightArmPath = 'M 86 68 Q 96 82 92 92'
+    leftHand = { x: 28, y: 92 }
+    rightHand = { x: 92, y: 92 }
   }
 
-  // Tilt angle based on state
-  let bodyTilt = 0
-  if (state === 'run') bodyTilt = facing === 'right' ? 8 : -8
-  if (state === 'drag') bodyTilt = facing === 'right' ? -12 : 12
-  if (state === 'alert') bodyTilt = -4
+  // Body lean tilt
+  let bodyLean = 0
+  if (state === 'run') bodyLean = facing === 'right' ? 5 : -5
+  if (state === 'drag') bodyLean = facing === 'right' ? -10 : 10
+  if (state === 'alert') bodyLean = -2
 
   return (
     <div
@@ -98,177 +153,21 @@ export default function DwarfCharacter({
         position: 'relative',
         width: `${120 * scale}px`,
         height: `${140 * scale}px`,
-        transform: `scaleX(${facing === 'left' ? -1 : 1}) rotate(${bodyTilt}deg)`,
-        transition: 'transform 0.15s ease-out',
+        transform: `scaleX(${facing === 'left' ? -1 : 1}) rotate(${bodyLean}deg)`,
+        transition: 'transform 0.12s ease-out',
         userSelect: 'none',
         pointerEvents: 'none',
       }}
     >
-      {state === 'alert' && (
-        <div
-          style={{
-            position: 'absolute',
-            top: '-45px',
-            left: '10px',
-            transform: facing === 'left' ? 'scaleX(-1)' : 'none',
-            background: '#FF5733',
-            color: '#FFF',
-            padding: '6px 12px',
-            borderRadius: '16px',
-            fontWeight: 800,
-            fontSize: '13px',
-            boxShadow: '0 4px 12px rgba(255, 87, 51, 0.4)',
-            whiteSpace: 'nowrap',
-            zIndex: 10,
-          }}
-        >
-          Veon spotted your idea! 💡
-        </div>
-      )}
-
-      {state === 'stalking' && (
-        <div
-          style={{
-            position: 'absolute',
-            top: '-42px',
-            left: '10px',
-            transform: facing === 'left' ? 'scaleX(-1)' : 'none',
-            background: 'rgba(30, 41, 59, 0.95)',
-            color: '#38BDF8',
-            border: '1px solid #38BDF8',
-            padding: '4px 10px',
-            borderRadius: '14px',
-            fontWeight: 700,
-            fontSize: '11px',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-            whiteSpace: 'nowrap',
-            zIndex: 10,
-          }}
-        >
-          Veon AI Engineer 💻
-        </div>
-      )}
-
-      {state === 'at_desk' && (
-        <div
-          style={{
-            position: 'absolute',
-            top: '-42px',
-            left: '10px',
-            transform: facing === 'left' ? 'scaleX(-1)' : 'none',
-            background: '#D97706',
-            color: '#FFF',
-            padding: '5px 12px',
-            borderRadius: '14px',
-            fontWeight: 800,
-            fontSize: '11px',
-            boxShadow: '0 4px 12px rgba(217, 119, 6, 0.4)',
-            whiteSpace: 'nowrap',
-            zIndex: 10,
-          }}
-        >
-          Veon Workstation ☕
-        </div>
-      )}
-
-      {state === 'grab' && (
-        <div
-          style={{
-            position: 'absolute',
-            top: '-45px',
-            left: '20px',
-            transform: facing === 'left' ? 'scaleX(-1)' : 'none',
-            background: '#3B82F6',
-            color: '#FFF',
-            padding: '6px 12px',
-            borderRadius: '16px',
-            fontWeight: 800,
-            fontSize: '12px',
-            boxShadow: '0 4px 12px rgba(59, 130, 246, 0.4)',
-            whiteSpace: 'nowrap',
-            zIndex: 10,
-          }}
-        >
-          Veon got your cursor! ✊
-        </div>
-      )}
-
-      {state === 'drag' && (
-        <div
-          style={{
-            position: 'absolute',
-            top: '-42px',
-            left: '10px',
-            transform: facing === 'left' ? 'scaleX(-1)' : 'none',
-            background: '#10B981',
-            color: '#FFF',
-            padding: '5px 12px',
-            borderRadius: '16px',
-            fontWeight: 700,
-            fontSize: '12px',
-            boxShadow: '0 4px 12px rgba(16, 185, 129, 0.4)',
-            whiteSpace: 'nowrap',
-            zIndex: 10,
-          }}
-        >
-          Veon leading to Strategy Call! 🏃‍♂️💨
-        </div>
-      )}
-
-      {state === 'celebrate' && (
-        <div
-          style={{
-            position: 'absolute',
-            top: '-50px',
-            left: '0px',
-            transform: facing === 'left' ? 'scaleX(-1)' : 'none',
-            background: '#8B5CF6',
-            color: '#FFF',
-            padding: '7px 14px',
-            borderRadius: '20px',
-            fontWeight: 800,
-            fontSize: '13px',
-            boxShadow: '0 4px 16px rgba(139, 92, 246, 0.5)',
-            whiteSpace: 'nowrap',
-            zIndex: 10,
-          }}
-        >
-          Veon: Book your call here! 👇✨
-        </div>
-      )}
-
-      {(state === 'rest' || state === 'resting') && (
-        <div
-          style={{
-            position: 'absolute',
-            top: '-48px',
-            left: '0px',
-            transform: facing === 'left' ? 'scaleX(-1)' : 'none',
-            background: 'linear-gradient(135deg, #7C3AED, #4F46E5)',
-            color: '#FFF',
-            padding: '6px 14px',
-            borderRadius: '20px',
-            fontWeight: 800,
-            fontSize: '12px',
-            boxShadow: '0 4px 16px rgba(124, 58, 237, 0.45)',
-            whiteSpace: 'nowrap',
-            zIndex: 10,
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px',
-          }}
-        >
-          <span>😴 Veon resting at workstation...</span>
-          <span className="zzz-particle" style={{ right: '-10px', top: '-12px' }}>z Z Z</span>
-        </div>
-      )}
-
-      {/* Main SVG Dwarf Vector */}
-      <svg viewBox="0 0 120 140" width="100%" height="100%">
+      <svg viewBox="0 0 120 145" width="100%" height="100%">
         <defs>
           <linearGradient id="vestGrad" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#1E293B" />
             <stop offset="100%" stopColor="#0F172A" />
+          </linearGradient>
+          <linearGradient id="hoodieGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#FF6B4A" />
+            <stop offset="100%" stopColor="#E11D48" />
           </linearGradient>
           <linearGradient id="beardGrad" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#D97706" />
@@ -279,122 +178,135 @@ export default function DwarfCharacter({
             <stop offset="100%" stopColor="#E29578" />
           </linearGradient>
           <linearGradient id="bootGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#78350F" />
+            <stop offset="0%" stopColor="#854D0E" />
             <stop offset="100%" stopColor="#451A03" />
           </linearGradient>
-          <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="3" result="blur" />
-            <feComposite in="SourceGraphic" in2="blur" operator="over" />
-          </filter>
         </defs>
 
-        {/* Shadow under feet */}
+        {/* ── Ground Shadow ────────────────────────────── */}
         <ellipse
           cx="60"
-          cy="134"
-          rx={state === 'run' ? 24 : 32}
-          ry="6"
-          fill="rgba(0, 0, 0, 0.15)"
+          cy="138"
+          rx={isMoving ? 26 : 30}
+          ry="5.5"
+          fill="rgba(0, 0, 0, 0.16)"
         />
 
-        {/* Boots / Feet with Step Rotation */}
-        <g id="boots">
-          {/* Left Boot */}
-          <g transform={`rotate(${legAngleLeft}, 45, 115)`}>
-            <rect x="36" y="112" width="18" height="20" rx="6" fill="url(#bootGrad)" />
-            <path d="M 32 124 Q 32 132 46 132 L 56 132 Q 58 124 50 124 Z" fill="#451A03" />
-            <line x1="38" y1="120" x2="52" y2="120" stroke="#F59E0B" strokeWidth="2" />
+        {/* ── Legs & Boots ─────────────────────────────── */}
+        <g id="legs" transform={`translate(0, ${bodyBob * 0.4})`}>
+          {/* Left Leg */}
+          <g transform={`translate(46, 102) rotate(${leftLegAngle}) translate(-46, -102) translate(0, ${leftFootLift})`}>
+            <rect x="38" y="96" width="16" height="20" rx="4" fill="#334155" />
+            <path
+              d="M 36 114 L 54 114 L 56 128 Q 56 134 46 134 L 32 134 Q 30 128 36 122 Z"
+              fill="url(#bootGrad)"
+            />
+            <path d="M 30 132 L 56 132 L 56 136 L 30 136 Z" fill="#1C1917" />
+            <line x1="36" y1="122" x2="52" y2="122" stroke="#F59E0B" strokeWidth="1.8" />
           </g>
-          {/* Right Boot */}
-          <g transform={`rotate(${legAngleRight}, 75, 115)`}>
-            <rect x="66" y="112" width="18" height="20" rx="6" fill="url(#bootGrad)" />
-            <path d="M 64 124 Q 64 132 78 132 L 88 132 Q 90 124 82 124 Z" fill="#451A03" />
-            <line x1="68" y1="120" x2="82" y2="120" stroke="#F59E0B" strokeWidth="2" />
+
+          {/* Right Leg */}
+          <g transform={`translate(74, 102) rotate(${rightLegAngle}) translate(-74, -102) translate(0, ${rightFootLift})`}>
+            <rect x="66" y="96" width="16" height="20" rx="4" fill="#1E293B" />
+            <path
+              d="M 64 114 L 82 114 L 84 128 Q 84 134 74 134 L 60 134 Q 58 128 64 122 Z"
+              fill="url(#bootGrad)"
+            />
+            <path d="M 58 132 L 84 132 L 84 136 L 58 136 Z" fill="#1C1917" />
+            <line x1="64" y1="122" x2="80" y2="122" stroke="#F59E0B" strokeWidth="1.8" />
           </g>
         </g>
 
-        {/* Cargo Pants */}
-        <rect x="40" y="94" width="40" height="24" rx="4" fill="#334155" />
-        <line x1="60" y1="96" x2="60" y2="118" stroke="#1E293B" strokeWidth="2" />
+        {/* ── Main Torso, Arms & Head ──────────────────── */}
+        <g id="upper-body" transform={`translate(0, ${bodyBob})`}>
+          {/* Left Arm */}
+          <g id="left-arm">
+            <circle cx="34" cy="68" r="6.5" fill="url(#hoodieGrad)" />
+            <path
+              d={leftArmPath}
+              stroke="url(#hoodieGrad)"
+              strokeWidth="9"
+              strokeLinecap="round"
+              fill="none"
+            />
+            <circle cx={leftHand.x} cy={leftHand.y} r="5" fill="#1E293B" />
+            <circle cx={leftHand.x} cy={leftHand.y + 1} r="4" fill="url(#skinGrad)" />
+          </g>
 
-        {/* Arms (Behind Body or Front) */}
-        <path
-          d={leftArmD}
-          stroke="url(#skinGrad)"
-          strokeWidth="10"
-          strokeLinecap="round"
-          fill="none"
-        />
-        <path
-          d={rightArmD}
-          stroke="url(#skinGrad)"
-          strokeWidth="10"
-          strokeLinecap="round"
-          fill="none"
-        />
-
-        {/* Torso / Tech Fleece Vest */}
-        <rect x="34" y="60" width="52" height="42" rx="10" fill="#FF5733" /> {/* Inner Coral Hoodie */}
-        <path d="M 36 60 L 84 60 L 88 100 L 32 100 Z" fill="url(#vestGrad)" rx="8" /> {/* Slate Tech Vest */}
-        {/* Zipper */}
-        <line x1="60" y1="62" x2="60" y2="98" stroke="#64748B" strokeWidth="2.5" strokeDasharray="3 2" />
-        {/* Developer Badge </ > on Vest */}
-        <rect x="40" y="70" width="16" height="14" rx="3" fill="#0F172A" stroke="#38BDF8" strokeWidth="1" />
-        <text x="43" y="81" fill="#38BDF8" fontSize="8" fontWeight="bold" fontFamily="monospace">
-          &lt;/&gt;
-        </text>
-
-        {/* Head Base */}
-        <circle cx="60" cy="42" r="24" fill="url(#skinGrad)" />
-
-        {/* Ears */}
-        <path d="M 34 40 Q 26 42 34 48 Z" fill="url(#skinGrad)" />
-        <path d="M 86 40 Q 94 42 86 48 Z" fill="url(#skinGrad)" />
-
-        {/* Dwarf Braided Beard */}
-        <g id="beard">
+          {/* Torso Hoodie */}
+          <rect x="33" y="60" width="54" height="42" rx="10" fill="url(#hoodieGrad)" />
+          {/* Slate Tech Vest */}
           <path
-            d="M 36 44 C 34 78 50 86 60 88 C 70 86 86 78 84 44 C 76 56 44 56 36 44 Z"
-            fill="url(#beardGrad)"
+            d="M 35 60 L 85 60 L 89 100 L 31 100 Z"
+            fill="url(#vestGrad)"
+            rx="7"
           />
-          {/* Beard Braids & Details */}
-          <path d="M 52 74 Q 60 92 68 74" stroke="#78350F" strokeWidth="2" fill="none" />
-          {/* Tiny Terminal Ring Clips on Beard */}
-          <circle cx="60" cy="82" r="3" fill="#38BDF8" />
-          <circle cx="53" cy="74" r="2.5" fill="#F59E0B" />
-          <circle cx="67" cy="74" r="2.5" fill="#F59E0B" />
+          {/* Zipper */}
+          <line x1="60" y1="62" x2="60" y2="98" stroke="#64748B" strokeWidth="2.2" strokeDasharray="3 2" />
+          {/* Tech Badge */}
+          <rect x="39" y="70" width="17" height="14" rx="3.5" fill="#020617" stroke="#38BDF8" strokeWidth="1.2" />
+          <text x="42" y="81" fill="#38BDF8" fontSize="7.5" fontWeight="900" fontFamily="monospace">
+            &lt;/&gt;
+          </text>
+
+          {/* Right Arm */}
+          <g id="right-arm">
+            <circle cx="86" cy="68" r="6.5" fill="url(#hoodieGrad)" />
+            <path
+              d={rightArmPath}
+              stroke="url(#hoodieGrad)"
+              strokeWidth="9"
+              strokeLinecap="round"
+              fill="none"
+            />
+            <circle cx={rightHand.x} cy={rightHand.y} r="5" fill="#1E293B" />
+            <circle cx={rightHand.x} cy={rightHand.y + 1} r="4" fill="url(#skinGrad)" />
+          </g>
+
+          {/* Head */}
+          <circle cx="60" cy="42" r="23" fill="url(#skinGrad)" />
+          <path d="M 36 40 Q 28 42 36 48 Z" fill="url(#skinGrad)" />
+          <path d="M 84 40 Q 92 42 84 48 Z" fill="url(#skinGrad)" />
+
+          {/* Beard */}
+          <g id="beard">
+            <path
+              d="M 37 44 C 35 78 50 87 60 89 C 70 87 85 78 83 44 C 75 56 45 56 37 44 Z"
+              fill="url(#beardGrad)"
+            />
+            <path d="M 52 74 Q 60 90 68 74" stroke="#78350F" strokeWidth="2" fill="none" />
+            <circle cx="60" cy="83" r="3" fill="#38BDF8" />
+            <circle cx="53" cy="74" r="2.5" fill="#F59E0B" />
+            <circle cx="67" cy="74" r="2.5" fill="#F59E0B" />
+          </g>
+
+          {/* Nose */}
+          <circle cx="60" cy="38" r="5.5" fill="#E29578" />
+
+          {/* Glasses & Eyes */}
+          <g id="glasses">
+            <rect x="42" y="28" width="15" height="14" rx="4" fill="rgba(255,255,255,0.3)" stroke="#0F172A" strokeWidth="2.5" />
+            <rect x="63" y="28" width="15" height="14" rx="4" fill="rgba(255,255,255,0.3)" stroke="#0F172A" strokeWidth="2.5" />
+            <line x1="57" y1="34" x2="63" y2="34" stroke="#0F172A" strokeWidth="2.5" />
+
+            <ellipse cx="49.5" cy="35" rx="4.5" ry={blink ? 0.8 : 4.5} fill="#FFFFFF" />
+            <ellipse cx="70.5" cy="35" rx="4.5" ry={blink ? 0.8 : 4.5} fill="#FFFFFF" />
+
+            {!blink && (
+              <>
+                <circle cx={49.5 + pupilOffset.x} cy={35 + pupilOffset.y} r="2.4" fill="#0F172A" />
+                <circle cx={70.5 + pupilOffset.x} cy={35 + pupilOffset.y} r="2.4" fill="#0F172A" />
+                <circle cx={48.8 + pupilOffset.x} cy={34.2 + pupilOffset.y} r="0.8" fill="#FFFFFF" />
+                <circle cx={69.8 + pupilOffset.x} cy={34.2 + pupilOffset.y} r="0.8" fill="#FFFFFF" />
+              </>
+            )}
+          </g>
+
+          {/* Cap */}
+          <path d="M 35 32 Q 60 15 85 32 Q 87 24 60 18 Q 33 24 35 32 Z" fill="#1E293B" />
+          <path d="M 39 28 Q 60 11 81 28 Z" fill="#0F172A" />
+          <rect x="55" y="11" width="10" height="5" rx="2.5" fill="#F59E0B" />
         </g>
-
-        {/* Nose */}
-        <circle cx="60" cy="38" r="6" fill="#E29578" />
-
-        {/* Eyes & Glasses */}
-        <g id="glasses-and-eyes">
-          {/* Glasses Frame (Modern Tech Glasses) */}
-          <rect x="41" y="28" width="16" height="14" rx="4" fill="rgba(255,255,255,0.25)" stroke="#0F172A" strokeWidth="2.5" />
-          <rect x="63" y="28" width="16" height="14" rx="4" fill="rgba(255,255,255,0.25)" stroke="#0F172A" strokeWidth="2.5" />
-          <line x1="57" y1="34" x2="63" y2="34" stroke="#0F172A" strokeWidth="2.5" />
-
-          {/* Eyes (White) */}
-          <ellipse cx="49" cy="35" rx="5" ry={blink ? 0.8 : 5} fill="#FFFFFF" />
-          <ellipse cx="71" cy="35" rx="5" ry={blink ? 0.8 : 5} fill="#FFFFFF" />
-
-          {/* Pupils with Dynamic Tracking */}
-          {!blink && (
-            <>
-              <circle cx={49 + pupilOffset.x} cy={35 + pupilOffset.y} r="2.5" fill="#0F172A" />
-              <circle cx={71 + pupilOffset.x} cy={35 + pupilOffset.y} r="2.5" fill="#0F172A" />
-              {/* Pupil Catchlight */}
-              <circle cx={48 + pupilOffset.x} cy={34 + pupilOffset.y} r="0.8" fill="#FFFFFF" />
-              <circle cx={70 + pupilOffset.x} cy={34 + pupilOffset.y} r="0.8" fill="#FFFFFF" />
-            </>
-          )}
-        </g>
-
-        {/* Developer Beanie / Cap */}
-        <path d="M 34 32 Q 60 14 86 32 Q 88 24 60 18 Q 32 24 34 32 Z" fill="#1E293B" />
-        <path d="M 38 28 Q 60 10 82 28 Z" fill="#0F172A" />
-        <rect x="54" y="10" width="12" height="6" rx="3" fill="#F59E0B" />
       </svg>
     </div>
   )

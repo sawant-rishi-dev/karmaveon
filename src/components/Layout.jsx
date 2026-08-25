@@ -5,6 +5,7 @@ import Footer from './Footer'
 import BackgroundGlitchEffect from './BackgroundGlitchEffect'
 import BookingModal from './BookingModal'
 import ScrollToTop from './ScrollToTop'
+import VeonDwarf from './VeonDwarf'
 import { KeyboardContext } from '../context/KeyboardContext'
 
 export default function Layout() {
@@ -66,6 +67,9 @@ export default function Layout() {
         </main>
         <Footer />
       </div>
+
+      {/* ── VEON — Persistent Dwarf Character (survives route changes) ── */}
+      <VeonDwarf />
 
       {/* ── Global Strategy Call Booking Modal ── */}
       <BookingModal isOpen={isBookingOpen} onClose={closeBookingModal} />

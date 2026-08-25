@@ -386,7 +386,14 @@ export default function Kwiee() {
               <span>🔌</span>
               <span>Request a Custom Build</span>
             </button>
-            <Link to="/services" style={{ textDecoration: 'none' }}>
+            <a
+              href="/services#hardware"
+              style={{ textDecoration: 'none' }}
+              onClick={(e) => {
+                e.preventDefault()
+                window.location.href = '/services#hardware'
+              }}
+            >
               <button
                 style={{
                   padding: '14px 24px',
@@ -405,7 +412,7 @@ export default function Kwiee() {
                 <span>View Hardware Services</span>
                 <span>→</span>
               </button>
-            </Link>
+            </a>
           </div>
         </div>
 

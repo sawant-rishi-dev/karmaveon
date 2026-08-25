@@ -104,11 +104,11 @@ export default function BookingModal({ isOpen, onClose }) {
                   textTransform: 'uppercase',
                 }}
               >
-                🌐 Worldwide Availability
+                Worldwide Availability
               </span>
             </div>
             <h2 style={{ fontSize: 'clamp(20px, 3vw, 24px)', fontWeight: 800, color: '#0f172a', marginBottom: '6px' }}>
-              📅 Book a Free Strategy Call
+              Book a Free Strategy Call
             </h2>
             <p style={{ color: '#64748b', fontSize: '13px', marginBottom: '20px', lineHeight: 1.5 }}>
               Select a time that works for you or share your project details to get a 4-week scope proposal.

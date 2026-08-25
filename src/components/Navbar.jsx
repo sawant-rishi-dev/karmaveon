@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import { useKeyboardContext } from '../context/KeyboardContext'
 
 export default function Navbar() {
@@ -32,11 +32,6 @@ export default function Navbar() {
     { to: '/qr-bites', label: 'QR Bites POS', icon: '🍕' },
     { to: '/smart-udhaar', label: 'Smart Udhaar', icon: '📱' },
   ]
-
-  const isActive = (to) => {
-    if (to === '/') return location.pathname === '/'
-    return location.pathname.startsWith(to)
-  }
 
   return (
     <>
@@ -106,12 +101,13 @@ export default function Navbar() {
         {/* Desktop Center Nav Links */}
         <div className="desktop-nav-links" style={{ display: 'flex', gap: '28px', alignItems: 'center', whiteSpace: 'nowrap' }}>
           {navLinks.map(({ to, label }) => (
-            <Link
+            <NavLink
               key={to}
               to={to}
-              style={{
+              end={to === '/'}
+              style={({ isActive }) => ({
                 textDecoration: 'none',
-                color: isActive(to) ? '#FF5733' : '#475569',
+                color: isActive ? '#FF5733' : '#475569',
                 fontSize: '14px',
                 fontWeight: 700,
                 letterSpacing: '0.5px',
@@ -119,23 +115,27 @@ export default function Navbar() {
                 padding: '4px 0',
                 transition: 'color 0.2s ease',
                 whiteSpace: 'nowrap',
-              }}
+              })}
             >
-              {label}
-              {isActive(to) && (
-                <span
-                  style={{
-                    position: 'absolute',
-                    bottom: '-2px',
-                    left: 0,
-                    right: 0,
-                    height: '2px',
-                    background: 'linear-gradient(90deg, #FF5733, #E11D48)',
-                    borderRadius: '1px',
-                  }}
-                />
+              {({ isActive }) => (
+                <>
+                  {label}
+                  {isActive && (
+                    <span
+                      style={{
+                        position: 'absolute',
+                        bottom: '-2px',
+                        left: 0,
+                        right: 0,
+                        height: '2px',
+                        background: 'linear-gradient(90deg, #FF5733, #E11D48)',
+                        borderRadius: '1px',
+                      }}
+                    />
+                  )}
+                </>
               )}
-            </Link>
+            </NavLink>
           ))}
         </div>
 
@@ -231,32 +231,34 @@ export default function Navbar() {
           >
             {/* Primary Nav Links */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              {navLinks.map(({ to, label }) => {
-                const active = isActive(to)
-                return (
-                  <Link
-                    key={to}
-                    to={to}
-                    onClick={() => setMobileMenuOpen(false)}
-                    style={{
-                      textDecoration: 'none',
-                      padding: '12px 16px',
-                      borderRadius: '10px',
-                      fontSize: '15px',
-                      fontWeight: active ? 800 : 600,
-                      color: active ? '#ff5733' : '#1e293b',
-                      background: active ? 'rgba(255, 87, 51, 0.08)' : 'transparent',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      transition: 'background 0.15s ease',
-                    }}
-                  >
-                    <span>{label}</span>
-                    {active && <span style={{ color: '#ff5733', fontSize: '12px' }}>●</span>}
-                  </Link>
-                )
-              })}
+              {navLinks.map(({ to, label }) => (
+                <NavLink
+                  key={to}
+                  to={to}
+                  end={to === '/'}
+                  onClick={() => setMobileMenuOpen(false)}
+                  style={({ isActive }) => ({
+                    textDecoration: 'none',
+                    padding: '12px 16px',
+                    borderRadius: '10px',
+                    fontSize: '15px',
+                    fontWeight: isActive ? 800 : 600,
+                    color: isActive ? '#ff5733' : '#1e293b',
+                    background: isActive ? 'rgba(255, 87, 51, 0.08)' : 'transparent',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    transition: 'background 0.15s ease',
+                  })}
+                >
+                  {({ isActive }) => (
+                    <>
+                      <span>{label}</span>
+                      {isActive && <span style={{ color: '#ff5733', fontSize: '12px' }}>●</span>}
+                    </>
+                  )}
+                </NavLink>
+              ))}
             </div>
 
             {/* Featured Product Shortcuts */}
@@ -266,26 +268,26 @@ export default function Navbar() {
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                 {featuredLinks.map(({ to, label, icon }) => (
-                  <Link
+                  <NavLink
                     key={to}
                     to={to}
                     onClick={() => setMobileMenuOpen(false)}
-                    style={{
+                    style={({ isActive }) => ({
                       textDecoration: 'none',
                       padding: '10px 14px',
                       borderRadius: '8px',
                       fontSize: '14px',
-                      fontWeight: 600,
-                      color: '#475569',
-                      background: '#f8fafc',
+                      fontWeight: isActive ? 800 : 600,
+                      color: isActive ? '#ff5733' : '#475569',
+                      background: isActive ? 'rgba(255, 87, 51, 0.08)' : '#f8fafc',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '10px',
-                    }}
+                    })}
                   >
                     <span style={{ fontSize: '16px' }}>{icon}</span>
                     <span>{label}</span>
-                  </Link>
+                  </NavLink>
                 ))}
               </div>
             </div>
