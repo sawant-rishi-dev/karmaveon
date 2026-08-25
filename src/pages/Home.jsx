@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useKeyboardContext } from '../context/KeyboardContext'
 import DwarfDevDesk from '../components/DwarfDevDesk'
+import Veon3DCharacter from '../components/Veon3DCharacter'
 
 // ── Typing effect hook ────────────────────────────────────────
 const TYPING_STRINGS = [
@@ -248,6 +249,40 @@ export default function Home() {
           zIndex: 10,
         }}
       >
+        {/* ── Atmospheric Cyan/Teal Studio Backlight ── */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '80px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '600px',
+            height: '600px',
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(6, 182, 212, 0.28) 0%, rgba(37, 99, 235, 0.12) 50%, transparent 75%)',
+            filter: 'blur(50px)',
+            zIndex: 0,
+            pointerEvents: 'none',
+          }}
+        />
+
+        {/* ── 3D Interactive VEON Character Background Entity ── */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '20px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '100%',
+            maxWidth: '1100px',
+            height: '650px',
+            zIndex: 1,
+            pointerEvents: 'none',
+            opacity: 0.95,
+          }}
+        >
+          <Veon3DCharacter scale={1.08} />
+        </div>
         {/* Veon Workstation Base */}
         <div data-veon-desk style={{ marginBottom: '24px' }}>
           <DwarfDevDesk deskRef={deskRef} isOccupied={dwarfStatus === 'at_desk' || dwarfStatus === 'bg_coding'} />
