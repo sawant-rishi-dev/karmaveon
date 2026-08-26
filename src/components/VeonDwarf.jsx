@@ -44,32 +44,42 @@ export default function VeonDwarf() {
     }
   }, [location.pathname])
 
+  const initialMobile = typeof window !== 'undefined' ? window.innerWidth <= 768 : false
+  const initialPos = initialMobile
+    ? { x: 44, y: (typeof window !== 'undefined' ? window.innerHeight : 700) - 56 }
+    : { x: 120, y: 350 }
+
   // ── State ─────────────────────────────────────────────────────
-  const [isMobile, setIsMobile]               = useState(typeof window !== 'undefined' ? window.innerWidth <= 768 : false)
-  const [pos, setPos]                         = useState({ x: 120, y: 350 })
+  const [isMobile, setIsMobile]               = useState(initialMobile)
+  const [pos, setPos]                         = useState(initialPos)
   const [facing, setFacing]                   = useState('right')
   const [dwarfState, setDwarfState]           = useState('idle')
   const [mode, setMode]                       = useState(isHome ? 'home' : isInteractive ? 'about' : 'corner')
   const [cursorPos, setCursorPos]             = useState({ x: 300, y: 300 })
   const [showFakeCursor, setShowFakeCursor]   = useState(false)
   const [dialogue, setDialogue]               = useState(null)
+  const [isUserDragging, setIsUserDragging]   = useState(false)
 
   // ── Refs ──────────────────────────────────────────────────────
-  const posRef              = useRef({ x: 120, y: 350 })
-  const modeRef             = useRef(isHome ? 'home' : isInteractive ? 'about' : 'corner')
-  const dwarfStateRef       = useRef('idle')
-  const facingRef           = useRef('right')
-  const cursorRef           = useRef({ x: 300, y: 300 })
-  const lastMoveRef         = useRef(Date.now())
-  const isCursorMovingRef   = useRef(false)
-  const hijackDoneRef       = useRef(false)
-  const isBusyRef           = useRef(false)
-  const busyTimeoutRef      = useRef(null)
-  const rafRef              = useRef(null)
-  const idleTimerRef        = useRef(null)
-  const walkTimerRef        = useRef(null)
-  const isInitialRef        = useRef(true)
-  const prevPathRef         = useRef(pathname)
+  const posRef                    = useRef(initialPos)
+  const modeRef                   = useRef(isHome ? 'home' : isInteractive ? 'about' : 'corner')
+  const dwarfStateRef             = useRef('idle')
+  const facingRef                 = useRef('right')
+  const cursorRef                 = useRef({ x: 300, y: 300 })
+  const lastMoveRef               = useRef(Date.now())
+  const isCursorMovingRef         = useRef(false)
+  const hijackDoneRef             = useRef(false)
+  const isBusyRef                 = useRef(false)
+  const busyTimeoutRef            = useRef(null)
+  const rafRef                    = useRef(null)
+  const idleTimerRef              = useRef(null)
+  const walkTimerRef              = useRef(null)
+  const isInitialRef              = useRef(true)
+  const prevPathRef               = useRef(pathname)
+  const isUserDraggingRef         = useRef(false)
+  const dragStartPointerRef       = useRef({ x: 0, y: 0 })
+  const dragStartDwarfRef         = useRef({ x: 0, y: 0 })
+  const hasMovedWhileDraggingRef  = useRef(false)
 
   // 3-second initial load guard & 5-second follow burst tracker
   const followAllowedRef    = useRef(false)
@@ -96,6 +106,73 @@ export default function VeonDwarf() {
       setFacing(f)
     }
   }
+
+  // ── Drag & Drop Pick-and-Place Handler ───────────────────────
+  const handlePointerDown = (e) => {
+    if (e.button !== undefined && e.button !== 0) return
+    const clientX = e.clientX ?? e.touches?.[0]?.clientX ?? 0
+    const clientY = e.clientY ?? e.touches?.[0]?.clientY ?? 0
+
+    dragStartPointerRef.current = { x: clientX, y: clientY }
+    dragStartDwarfRef.current = { ...posRef.current }
+    hasMovedWhileDraggingRef.current = false
+    isUserDraggingRef.current = true
+    setIsUserDragging(true)
+  }
+
+  useEffect(() => {
+    const handlePointerMove = (e) => {
+      if (!isUserDraggingRef.current) return
+      const clientX = e.clientX ?? e.touches?.[0]?.clientX ?? 0
+      const clientY = e.clientY ?? e.touches?.[0]?.clientY ?? 0
+
+      const dx = clientX - dragStartPointerRef.current.x
+      const dy = clientY - dragStartPointerRef.current.y
+      const dist = Math.hypot(dx, dy)
+
+      if (dist > 4) {
+        hasMovedWhileDraggingRef.current = true
+        isBusyRef.current = true
+        modeRef.current = 'dragged'
+
+        const newX = Math.max(45, Math.min(window.innerWidth - 45, dragStartDwarfRef.current.x + dx))
+        const newY = Math.max(115, Math.min(window.innerHeight - 45, dragStartDwarfRef.current.y + dy))
+
+        updatePos({ x: newX, y: newY })
+        updateFacing(dx >= 0 ? 'right' : 'left')
+        updateDwarfState('run')
+      }
+    }
+
+    const handlePointerUp = () => {
+      if (!isUserDraggingRef.current) return
+      isUserDraggingRef.current = false
+      setIsUserDragging(false)
+
+      if (hasMovedWhileDraggingRef.current) {
+        updateDwarfState('celebrate')
+        say('Landed at new spot! 🚀', 2000)
+        setTimeout(() => {
+          updateDwarfState('idle')
+          isBusyRef.current = false
+        }, 1000)
+      } else {
+        if (openChatModal) openChatModal()
+      }
+    }
+
+    window.addEventListener('mousemove', handlePointerMove, { passive: true })
+    window.addEventListener('mouseup', handlePointerUp)
+    window.addEventListener('touchmove', handlePointerMove, { passive: true })
+    window.addEventListener('touchend', handlePointerUp)
+
+    return () => {
+      window.removeEventListener('mousemove', handlePointerMove)
+      window.removeEventListener('mouseup', handlePointerUp)
+      window.removeEventListener('touchmove', handlePointerMove)
+      window.removeEventListener('touchend', handlePointerUp)
+    }
+  }, [openChatModal])
 
   // ── Dialogue balloon helper ──────────────────────────────────
   const say = (text, ms = 3000) => {
@@ -548,23 +625,27 @@ export default function VeonDwarf() {
       {/* ── VEON Dwarf Entity (Hidden on interactive page because VEON is sitting at his dev workstation) ── */}
       {!isInteractive && !isOffscreen && (
         <div
-          onClick={() => {
-            if (openChatModal) openChatModal()
-          }}
-          title="Click to Chat with VEON AI!"
+          onMouseDown={handlePointerDown}
+          onTouchStart={handlePointerDown}
+          title="Drag & Drop VEON anywhere, or click to Chat!"
           style={{
             position: 'fixed',
-            left: isMobile ? '12px' : `${pos.x - 60 * scale}px`,
-            bottom: isMobile ? '14px' : undefined,
-            top: isMobile ? undefined : `${pos.y - 70 * scale}px`,
+            left: `${pos.x - 60 * scale}px`,
+            top: `${pos.y - 70 * scale}px`,
             zIndex: 9990,
             pointerEvents: 'auto',
-            cursor: 'pointer',
+            cursor: isUserDragging ? 'grabbing' : 'grab',
+            userSelect: 'none',
+            WebkitUserSelect: 'none',
+            touchAction: 'none',
+            transform: isUserDragging ? 'scale(1.1) rotate(-4deg)' : 'none',
             willChange: 'transform, left, top',
-            filter: isCorner
+            filter: isUserDragging
+              ? 'drop-shadow(0 16px 28px rgba(255, 87, 51, 0.45))'
+              : isCorner
               ? 'drop-shadow(0 4px 10px rgba(0,0,0,0.15))'
               : 'drop-shadow(0 12px 24px rgba(0,0,0,0.22))',
-            transition: isCorner ? 'all 0.3s ease-out' : 'none',
+            transition: isUserDragging ? 'none' : isCorner ? 'all 0.3s ease-out' : 'none',
           }}
         >
           {/* Speech Dialogue Bubble (Clickable) */}
