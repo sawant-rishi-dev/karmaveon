@@ -45,6 +45,7 @@ export default function VeonDwarf() {
   }, [location.pathname])
 
   // ── State ─────────────────────────────────────────────────────
+  const [isMobile, setIsMobile]               = useState(typeof window !== 'undefined' ? window.innerWidth <= 768 : false)
   const [pos, setPos]                         = useState({ x: 120, y: 350 })
   const [facing, setFacing]                   = useState('right')
   const [dwarfState, setDwarfState]           = useState('idle')
@@ -440,6 +441,8 @@ export default function VeonDwarf() {
     const LERP = 0.12
 
     const tick = () => {
+      if (isMobile) return // Never follow cursor on mobile
+
       if (modeRef.current === 'home' && followAllowedRef.current && !isBusyRef.current) {
         const cursor = cursorRef.current
         const current = posRef.current
@@ -489,10 +492,11 @@ export default function VeonDwarf() {
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current)
     }
-  }, [])
+  }, [isMobile])
 
   // ── Rule 3: Check Idle >= 2.0s ────────────────────────────────
   useEffect(() => {
+    if (isMobile) return
     idleTimerRef.current = setInterval(() => {
       if (!followAllowedRef.current || modeRef.current !== 'home' || isBusyRef.current || hijackDoneRef.current) return
       const idleTime = Date.now() - lastMoveRef.current
@@ -501,10 +505,11 @@ export default function VeonDwarf() {
       }
     }, 300)
     return () => clearInterval(idleTimerRef.current)
-  }, [])
+  }, [isMobile])
 
   // ── Random Autonomous Wander (every 18-30s when idle on Home) ─
   useEffect(() => {
+    if (isMobile) return
     let timeout
     const scheduleNext = () => {
       const delay = 18000 + Math.random() * 12000
@@ -518,22 +523,25 @@ export default function VeonDwarf() {
     }
     scheduleNext()
     return () => clearTimeout(timeout)
-  }, [])
+  }, [isMobile])
 
   // ── Keep Corner Position on Window Resize ────────────────────
   useEffect(() => {
     const handleResize = () => {
-      if (modeRef.current === 'corner') {
-        updatePos({ x: 64, y: window.innerHeight - 80 })
+      const mobile = window.innerWidth <= 768
+      setIsMobile(mobile)
+      if (modeRef.current === 'corner' || mobile) {
+        updatePos({ x: mobile ? 42 : 64, y: window.innerHeight - (mobile ? 50 : 80) })
       }
     }
+    handleResize()
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  const isCorner = mode === 'corner' || mode === 'corner_rising'
-  const scale = isCorner ? 0.78 : 1.0
-  const isOffscreen = pos.y > window.innerHeight + 120
+  const isCorner = mode === 'corner' || mode === 'corner_rising' || isMobile
+  const scale = isMobile ? 0.52 : isCorner ? 0.78 : 1.0
+  const isOffscreen = !isMobile && pos.y > window.innerHeight + 120
 
   return (
     <>
@@ -546,14 +554,15 @@ export default function VeonDwarf() {
           title="Click to Chat with VEON AI!"
           style={{
             position: 'fixed',
-            left: `${pos.x - 60 * scale}px`,
-            top: `${pos.y - 70 * scale}px`,
+            left: isMobile ? '12px' : `${pos.x - 60 * scale}px`,
+            bottom: isMobile ? '14px' : undefined,
+            top: isMobile ? undefined : `${pos.y - 70 * scale}px`,
             zIndex: 9990,
             pointerEvents: 'auto',
             cursor: 'pointer',
             willChange: 'transform, left, top',
             filter: isCorner
-              ? 'drop-shadow(0 6px 12px rgba(0,0,0,0.12))'
+              ? 'drop-shadow(0 4px 10px rgba(0,0,0,0.15))'
               : 'drop-shadow(0 12px 24px rgba(0,0,0,0.22))',
             transition: isCorner ? 'all 0.3s ease-out' : 'none',
           }}
