@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { NavLink, Link, useLocation } from 'react-router-dom'
 import { useKeyboardContext } from '../context/KeyboardContext'
 
 export default function Navbar() {
@@ -7,12 +7,12 @@ export default function Navbar() {
   const { openBookingModal } = useKeyboardContext()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
-  // Close mobile menu whenever location changes
+  // Close mobile drawer on route change
   useEffect(() => {
     setMobileMenuOpen(false)
   }, [location.pathname])
 
-  // Close mobile menu on Esc key
+  // Close on Esc key
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') setMobileMenuOpen(false)
@@ -22,149 +22,134 @@ export default function Navbar() {
   }, [])
 
   const navLinks = [
-    { to: '/', label: 'Home' },
-    { to: '/products', label: 'Products' },
-    { to: '/services', label: 'Services' },
-    { to: '/about', label: 'About' },
+    { to: '/', label: 'Home', end: true },
+    { to: '/products', label: 'Products', end: false },
+    { to: '/services', label: 'Services', end: false },
   ]
 
-  const featuredLinks = [
-    { to: '/qr-bites', label: 'QR Bites POS', icon: '🍕' },
-    { to: '/smart-udhaar', label: 'Smart Udhaar', icon: '📱' },
-  ]
+  const handleNavClick = () => {
+    setMobileMenuOpen(false)
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+  }
 
   return (
     <>
       <nav
-        className="glass"
         style={{
           position: 'fixed',
           top: 0,
           left: 0,
           right: 0,
-          zIndex: 100,
-          padding: '0 16px',
-          height: '64px',
+          zIndex: 99999,
+          padding: '0 24px',
+          height: '68px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          flexWrap: 'nowrap',
-          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.04)',
-          borderBottom: '1px solid rgba(226, 232, 240, 0.8)',
+          background: 'rgba(253, 251, 247, 0.94)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+          borderBottom: '1px solid rgba(203, 213, 225, 0.8)',
+          boxShadow: '0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03)',
         }}
       >
         {/* Brand Logo */}
         <Link
           to="/"
-          className="logo-link"
+          onClick={handleNavClick}
           style={{
             textDecoration: 'none',
             display: 'flex',
             alignItems: 'center',
-            gap: '8px',
+            gap: '10px',
             flexShrink: 0,
           }}
         >
-          {/* Circuit Icon */}
-          <svg width="28" height="28" viewBox="0 0 32 32" fill="none" style={{ flexShrink: 0 }}>
-            <circle cx="16" cy="16" r="15" stroke="#FF5733" strokeWidth="1.5" />
-            <rect x="10" y="10" width="5" height="5" rx="1" fill="#FF5733" opacity="0.9" />
-            <rect x="17" y="10" width="5" height="5" rx="1" fill="#E11D48" opacity="0.9" />
-            <rect x="10" y="17" width="5" height="5" rx="1" fill="#E11D48" opacity="0.9" />
-            <rect x="17" y="17" width="5" height="5" rx="1" fill="#FF5733" opacity="0.9" />
-            <line x1="12.5" y1="6" x2="12.5" y2="10" stroke="#FF5733" strokeWidth="1.5" />
-            <line x1="19.5" y1="6" x2="19.5" y2="10" stroke="#E11D48" strokeWidth="1.5" />
-            <line x1="12.5" y1="22" x2="12.5" y2="26" stroke="#E11D48" strokeWidth="1.5" />
-            <line x1="19.5" y1="22" x2="19.5" y2="26" stroke="#FF5733" strokeWidth="1.5" />
-            <line x1="6" y1="12.5" x2="10" y2="12.5" stroke="#FF5733" strokeWidth="1.5" />
-            <line x1="22" y1="12.5" x2="26" y2="12.5" stroke="#E11D48" strokeWidth="1.5" />
-            <line x1="6" y1="19.5" x2="10" y2="19.5" stroke="#E11D48" strokeWidth="1.5" />
-            <line x1="22" y1="19.5" x2="26" y2="19.5" stroke="#FF5733" strokeWidth="1.5" />
-          </svg>
-          <span
-            className="logo-text"
+          {/* Official Karmaveon Circuit Logo */}
+          <img
+            src="/karmaveon-logo.png"
+            alt="Karmaveon Logo"
             style={{
-              fontWeight: 800,
-              fontSize: '16px',
+              width: '32px',
+              height: '32px',
+              borderRadius: '7px',
+              objectFit: 'contain',
+              flexShrink: 0,
+              boxShadow: '0 2px 8px rgba(0, 102, 255, 0.25)',
+            }}
+          />
+          <span
+            style={{
+              fontWeight: 900,
+              fontSize: '18px',
               letterSpacing: '1.2px',
-              background: 'linear-gradient(135deg, #FF5733, #E11D48)',
+              background: 'linear-gradient(135deg, #0284c7, #2563eb)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
               whiteSpace: 'nowrap',
+              fontFamily: "'Outfit', 'Inter', system-ui, sans-serif",
             }}
           >
             KARMAVEON
           </span>
         </Link>
 
-        {/* Desktop Center Nav Links */}
-        <div className="desktop-nav-links" style={{ display: 'flex', gap: '28px', alignItems: 'center', whiteSpace: 'nowrap' }}>
-          {navLinks.map(({ to, label }) => (
+        {/* Desktop Nav Links using standard NavLink */}
+        <div className="desktop-nav-links" style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          {navLinks.map(({ to, label, end }) => (
             <NavLink
               key={to}
               to={to}
-              end={to === '/'}
+              end={end}
+              onClick={handleNavClick}
+              className={({ isActive }) => `nav-link-btn ${isActive ? 'nav-link-active' : ''}`}
               style={({ isActive }) => ({
                 textDecoration: 'none',
-                color: isActive ? '#FF5733' : '#475569',
+                color: isActive ? '#FF5733' : '#1E293B',
+                background: isActive ? 'rgba(255, 87, 51, 0.08)' : 'transparent',
+                border: isActive ? '1px solid rgba(255, 87, 51, 0.25)' : '1px solid transparent',
                 fontSize: '14px',
-                fontWeight: 700,
-                letterSpacing: '0.5px',
-                position: 'relative',
-                padding: '4px 0',
-                transition: 'color 0.2s ease',
+                fontWeight: isActive ? 800 : 650,
+                letterSpacing: '0.2px',
+                padding: '7px 16px',
+                borderRadius: '8px',
+                transition: 'all 0.18s ease',
                 whiteSpace: 'nowrap',
               })}
             >
-              {({ isActive }) => (
-                <>
-                  {label}
-                  {isActive && (
-                    <span
-                      style={{
-                        position: 'absolute',
-                        bottom: '-2px',
-                        left: 0,
-                        right: 0,
-                        height: '2px',
-                        background: 'linear-gradient(90deg, #FF5733, #E11D48)',
-                        borderRadius: '1px',
-                      }}
-                    />
-                  )}
-                </>
-              )}
+              {label}
             </NavLink>
           ))}
         </div>
 
-        {/* Right Side Group: Desktop CTA + Mobile Hamburger Button */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
+        {/* Right CTA + Mobile Toggle */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
           <button
             className="btn-glow desktop-cta-btn"
             style={{
-              padding: '8px 16px',
-              borderRadius: '8px',
+              padding: '9px 20px',
+              borderRadius: '10px',
               border: 'none',
               color: '#fff',
-              fontSize: '12px',
-              fontWeight: 700,
+              fontSize: '13px',
+              fontWeight: 800,
               letterSpacing: '0.3px',
               cursor: 'pointer',
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '6px',
+              justifyContent: 'center',
               whiteSpace: 'nowrap',
-              height: '36px',
+              height: '38px',
               lineHeight: 1,
+              boxShadow: '0 4px 14px rgba(255, 87, 51, 0.35)',
             }}
             onClick={openBookingModal}
           >
-            📅 Strategy Call
+            Strategy Call
           </button>
 
-          {/* Mobile Hamburger Toggle Button */}
+          {/* Mobile Menu Toggle Button */}
           <button
             type="button"
             className="mobile-menu-btn"
@@ -206,12 +191,11 @@ export default function Navbar() {
           style={{
             position: 'fixed',
             inset: 0,
-            zIndex: 99,
-            paddingTop: '64px',
+            zIndex: 99998,
+            paddingTop: '68px',
             background: 'rgba(15, 23, 42, 0.45)',
             backdropFilter: 'blur(10px)',
             WebkitBackdropFilter: 'blur(10px)',
-            animation: 'fadeIn 0.2s ease-out',
           }}
           onClick={() => setMobileMenuOpen(false)}
         >
@@ -225,18 +209,17 @@ export default function Navbar() {
               display: 'flex',
               flexDirection: 'column',
               gap: '12px',
-              maxHeight: 'calc(100vh - 64px)',
+              maxHeight: 'calc(100vh - 68px)',
               overflowY: 'auto',
             }}
           >
-            {/* Primary Nav Links */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              {navLinks.map(({ to, label }) => (
+              {navLinks.map(({ to, label, end }) => (
                 <NavLink
                   key={to}
                   to={to}
-                  end={to === '/'}
-                  onClick={() => setMobileMenuOpen(false)}
+                  end={end}
+                  onClick={handleNavClick}
                   style={({ isActive }) => ({
                     textDecoration: 'none',
                     padding: '12px 16px',
@@ -248,7 +231,6 @@ export default function Navbar() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    transition: 'background 0.15s ease',
                   })}
                 >
                   {({ isActive }) => (
@@ -261,38 +243,6 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* Featured Product Shortcuts */}
-            <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: '14px', marginTop: '6px' }}>
-              <div style={{ fontSize: '11px', fontWeight: 800, color: '#94a3b8', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '8px', paddingLeft: '8px' }}>
-                Featured Products
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                {featuredLinks.map(({ to, label, icon }) => (
-                  <NavLink
-                    key={to}
-                    to={to}
-                    onClick={() => setMobileMenuOpen(false)}
-                    style={({ isActive }) => ({
-                      textDecoration: 'none',
-                      padding: '10px 14px',
-                      borderRadius: '8px',
-                      fontSize: '14px',
-                      fontWeight: isActive ? 800 : 600,
-                      color: isActive ? '#ff5733' : '#475569',
-                      background: isActive ? 'rgba(255, 87, 51, 0.08)' : '#f8fafc',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '10px',
-                    })}
-                  >
-                    <span style={{ fontSize: '16px' }}>{icon}</span>
-                    <span>{label}</span>
-                  </NavLink>
-                ))}
-              </div>
-            </div>
-
-            {/* Strategy Call Full Width Mobile Button */}
             <div style={{ marginTop: '12px' }}>
               <button
                 className="btn-glow"
@@ -308,14 +258,13 @@ export default function Navbar() {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  gap: '8px',
                 }}
                 onClick={() => {
                   setMobileMenuOpen(false)
                   openBookingModal()
                 }}
               >
-                <span>📅 Book Free Strategy Call</span>
+                <span>Book Free Strategy Call</span>
               </button>
             </div>
           </div>

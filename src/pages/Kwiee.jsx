@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useKeyboardContext } from '../context/KeyboardContext'
+import HeroCodeAmbiance from '../components/HeroCodeAmbiance'
 
 // ── Live Kwiee TFT Screen Simulator ─────────────────────────────
 function KwieeLiveScreen() {
@@ -275,18 +276,32 @@ export default function Kwiee() {
       {/* ── Hero Section ── */}
       <section
         style={{
-          maxWidth: '1100px',
-          margin: '0 auto',
-          padding: '48px 24px 60px',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 440px), 1fr))',
-          gap: '60px',
-          alignItems: 'center',
+          width: '100%',
+          padding: '60px 24px 60px',
+          position: 'relative',
+          overflow: 'hidden',
+          boxShadow: '0 20px 40px -15px rgba(28, 25, 23, 0.07)',
+          borderBottom: '1px solid rgba(203, 213, 225, 0.6)',
+          marginBottom: '50px',
         }}
       >
-        {/* Left: Text */}
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
+        <HeroCodeAmbiance preset="kwiee" />
+
+        <div
+          style={{
+            maxWidth: '1100px',
+            margin: '0 auto',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 440px), 1fr))',
+            gap: '60px',
+            alignItems: 'center',
+            position: 'relative',
+            zIndex: 1,
+          }}
+        >
+          {/* Left: Text */}
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
             <span
               style={{
                 background: 'rgba(5, 150, 105, 0.12)',
@@ -520,6 +535,7 @@ export default function Kwiee() {
             Screen simulator above is running live sensor data
           </div>
         </div>
+        </div>
       </section>
 
       {/* ── Stats Strip ── */}
@@ -589,27 +605,79 @@ export default function Kwiee() {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
               gap: '20px',
             }}
           >
-            {features.map((f) => (
+            {[
+              {
+                spec: 'VL53L0X TOF LASER',
+                color: '#059669',
+                title: '940nm Time-of-Flight Distance Radar',
+                desc: 'Sub-millimeter photon flight measurement detects desk presence up to 2,000mm. Triggers automated screen wake and proximity greetings.',
+                hwTag: 'I2C @ 400kHz · VCSEL 940nm Laser',
+              },
+              {
+                spec: 'DHT22 MEMS SENSOR',
+                color: '#0284c7',
+                title: 'High-Precision Climate Telemetry',
+                desc: 'Continuous real-time sampling of ambient desk temperature (±0.5°C) and relative humidity (±2% RH). Visual climate comfort alerts.',
+                hwTag: 'Single-Bus Digital · 0.5Hz Sample Rate',
+              },
+              {
+                spec: 'ASCII PERSONALITY',
+                color: '#db2777',
+                title: 'Dynamic State-Machine ASCII Face',
+                desc: 'Ambient emotional engine: blinks at randomized intervals, smiles when notifications land, and displays focused mood during deep work.',
+                hwTag: 'Non-Blocking State Loop · Mood Matrix',
+              },
+              {
+                spec: 'MQTT NOTIFICATION BRIDGE',
+                color: '#7c3aed',
+                title: 'Sub-100ms IoT Notification Stream',
+                desc: 'Encrypted WiFi MQTT daemon parses incoming WhatsApp, Slack, Gmail, and calendar webhooks directly to the handheld TFT display.',
+                hwTag: 'TLS MQTT 8883 · WiFi 802.11 b/g/n',
+              },
+              {
+                spec: 'ST7789 SPI DISPLAY',
+                color: '#ff5733',
+                title: '240x240 High-DPI IPS TFT Screen',
+                desc: 'Ultra-crisp 16-bit RGB 65K color screen driven by high-speed hardware SPI. Legible under bright daylight with zero glare.',
+                hwTag: 'Hardware SPI @ 40MHz · 16-bit Color',
+              },
+              {
+                spec: 'PHYSICAL ENCLOSURE',
+                color: '#059669',
+                title: 'Matte PETG Casing & Brass Heat-Sets',
+                desc: 'Engineered in CAD and 3D-printed with textured PETG with internal brass threaded inserts, USB-C strain relief, and non-slip rubber feet.',
+                hwTag: 'CAD Optimized · M2.5 Brass Inserts',
+              },
+            ].map((f) => (
               <div
                 key={f.title}
                 style={{
                   background: '#ffffff',
-                  border: '1px solid #e2e8f0',
+                  border: '1.5px solid #e2e8f0',
                   borderRadius: '16px',
                   padding: '24px',
-                  boxShadow: '0 6px 20px rgba(0,0,0,0.03)',
+                  boxShadow: '0 4px 16px rgba(0,0,0,0.02)',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '10px',
+                  justifyContent: 'space-between',
                 }}
               >
-                <div style={{ fontSize: '28px' }}>{f.icon}</div>
-                <div style={{ fontSize: '16px', fontWeight: 800, color: '#0f172a' }}>{f.title}</div>
-                <div style={{ fontSize: '14px', color: '#475569', lineHeight: 1.6 }}>{f.desc}</div>
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                    <span style={{ fontSize: '10px', fontWeight: 900, fontFamily: 'monospace', color: f.color, background: `${f.color}12`, border: `1px solid ${f.color}30`, padding: '2px 8px', borderRadius: '4px' }}>
+                      {f.spec}
+                    </span>
+                  </div>
+                  <h3 style={{ fontSize: '17px', fontWeight: 900, color: '#0f172a', marginBottom: '8px', lineHeight: 1.3 }}>{f.title}</h3>
+                  <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, margin: 0 }}>{f.desc}</p>
+                </div>
+                <div style={{ marginTop: '18px', paddingTop: '10px', borderTop: '1px dashed #e2e8f0', fontSize: '11px', fontFamily: 'monospace', color: '#64748b' }}>
+                  ⚡ {f.hwTag}
+                </div>
               </div>
             ))}
           </div>
@@ -735,7 +803,7 @@ export default function Kwiee() {
         )}
       </section>
 
-      {/* ── How It Works ── */}
+      {/* ── Hardware Boot & Execution Pipeline ── */}
       <section
         style={{
           maxWidth: '1100px',
@@ -744,58 +812,43 @@ export default function Kwiee() {
         }}
       >
         <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-          <p style={{ color: '#059669', fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', fontWeight: 800, marginBottom: '10px' }}>
-            How It Works
-          </p>
-          <h2 style={{ fontSize: 'clamp(26px, 3.5vw, 40px)', fontWeight: 900, color: '#0f172a' }}>
-            One Device. Eyes on Everything.
+          <span style={{ color: '#059669', fontSize: '11px', letterSpacing: '2px', textTransform: 'uppercase', fontWeight: 900, fontFamily: 'monospace' }}>
+            HARDWARE & FIRMWARE LIFECYCLE
+          </span>
+          <h2 style={{ fontSize: 'clamp(26px, 3.5vw, 40px)', fontWeight: 900, color: '#0f172a', marginTop: '8px' }}>
+            Real-Time Embedded Execution Pipeline
           </h2>
         </div>
 
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))',
-            gap: '0',
-            background: '#ffffff',
-            border: '1px solid #e2e8f0',
-            borderRadius: '20px',
-            overflow: 'hidden',
-            boxShadow: '0 10px 30px rgba(0,0,0,0.04)',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))',
+            gap: '16px',
           }}
         >
           {[
-            { step: '01', icon: '🔌', title: 'Power On', desc: 'Plug in via USB-C. Kwiee boots in under 3 seconds and immediately begins reading all sensors.' },
-            { step: '02', icon: '📡', title: 'WiFi Connects', desc: 'Kwiee joins your home or office WiFi and subscribes to your MQTT notification broker.' },
-            { step: '03', icon: '🌡️', title: 'Live Readings', desc: 'Temperature, pressure, altitude, and distance are measured and displayed in real-time, every second.' },
-            { step: '04', icon: '🔔', title: 'Push Notifs', desc: 'Short notifications from WhatsApp, Gmail, Slack, or calendar pop on screen — Kwiee blinks and smiles.' },
-          ].map((s, idx, arr) => (
+            { stage: 'STAGE 01', marker: 'T+0.2s', title: '3.3V Power & Core Init', desc: 'ESP32 dual-core boots at 240MHz, configures SPI display bus, and initializes I2C pull-up resistors.' },
+            { stage: 'STAGE 02', marker: 'T+0.8s', title: 'I2C Sensor Bus Probe', desc: 'Calibrates VL53L0X laser sensor and samples initial temperature/humidity from DHT22 register.' },
+            { stage: 'STAGE 03', marker: 'T+1.8s', title: 'Encrypted MQTT Bridge', desc: 'Authenticates with cloud MQTT broker over TLS. Starts non-blocking background packet polling daemon.' },
+            { stage: 'STAGE 04', marker: 'T+2.5s', title: 'ASCII Mood Loop Active', desc: 'Enters 60Hz display refresh loop. Updates real-time clock, distance radar, and mood animations.' },
+          ].map((s) => (
             <div
-              key={s.step}
+              key={s.stage}
               style={{
-                padding: '28px 24px',
-                borderRight: idx < arr.length - 1 ? '1px solid #f1f5f9' : 'none',
-                textAlign: 'center',
+                background: '#ffffff',
+                border: '1.5px solid #e2e8f0',
+                borderRadius: '14px',
+                padding: '22px 18px',
+                boxShadow: '0 4px 14px rgba(0,0,0,0.02)',
               }}
             >
-              <div
-                style={{
-                  fontSize: '11px',
-                  fontWeight: 800,
-                  color: '#059669',
-                  background: 'rgba(5, 150, 105, 0.1)',
-                  display: 'inline-block',
-                  padding: '3px 10px',
-                  borderRadius: '100px',
-                  marginBottom: '12px',
-                  letterSpacing: '1px',
-                }}
-              >
-                STEP {s.step}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                <span style={{ fontSize: '10.5px', fontWeight: 900, fontFamily: 'monospace', color: '#059669' }}>{s.stage}</span>
+                <span style={{ fontSize: '10px', fontFamily: 'monospace', background: '#f1f5f9', color: '#64748b', padding: '2px 6px', borderRadius: '4px', fontWeight: 700 }}>{s.marker}</span>
               </div>
-              <div style={{ fontSize: '26px', marginBottom: '10px' }}>{s.icon}</div>
-              <div style={{ fontSize: '15px', fontWeight: 800, color: '#0f172a', marginBottom: '8px' }}>{s.title}</div>
-              <div style={{ fontSize: '13px', color: '#475569', lineHeight: 1.6 }}>{s.desc}</div>
+              <h3 style={{ fontSize: '15px', fontWeight: 900, color: '#0f172a', marginBottom: '8px' }}>{s.title}</h3>
+              <p style={{ fontSize: '13px', color: '#475569', lineHeight: 1.6, margin: 0 }}>{s.desc}</p>
             </div>
           ))}
         </div>

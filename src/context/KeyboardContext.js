@@ -8,6 +8,9 @@ export const KeyboardContext = createContext({
   isBookingOpen: false,
   openBookingModal: () => {},
   closeBookingModal: () => {},
+  isChatOpen: false,
+  openChatModal: () => {},
+  closeChatModal: () => {},
 })
 
 export const useKeyboardContext = () => useContext(KeyboardContext)

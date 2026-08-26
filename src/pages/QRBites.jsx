@@ -1,5 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
 import { useKeyboardContext } from '../context/KeyboardContext'
+import QRBitesProcessAnimation from '../components/QRBitesProcessAnimation'
+import QRBitesBenefitsAnimation from '../components/QRBitesBenefitsAnimation'
+import QRBitesAnalyticsDashboard from '../components/QRBitesAnalyticsDashboard'
+import QRBitesAIFeatures from '../components/QRBitesAIFeatures'
+import HeroCodeAmbiance from '../components/HeroCodeAmbiance'
 
 export default function QRBites() {
   const { openBookingModal } = useKeyboardContext()
@@ -77,37 +82,43 @@ export default function QRBites() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#FDFBF7', color: '#0f172a', paddingBottom: '120px' }}>
+    <div style={{ minHeight: '100vh', background: 'transparent', color: '#0f172a', paddingBottom: '120px' }}>
 
       {/* ── SECTION 1: HERO ── */}
       <section
         style={{
-          padding: '90px 24px 60px',
+          width: '100%',
+          padding: '80px 24px 60px',
           textAlign: 'center',
-          maxWidth: '960px',
-          margin: '0 auto',
           position: 'relative',
+          overflow: 'hidden',
+          boxShadow: '0 20px 40px -15px rgba(28, 25, 23, 0.07)',
+          borderBottom: '1px solid rgba(203, 213, 225, 0.6)',
+          marginBottom: '40px',
         }}
       >
-        <div
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            background: 'rgba(255, 87, 51, 0.08)',
-            border: '1px solid rgba(255, 87, 51, 0.25)',
-            borderRadius: '100px',
-            padding: '6px 18px',
-            marginBottom: '24px',
-            fontSize: '12px',
-            color: '#ff5733',
-            letterSpacing: '1.5px',
-            textTransform: 'uppercase',
-            fontWeight: 800,
-          }}
-        >
-          <span>🍕 NEXT-GEN TABLETOP ORDERING</span>
-        </div>
+        <HeroCodeAmbiance preset="qrbites" />
+
+        <div style={{ maxWidth: '960px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              background: 'rgba(255, 87, 51, 0.08)',
+              border: '1px solid rgba(255, 87, 51, 0.25)',
+              borderRadius: '100px',
+              padding: '6px 18px',
+              marginBottom: '24px',
+              fontSize: '12px',
+              color: '#ff5733',
+              letterSpacing: '1.5px',
+              textTransform: 'uppercase',
+              fontWeight: 800,
+            }}
+          >
+            <span>🍕 NEXT-GEN TABLETOP ORDERING</span>
+          </div>
 
         <h1
           style={{
@@ -176,6 +187,7 @@ export default function QRBites() {
           >
             Start 15-Day Free Trial →
           </button>
+        </div>
         </div>
       </section>
 
@@ -417,57 +429,35 @@ export default function QRBites() {
       {/* ── SECTION 3: HOW QR BITES WORKS ── */}
       <section style={{ maxWidth: '1100px', margin: '0 auto 100px', padding: '0 24px' }}>
         <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              background: 'rgba(255, 87, 51, 0.08)',
+              border: '1px solid rgba(255, 87, 51, 0.25)',
+              borderRadius: '100px',
+              padding: '6px 18px',
+              marginBottom: '16px',
+              fontSize: '12px',
+              color: '#ff5733',
+              letterSpacing: '1.5px',
+              textTransform: 'uppercase',
+              fontWeight: 800,
+            }}
+          >
+            <span>⚡ FULL LIFECYCLE WORKFLOW</span>
+          </div>
           <h2 style={{ fontSize: 'clamp(28px, 4vw, 42px)', fontWeight: 900, color: '#0f172a' }}>
             How QR Bites Works
           </h2>
           <p style={{ color: '#64748b', fontSize: '16px', marginTop: '8px' }}>
-            A seamless 6-step ordering flow engineered for speed and simplicity.
+            A seamless 6-step ordering flow engineered for speed, zero friction, and high turnover.
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '24px' }}>
-          {[
-            { step: '1', icon: '📱', title: 'SCAN', desc: 'Customer scans the unique QR code placed on their table.' },
-            { step: '2', icon: '📋', title: 'BROWSE MENU', desc: 'The full digital menu opens instantly on their phone.' },
-            { step: '3', icon: '🛒', title: 'PLACE ORDER', desc: 'Customer selects items, customizes, and confirms the order.' },
-            { step: '4', icon: '⚡', title: 'ORDER SENT', desc: 'Order is instantly sent with the exact table number (e.g., Table 05).' },
-            { step: '5', icon: '👨‍🍳', title: 'KITCHEN RECEIVES', desc: 'Kitchen staff gets a real-time alert with the order details.' },
-            { step: '6', icon: '📊', title: 'MANAGER DASHBOARD', desc: 'Manager views all live orders, tracks status, and checks sales.' },
-          ].map((item) => (
-            <div
-              key={item.step}
-              style={{
-                background: '#ffffff',
-                border: '1px solid #e2e8f0',
-                borderRadius: '20px',
-                padding: '28px 24px',
-                boxShadow: '0 8px 24px rgba(0,0,0,0.03)',
-                position: 'relative',
-              }}
-            >
-              <div
-                style={{
-                  position: 'absolute',
-                  top: '16px',
-                  right: '20px',
-                  fontSize: '12px',
-                  fontWeight: 900,
-                  color: '#ff5733',
-                  background: 'rgba(255, 87, 51, 0.08)',
-                  padding: '4px 10px',
-                  borderRadius: '12px',
-                }}
-              >
-                STEP {item.step}
-              </div>
-              <div style={{ fontSize: '36px', marginBottom: '16px' }}>{item.icon}</div>
-              <h3 style={{ fontSize: '18px', fontWeight: 900, color: '#0f172a', marginBottom: '8px' }}>
-                {item.title}
-              </h3>
-              <p style={{ color: '#64748b', fontSize: '14px', lineHeight: 1.6 }}>{item.desc}</p>
-            </div>
-          ))}
-        </div>
+        {/* Dynamic Animated 6-Step Workflow */}
+        <QRBitesProcessAnimation />
       </section>
 
       {/* ── SECTION 4: THE QR BITES SYSTEM (CUSTOMER VS KITCHEN SPLIT) ── */}
@@ -563,154 +553,47 @@ export default function QRBites() {
           </p>
         </div>
 
-        {/* Dashboard Mock Grid */}
-        <div
-          style={{
-            background: '#0f172a',
-            borderRadius: '28px',
-            padding: '36px',
-            color: '#ffffff',
-            boxShadow: '0 20px 50px rgba(15, 23, 42, 0.3)',
-            marginBottom: '40px',
-          }}
-        >
-          {/* Top 4 Dashboard Metric Cards */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: '16px', marginBottom: '32px' }}>
-            {[
-              { label: "Today's Sales", value: '₹42,580', icon: '📈', color: '#34d399' },
-              { label: 'Total Orders', value: '184', icon: '📊', color: '#60a5fa' },
-              { label: 'Active Tables', value: '23', icon: '🪑', color: '#fbbf24' },
-              { label: 'Avg. Order Value', value: '₹231', icon: '💰', color: '#f472b6' },
-            ].map((m) => (
-              <div
-                key={m.label}
-                style={{
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  borderRadius: '16px',
-                  padding: '20px',
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                  <span style={{ fontSize: '12px', color: '#94a3b8', fontWeight: 600 }}>{m.label}</span>
-                  <span style={{ fontSize: '18px' }}>{m.icon}</span>
-                </div>
-                <div style={{ fontSize: '24px', fontWeight: 900, color: m.color }}>{m.value}</div>
-              </div>
-            ))}
-          </div>
-
-          {/* Live Orders & Best Selling Dishes Split */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '24px' }}>
-            {/* Live Orders Status */}
-            <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '18px', padding: '24px' }}>
-              <div style={{ fontSize: '14px', fontWeight: 800, color: '#38bdf8', marginBottom: '16px' }}>
-                ⚡ Live Orders Status Updates
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                {[
-                  { table: 'Table 04', status: 'Preparing', tagColor: '#f59e0b' },
-                  { table: 'Table 08', status: 'Ready', tagColor: '#10b981' },
-                  { table: 'Table 12', status: 'New Order', tagColor: '#3b82f6' },
-                  { table: 'Table 17', status: 'Served', tagColor: '#8b5cf6' },
-                ].map((ord) => (
-                  <div key={ord.table} style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 14px', background: 'rgba(255,255,255,0.04)', borderRadius: '10px' }}>
-                    <span style={{ fontWeight: 700, fontSize: '14px' }}>{ord.table}</span>
-                    <span style={{ fontSize: '12px', fontWeight: 800, color: ord.tagColor, background: `${ord.tagColor}20`, padding: '2px 10px', borderRadius: '12px' }}>
-                      {ord.status}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Best Selling Dishes Chart */}
-            <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '18px', padding: '24px' }}>
-              <div style={{ fontSize: '14px', fontWeight: 800, color: '#f472b6', marginBottom: '16px' }}>
-                🏆 Best Selling Dishes
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                {[
-                  { name: '🍕 Margherita Pizza', orders: '320 orders', width: '90%' },
-                  { name: '🍔 Veg Burger', orders: '245 orders', width: '70%' },
-                  { name: '🍝 Pasta Alfredo', orders: '189 orders', width: '55%' },
-                  { name: '☕ Cold Coffee', orders: '120 orders', width: '40%' },
-                ].map((dish) => (
-                  <div key={dish.name}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', fontWeight: 700, marginBottom: '4px' }}>
-                      <span>{dish.name}</span>
-                      <span style={{ color: '#94a3b8' }}>{dish.orders}</span>
-                    </div>
-                    <div style={{ height: '6px', background: 'rgba(255,255,255,0.1)', borderRadius: '4px', overflow: 'hidden' }}>
-                      <div style={{ height: '100%', width: dish.width, background: 'linear-gradient(90deg, #ff5733, #f472b6)', borderRadius: '4px' }} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+        {/* Dynamic Animated AI Features Cards */}
+        <div style={{ marginBottom: '36px' }}>
+          <QRBitesAIFeatures />
         </div>
 
-        {/* AI Features Cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '20px' }}>
-          {[
-            { title: '🔮 AI Demand Forecast', desc: 'Predict peak hours and prepare stock in advance.' },
-            { title: '⏰ Peak Hours Analysis', desc: 'Understand your busiest times (e.g., 8 PM - 9:30 PM).' },
-            { title: '📉 Low-Performing Items', desc: 'Get suggestions to launch offers on slow-moving dishes.' },
-          ].map((ai) => (
-            <div
-              key={ai.title}
-              style={{
-                background: '#ffffff',
-                border: '1px solid #e2e8f0',
-                borderRadius: '16px',
-                padding: '24px',
-                boxShadow: '0 4px 14px rgba(0,0,0,0.02)',
-              }}
-            >
-              <h3 style={{ fontSize: '17px', fontWeight: 800, color: '#0f172a', marginBottom: '8px' }}>
-                {ai.title}
-              </h3>
-              <p style={{ color: '#64748b', fontSize: '14px', lineHeight: 1.6 }}>{ai.desc}</p>
-            </div>
-          ))}
-        </div>
+        {/* Interactive Live Jumping Analytics Dashboard */}
+        <QRBitesAnalyticsDashboard />
       </section>
 
       {/* ── SECTION 6: BENEFITS FOR YOUR RESTAURANT ── */}
       <section style={{ maxWidth: '1100px', margin: '0 auto 100px', padding: '0 24px' }}>
         <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              background: 'rgba(37, 99, 235, 0.08)',
+              border: '1px solid rgba(37, 99, 235, 0.25)',
+              borderRadius: '100px',
+              padding: '6px 18px',
+              marginBottom: '16px',
+              fontSize: '12px',
+              color: '#2563eb',
+              letterSpacing: '1.5px',
+              textTransform: 'uppercase',
+              fontWeight: 800,
+            }}
+          >
+            <span>📈 BUSINESS IMPACT & ROI</span>
+          </div>
           <h2 style={{ fontSize: 'clamp(28px, 4vw, 42px)', fontWeight: 900, color: '#0f172a' }}>
             Why Restaurant Owners Love QR Bites
           </h2>
+          <p style={{ color: '#64748b', fontSize: '16px', marginTop: '8px' }}>
+            Built specifically to reduce operational overhead, eliminate human errors, and increase profitability.
+          </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '24px' }}>
-          {[
-            { icon: '⚡', title: 'Faster Ordering', desc: 'Customers order directly, cutting wait times and increasing table turnover.' },
-            { icon: '🚫', title: 'Fewer Order Mistakes', desc: 'Digital orders go straight to the kitchen—no miscommunication with waiters.' },
-            { icon: '🧑🍳', title: 'Less Staff Workload', desc: 'Your staff can focus on hospitality and service, not taking orders.' },
-            { icon: '📊', title: 'Better Sales & Profits', desc: 'AI-driven insights help you optimize menu pricing and stock management.' },
-            { icon: '📝', title: 'Easy Menu Updates', desc: 'Update prices, descriptions, or availability instantly without reprinting menus.' },
-          ].map((b) => (
-            <div
-              key={b.title}
-              style={{
-                background: '#ffffff',
-                border: '1px solid #e2e8f0',
-                borderRadius: '20px',
-                padding: '28px 24px',
-                boxShadow: '0 6px 20px rgba(0,0,0,0.03)',
-              }}
-            >
-              <div style={{ fontSize: '32px', marginBottom: '14px' }}>{b.icon}</div>
-              <h3 style={{ fontSize: '18px', fontWeight: 900, color: '#0f172a', marginBottom: '8px' }}>
-                {b.title}
-              </h3>
-              <p style={{ color: '#64748b', fontSize: '14px', lineHeight: 1.6 }}>{b.desc}</p>
-            </div>
-          ))}
-        </div>
+        {/* Dynamic Animated 5 Benefits Showcase */}
+        <QRBitesBenefitsAnimation />
       </section>
 
       {/* ── SECTION 7: PRICING & FINAL CALL-TO-ACTION ── */}

@@ -1,467 +1,615 @@
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useKeyboardContext } from '../context/KeyboardContext'
-
-const PRODUCTS = [
-  {
-    id: 'qr-bites',
-    title: 'QR Bites',
-    subtitle: 'Digital Menu & Zero-Commission Ordering',
-    link: '/qr-bites',
-    version: 'v1.0.0',
-    badge: 'Featured',
-    badgeColor: '#ff5733',
-    icon: '🍽️',
-    desc: 'Smart QR digital menu ecosystem for restaurants & cafes. Customers scan, order, and pay in seconds — zero app downloads, 0% commission, real-time kitchen dispatch.',
-    tags: ['React', 'Node.js', 'QR Scanning', 'WebSockets', 'Stripe / UPI'],
-    accentColor: '#ff5733',
-    terminalLines: [
-      '> Initializing QR Bites engine...',
-      '> Generating table QR codes',
-      '> Kitchen KDS WebSocket connected',
-      '> Restaurant portal ready ✓',
-    ],
-    metrics: [
-      { label: 'Scan to Order', value: '<2 sec' },
-      { label: 'Commission', value: '0%' },
-      { label: 'Table Turnaround', value: '+35%' },
-    ],
-  },
-  {
-    id: 'smart-udhaar',
-    title: 'Smart Udhaar',
-    subtitle: 'Offline Kirana POS & Udhaar Ledger',
-    link: '/smart-udhaar',
-    version: 'v2.1.0',
-    badge: 'Featured',
-    badgeColor: '#10b981',
-    icon: '🏪',
-    desc: 'Offline-first React Native POS for Kirana shops. Barcode scan-to-sell, SMS-free PIN login, WhatsApp collection links, and Supabase cloud sync when online.',
-    tags: ['React Native', 'Expo', 'SQLite', 'Supabase', 'expo-camera'],
-    accentColor: '#10b981',
-    terminalLines: [
-      '> Booting Kirana POS engine...',
-      '> Offline SQLite database active',
-      '> Camera barcode scanner ready',
-      '> Auto-sync with Supabase ✓',
-    ],
-    metrics: [
-      { label: 'Offline Speed', value: '100%' },
-      { label: 'Collections', value: '+42%' },
-      { label: 'WA Reminders', value: '1-Tap' },
-    ],
-  },
-  {
-    id: 'kwiee',
-    title: 'Kwiee',
-    subtitle: 'Smart Desktop Buddy & Sensor Hub',
-    link: '/kwiee',
-    version: 'v1.0.0',
-    badge: 'Hardware',
-    badgeColor: '#059669',
-    icon: '🔌',
-    desc: 'A compact smart device that keeps an eye on you — live temp, clock, pressure, distance sensor, and push notifications (WhatsApp, Gmail, Slack) on a TFT screen.',
-    tags: ['Arduino / ESP32', 'TFT Display', 'DHT22', 'VL53L0X ToF', 'WiFi MQTT'],
-    accentColor: '#059669',
-    terminalLines: [
-      '> Kwiee firmware booting...',
-      '> TFT display: OK ✓',
-      '> Sensors: DHT22 + VL53L0X active',
-      '> Push notification bridge: LIVE ✓',
-    ],
-    metrics: [
-      { label: 'Sensor Update', value: '< 1s' },
-      { label: 'Notif Bridge', value: 'WiFi' },
-      { label: 'Offline Ready', value: '100%' },
-    ],
-  },
-  {
-    id: 'crm',
-    title: 'Custom CRM',
-    subtitle: 'Pipeline & Customer Lifecycle Dashboards',
-    link: '/solutions',
-    version: 'v2.4.1',
-    badge: 'Available',
-    badgeColor: '#2563eb',
-    icon: '📊',
-    desc: 'Tailored dashboards to track your full sales pipeline, customer lifecycle, and team performance in real-time with automated alerts and reporting.',
-    tags: ['React', 'Node.js', 'PostgreSQL', 'REST API'],
-    accentColor: '#2563eb',
-    terminalLines: [
-      '> Initializing CRM module...',
-      '> Connecting to pipeline API',
-      '> Loading 247 active deals',
-      '> Dashboard ready ✓',
-    ],
-    metrics: [
-      { label: 'Deals Tracked', value: '247' },
-      { label: 'Automation Rules', value: '18' },
-      { label: 'Uptime', value: '99.9%' },
-    ],
-  },
-  {
-    id: 'ecom',
-    title: 'E-Commerce Engine',
-    subtitle: 'High-Performance Storefront Systems',
-    link: '/solutions',
-    version: 'v3.1.0',
-    badge: 'Available',
-    badgeColor: '#2563eb',
-    icon: '🛒',
-    desc: 'Blazing-fast storefronts built for scale. Handles thousands of concurrent users with sub-second load times, CDN delivery, and seamless checkout flows.',
-    tags: ['Next.js', 'Stripe', 'Redis', 'CDN'],
-    accentColor: '#2563eb',
-    terminalLines: [
-      '> Booting storefront engine...',
-      '> CDN edge nodes: 42 active',
-      '> Payment gateways: connected',
-      '> Ready for traffic ✓',
-    ],
-    metrics: [
-      { label: 'Products', value: '10K+' },
-      { label: 'Load Time', value: '<0.8s' },
-      { label: 'Conversion', value: '+34%' },
-    ],
-  },
-  {
-    id: 'pipelines',
-    title: 'Automated Pipelines',
-    subtitle: 'n8n Workflow Orchestration',
-    link: '/solutions',
-    version: 'v1.8.3',
-    badge: 'Available',
-    badgeColor: '#7c3aed',
-    icon: '⚡',
-    desc: 'n8n-powered automation workflows that eliminate human error. Sync databases, trigger alerts, and orchestrate your entire data and business ecosystem.',
-    tags: ['n8n', 'Webhooks', 'APIs', 'Cron Jobs'],
-    accentColor: '#7c3aed',
-    terminalLines: [
-      '> Pipeline orchestrator online',
-      '> 34 active workflows loaded',
-      '> Last sync: 2s ago',
-      '> All systems nominal ✓',
-    ],
-    metrics: [
-      { label: 'Workflows', value: '34' },
-      { label: 'Daily Runs', value: '8,400' },
-      { label: 'Error Rate', value: '0.01%' },
-    ],
-  },
-  {
-    id: 'saas',
-    title: 'SaaS Starter Platform',
-    subtitle: 'Multi-Tenant Foundations',
-    link: '/solutions',
-    version: 'v1.2.0',
-    badge: 'Available',
-    badgeColor: '#db2777',
-    icon: '🚀',
-    desc: 'Complete multi-tenant SaaS foundations with auth, billing, user management, and admin dashboards — ready to customize and launch in under a week.',
-    tags: ['Auth0', 'Stripe', 'TypeScript', 'Docker'],
-    accentColor: '#db2777',
-    terminalLines: [
-      '> Multi-tenant mode active',
-      '> Auth layer: secured',
-      '> Billing engine: live',
-      '> Tenant isolated ✓',
-    ],
-    metrics: [
-      { label: 'Tenants', value: 'Unlimited' },
-      { label: 'Auth Methods', value: '6' },
-      { label: 'Setup Time', value: '<1 week' },
-    ],
-  },
-]
+import HeroCodeAmbiance from '../components/HeroCodeAmbiance'
 
 export default function Products() {
-  const { triggerCascade } = useKeyboardContext()
+  const { openBookingModal } = useKeyboardContext()
+  const [activeTab, setActiveTab] = useState('all')
 
   return (
-    <div>
-      {/* ── Header ── */}
+    <div style={{ minHeight: '100vh', background: 'transparent', color: '#0f172a', paddingBottom: '100px' }}>
+      
+      {/* ── SECTION 1: HERO (High-Contrast, Punchy, Technical) ── */}
       <section
         style={{
-          padding: '80px 24px 60px',
+          width: '100%',
+          padding: '70px 24px 50px',
           textAlign: 'center',
-          maxWidth: '800px',
-          margin: '0 auto',
+          position: 'relative',
+          overflow: 'hidden',
+          boxShadow: '0 20px 40px -15px rgba(28, 25, 23, 0.07)',
+          borderBottom: '1px solid rgba(203, 213, 225, 0.6)',
+          marginBottom: '50px',
         }}
       >
-        <p style={{ color: '#ff5733', fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', fontWeight: 700, marginBottom: '16px' }}>
-          Our Portfolio
-        </p>
-        <h1
-          style={{
-            fontSize: 'clamp(36px, 5vw, 60px)',
-            fontWeight: 900,
-            color: '#0f172a',
-            marginBottom: '20px',
-            lineHeight: 1.1,
-          }}
-        >
-          What We{' '}
-          <span className="circuit-underline gradient-text">Build</span>
-        </h1>
-        <p style={{ color: '#475569', fontSize: '18px', lineHeight: 1.7 }}>
-          Battle-tested software and hardware products engineered for performance, reliability, and scale.
-        </p>
-      </section>
+        <HeroCodeAmbiance preset="products" />
 
-      {/* ── Product Grid ── */}
-      <section
-        style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-          padding: '0 24px 80px',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 360px), 1fr))',
-          gap: '28px',
-          alignItems: 'start',
-        }}
-      >
-        {PRODUCTS.map((product) => (
+        <div style={{ maxWidth: '960px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div
-            key={product.id}
-            onMouseEnter={triggerCascade}
             style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
               background: '#ffffff',
-              border: '1px solid #e8edf2',
-              borderRadius: '20px',
-              boxShadow: '0 4px 24px rgba(0, 0, 0, 0.05)',
-              overflow: 'hidden',
-              display: 'flex',
-              flexDirection: 'column',
+              border: '1px solid #cbd5e1',
+              borderRadius: '100px',
+              padding: '5px 16px',
+              marginBottom: '20px',
+              fontSize: '11px',
+              fontWeight: 800,
+              fontFamily: 'monospace',
+              color: '#ff5733',
+              letterSpacing: '1px',
             }}
           >
-            {/* Accent top bar */}
-            <div style={{ height: '4px', background: `linear-gradient(90deg, ${product.accentColor}, ${product.accentColor}66)` }} />
+            <span>PROVEN PRODUCTION PLATFORMS & HARDWARE</span>
+          </div>
 
-            {/* Terminal header bar */}
-            <div
+          <h1
+            style={{
+              fontSize: 'clamp(36px, 5.5vw, 64px)',
+              fontWeight: 900,
+              color: '#0f172a',
+              letterSpacing: '-1.8px',
+              lineHeight: 1.1,
+              marginBottom: '20px',
+            }}
+          >
+            Built for Real-World Operations.
+          </h1>
+
+          <p
+            style={{
+              color: '#475569',
+              fontSize: 'clamp(16px, 2vw, 19px)',
+              lineHeight: 1.6,
+              maxWidth: '720px',
+              margin: '0 auto 36px',
+              fontWeight: 500,
+            }}
+          >
+            Explore our proprietary software platforms, offline retail operating systems, and custom microcontroller IoT hardware deployed in live environments.
+          </p>
+        </div>
+
+        {/* Filter Pills */}
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', flexWrap: 'wrap', position: 'relative', zIndex: 1 }}>
+          {[
+            { id: 'all', label: 'All Deployments' },
+            { id: 'flagships', label: '⭐ Flagships' },
+            { id: 'mobile', label: '📱 Offline Mobile' },
+            { id: 'hardware', label: '🔌 IoT & Hardware' },
+            { id: 'bespoke', label: '⚡ Bespoke SaaS' },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
               style={{
-                background: '#f8fafc',
-                padding: '9px 16px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                borderBottom: '1px solid #f1f5f9',
+                padding: '8px 18px',
+                borderRadius: '8px',
+                border: activeTab === tab.id ? '1.5px solid #0f172a' : '1px solid #e2e8f0',
+                background: activeTab === tab.id ? '#0f172a' : '#ffffff',
+                color: activeTab === tab.id ? '#ffffff' : '#64748b',
+                fontSize: '13px',
+                fontWeight: 700,
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
               }}
             >
-              <div style={{ display: 'flex', gap: '5px', flexShrink: 0 }}>
-                <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: '#ff5f57', display: 'block' }} />
-                <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: '#ffbd2e', display: 'block' }} />
-                <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: '#28c840', display: 'block' }} />
-              </div>
-              <span
-                style={{
-                  flex: 1,
-                  color: '#94a3b8',
-                  fontSize: '11px',
-                  fontFamily: "'Courier New', monospace",
-                  overflow: 'hidden',
-                  whiteSpace: 'nowrap',
-                  textOverflow: 'ellipsis',
-                  minWidth: 0,
-                }}
-              >
-                karmaveon/{product.id} · {product.version}
-              </span>
-              <span
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '4px',
-                  fontSize: '10px',
-                  fontWeight: 700,
-                  color: product.accentColor,
-                  flexShrink: 0,
-                }}
-              >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* ── SECTION 2: FLAGSHIP 1: QR BITES (DOMINANT 12-COL HERO) ── */}
+      {(activeTab === 'all' || activeTab === 'flagships') && (
+        <section
+          style={{
+            maxWidth: '1200px',
+            margin: '0 auto 36px',
+            padding: '0 24px',
+          }}
+        >
+          <div
+            style={{
+              background: '#ffffff',
+              borderRadius: '24px',
+              border: '2px solid #ff5733',
+              padding: '40px 36px',
+              boxShadow: '0 20px 50px -10px rgba(255, 87, 51, 0.12)',
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 360px), 1fr))',
+              gap: '36px',
+              alignItems: 'center',
+            }}
+          >
+            {/* Left: Product Spec & Details */}
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
                 <span
                   style={{
-                    width: '5px',
-                    height: '5px',
-                    borderRadius: '50%',
-                    background: product.accentColor,
-                    boxShadow: `0 0 5px ${product.accentColor}`,
-                  }}
-                />
-                LIVE
-              </span>
-            </div>
-
-            {/* Card body */}
-            <div style={{ padding: '22px', display: 'flex', flexDirection: 'column', gap: '16px', flex: 1 }}>
-
-              {/* Icon + title row */}
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
-                <div
-                  style={{
-                    width: '44px',
-                    height: '44px',
-                    borderRadius: '12px',
-                    background: `${product.accentColor}12`,
-                    border: `1px solid ${product.accentColor}25`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '20px',
-                    flexShrink: 0,
+                    background: '#ff5733',
+                    color: '#ffffff',
+                    fontSize: '11px',
+                    fontWeight: 900,
+                    fontFamily: 'monospace',
+                    padding: '3px 10px',
+                    borderRadius: '4px',
                   }}
                 >
-                  {product.icon}
-                </div>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-                    <h2 style={{ fontSize: '17px', fontWeight: 900, color: '#0f172a', margin: 0 }}>
-                      {product.title}
-                    </h2>
-                    <span
-                      style={{
-                        padding: '2px 8px',
-                        borderRadius: '100px',
-                        background: `${product.badgeColor}14`,
-                        border: `1px solid ${product.badgeColor}30`,
-                        color: product.badgeColor,
-                        fontSize: '10px',
-                        fontWeight: 800,
-                        flexShrink: 0,
-                      }}
-                    >
-                      {product.badge}
-                    </span>
-                  </div>
-                  <p style={{ fontSize: '11.5px', color: '#94a3b8', fontWeight: 600, margin: '3px 0 0' }}>
-                    {product.subtitle}
-                  </p>
-                </div>
+                  FLAGSHIP 01
+                </span>
+                <span style={{ color: '#10b981', fontSize: '12px', fontFamily: 'monospace', fontWeight: 800 }}>
+                  ● LIVE RESTAURANT DEPLOYMENT
+                </span>
               </div>
 
-              {/* Description */}
-              <p style={{ color: '#475569', fontSize: '13.5px', lineHeight: 1.75, margin: 0 }}>
-                {product.desc}
-              </p>
-
-              {/* Terminal block */}
-              <div
+              <h2
                 style={{
-                  background: '#0f172a',
-                  borderRadius: '10px',
-                  padding: '12px 14px',
-                  fontFamily: "'Courier New', monospace",
-                  fontSize: '11.5px',
-                  lineHeight: 1.8,
+                  fontSize: 'clamp(28px, 3.8vw, 42px)',
+                  fontWeight: 900,
+                  color: '#0f172a',
+                  lineHeight: 1.15,
+                  letterSpacing: '-1px',
+                  marginBottom: '14px',
                 }}
               >
-                {product.terminalLines.map((line, i) => (
-                  <div key={i} style={{ color: line.endsWith('✓') ? '#34d399' : '#38bdf8' }}>
-                    {line}
-                  </div>
-                ))}
+                QR Bites — Contactless Dining & Instant KDS
+              </h2>
+
+              <p style={{ color: '#475569', fontSize: '15px', lineHeight: 1.7, marginBottom: '24px' }}>
+                Replaces bulky paper menus and slow staff orders. Diners scan a high-density QR code at their table, customize dishes, and order in under 2 seconds. The order streams instantly over WebSockets to the kitchen display screen. Zero app download, 0% platform commission.
+              </p>
+
+              {/* Technical Spec Matrix */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', marginBottom: '28px' }}>
+                <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '14px 10px', borderRadius: '10px', textAlign: 'center' }}>
+                  <div style={{ fontSize: '20px', fontWeight: 900, color: '#ff5733' }}>&lt; 2s</div>
+                  <div style={{ fontSize: '10px', color: '#64748b', fontFamily: 'monospace', fontWeight: 800 }}>SCAN TO ORDER</div>
+                </div>
+                <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '14px 10px', borderRadius: '10px', textAlign: 'center' }}>
+                  <div style={{ fontSize: '20px', fontWeight: 900, color: '#10b981' }}>0%</div>
+                  <div style={{ fontSize: '10px', color: '#64748b', fontFamily: 'monospace', fontWeight: 800 }}>COMMISSION</div>
+                </div>
+                <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '14px 10px', borderRadius: '10px', textAlign: 'center' }}>
+                  <div style={{ fontSize: '20px', fontWeight: 900, color: '#2563eb' }}>+40%</div>
+                  <div style={{ fontSize: '10px', color: '#64748b', fontFamily: 'monospace', fontWeight: 800 }}>TABLE TURNOVER</div>
+                </div>
               </div>
 
-              {/* Metrics */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
-                {product.metrics.map((m) => (
-                  <div
-                    key={m.label}
-                    style={{
-                      textAlign: 'center',
-                      padding: '10px 6px',
-                      background: `${product.accentColor}08`,
-                      borderRadius: '10px',
-                      border: `1px solid ${product.accentColor}18`,
-                    }}
-                  >
-                    <div style={{ fontSize: '16px', fontWeight: 900, color: product.accentColor, marginBottom: '3px' }}>
-                      {m.value}
-                    </div>
-                    <div style={{ fontSize: '9px', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.5px', fontWeight: 700 }}>
-                      {m.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Tech tags */}
-              <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-                {product.tags.map((tag) => (
+              {/* Stack Tags */}
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '28px' }}>
+                {['React 19', 'Node.js', 'WebSocket KDS', 'Instant UPI / Stripe', 'Dynamic Table QR'].map((t) => (
                   <span
-                    key={tag}
+                    key={t}
                     style={{
-                      padding: '3px 9px',
-                      borderRadius: '6px',
                       background: '#f1f5f9',
                       border: '1px solid #e2e8f0',
-                      color: '#475569',
-                      fontSize: '11px',
-                      fontWeight: 600,
+                      color: '#334155',
+                      padding: '4px 10px',
+                      borderRadius: '6px',
+                      fontSize: '11.5px',
+                      fontWeight: 700,
+                      fontFamily: 'monospace',
                     }}
                   >
-                    {tag}
+                    {t}
                   </span>
                 ))}
               </div>
 
-              {/* CTA */}
-              {product.link && (
-                <Link to={product.link} style={{ textDecoration: 'none', marginTop: 'auto' }}>
+              <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
+                <Link to="/qr-bites" style={{ textDecoration: 'none' }}>
                   <button
+                    className="btn-glow"
                     style={{
-                      width: '100%',
-                      padding: '11px 20px',
+                      padding: '14px 30px',
                       borderRadius: '10px',
                       border: 'none',
-                      background: `linear-gradient(135deg, ${product.accentColor}ee, ${product.accentColor}bb)`,
-                      color: '#ffffff',
-                      fontWeight: 800,
-                      fontSize: '13.5px',
+                      fontSize: '14.5px',
+                      fontWeight: 900,
                       cursor: 'pointer',
-                      display: 'flex',
+                      color: '#ffffff',
+                      display: 'inline-flex',
                       alignItems: 'center',
-                      justifyContent: 'center',
                       gap: '8px',
-                      boxShadow: `0 4px 14px ${product.accentColor}28`,
                     }}
                   >
-                    <span>Explore {product.title}</span>
+                    <span>View QR Bites Platform & Live Demo</span>
                     <span>→</span>
                   </button>
                 </Link>
-              )}
+              </div>
+            </div>
+
+            {/* Right: Real Restaurant KDS Simulation Frame */}
+            <div
+              style={{
+                background: '#090d16',
+                borderRadius: '18px',
+                border: '1px solid #1e293b',
+                padding: '24px',
+                boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #1e293b', paddingBottom: '12px', marginBottom: '16px' }}>
+                <span style={{ color: '#ff5733', fontWeight: 800, fontSize: '13px', fontFamily: 'monospace' }}>
+                  KITCHEN DISPLAY SCREEN (KDS)
+                </span>
+                <span style={{ color: '#10b981', fontSize: '12px', fontFamily: 'monospace', fontWeight: 700 }}>
+                  ● WebSocket Connected
+                </span>
+              </div>
+
+              {/* Simulated Tickets */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <div style={{ background: 'rgba(255, 87, 51, 0.12)', border: '1px solid rgba(255, 87, 51, 0.35)', padding: '12px', borderRadius: '8px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', color: '#ff5733', fontWeight: 800, fontSize: '13px' }}>
+                    <span>TABLE #04 (NEW ORDER)</span>
+                    <span>₹498</span>
+                  </div>
+                  <div style={{ color: '#ffffff', fontSize: '13px', marginTop: '4px' }}>1x Truffle Mushroom Pizza (Extra Cheese)</div>
+                  <div style={{ color: '#94a3b8', fontSize: '11px', marginTop: '4px', fontFamily: 'monospace' }}>Received: 12s ago · Prep Time: 12m</div>
+                </div>
+
+                <div style={{ background: 'rgba(16, 185, 129, 0.08)', border: '1px solid rgba(16, 185, 129, 0.25)', padding: '12px', borderRadius: '8px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', color: '#10b981', fontWeight: 800, fontSize: '13px' }}>
+                    <span>TABLE #09 (READY)</span>
+                    <span>₹249</span>
+                  </div>
+                  <div style={{ color: '#ffffff', fontSize: '13px', marginTop: '4px' }}>2x Iced Espresso Tonic</div>
+                  <div style={{ color: '#94a3b8', fontSize: '11px', marginTop: '4px', fontFamily: 'monospace' }}>Dispatched to Server Station ✓</div>
+                </div>
+              </div>
             </div>
           </div>
-        ))}
-      </section>
+        </section>
+      )}
 
-      {/* ── Bottom CTA ── */}
+      {/* ── SECTION 3: FLAGSHIP 2 (SMART UDHAAR) & FLAGSHIP 3 (KWIEE HARDWARE) ── */}
       <section
         style={{
-          padding: '60px 24px 100px',
-          textAlign: 'center',
-          borderTop: '1px solid rgba(226, 232, 240, 0.8)',
+          maxWidth: '1200px',
+          margin: '0 auto 36px',
+          padding: '0 24px',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 360px), 1fr))',
+          gap: '28px',
         }}
       >
-        <h2 style={{ fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 800, color: '#0f172a', marginBottom: '16px' }}>
-          Don't see what you need?
-        </h2>
-        <p style={{ color: '#475569', marginBottom: '32px', fontSize: '16px', maxWidth: '500px', margin: '0 auto 32px' }}>
-          We build fully custom solutions from scratch. Tell us your vision and we'll engineer it.
-        </p>
-        <a href="mailto:karmaaveontechnologies@gmail.com">
-          <button
-            className="btn-outline"
+        {/* ── SMART UDHAAR ── */}
+        {(activeTab === 'all' || activeTab === 'flagships' || activeTab === 'mobile') && (
+          <div
             style={{
-              padding: '14px 36px',
-              borderRadius: '10px',
-              fontSize: '15px',
-              fontWeight: 700,
-              cursor: 'pointer',
-              letterSpacing: '0.5px',
+              background: '#ffffff',
+              borderRadius: '24px',
+              border: '1.5px solid #e2e8f0',
+              padding: '36px 30px',
+              boxShadow: '0 10px 30px rgba(0, 0, 0, 0.04)',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
             }}
           >
-            Let's Talk →
-          </button>
-        </a>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+                <span
+                  style={{
+                    background: '#10b981',
+                    color: '#ffffff',
+                    fontSize: '10.5px',
+                    fontWeight: 900,
+                    fontFamily: 'monospace',
+                    padding: '3px 8px',
+                    borderRadius: '4px',
+                  }}
+                >
+                  FLAGSHIP 02
+                </span>
+                <span style={{ color: '#64748b', fontSize: '11px', fontFamily: 'monospace', fontWeight: 700 }}>
+                  OFFLINE-FIRST POS
+                </span>
+              </div>
+
+              <h2 style={{ fontSize: '26px', fontWeight: 900, color: '#0f172a', marginBottom: '10px', letterSpacing: '-0.5px' }}>
+                Smart Udhaar — Kirana Khata & Billing
+              </h2>
+
+              <p style={{ color: '#475569', fontSize: '14.5px', lineHeight: 1.7, marginBottom: '20px' }}>
+                Tailored for Indian retail & grocery stores. Zero internet required during peak billing hours. Instant barcode scanning, local SQLite credit balances, and 1-tap WhatsApp payment collection links.
+              </p>
+
+              {/* Highlights */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', marginBottom: '24px' }}>
+                <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', padding: '10px', borderRadius: '8px', textAlign: 'center' }}>
+                  <div style={{ fontSize: '17px', fontWeight: 900, color: '#10b981' }}>100%</div>
+                  <div style={{ fontSize: '9.5px', color: '#166534', fontFamily: 'monospace', fontWeight: 700 }}>OFFLINE SPEED</div>
+                </div>
+                <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', padding: '10px', borderRadius: '8px', textAlign: 'center' }}>
+                  <div style={{ fontSize: '17px', fontWeight: 900, color: '#10b981' }}>1-Tap</div>
+                  <div style={{ fontSize: '9.5px', color: '#166534', fontFamily: 'monospace', fontWeight: 700 }}>WA REMINDERS</div>
+                </div>
+                <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', padding: '10px', borderRadius: '8px', textAlign: 'center' }}>
+                  <div style={{ fontSize: '17px', fontWeight: 900, color: '#10b981' }}>+42%</div>
+                  <div style={{ fontSize: '9.5px', color: '#166534', fontFamily: 'monospace', fontWeight: 700 }}>COLLECTIONS</div>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '24px' }}>
+                {['React Native', 'Expo 51', 'SQLite Embedded', 'Supabase Sync', 'expo-camera'].map((tag) => (
+                  <span key={tag} style={{ background: '#f1f5f9', border: '1px solid #e2e8f0', color: '#475569', fontSize: '11px', padding: '3px 8px', borderRadius: '6px', fontFamily: 'monospace', fontWeight: 700 }}>
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <Link to="/smart-udhaar" style={{ textDecoration: 'none' }}>
+              <button
+                style={{
+                  width: '100%',
+                  padding: '14px 20px',
+                  borderRadius: '10px',
+                  border: 'none',
+                  background: '#10b981',
+                  color: '#ffffff',
+                  fontWeight: 900,
+                  fontSize: '14px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  boxShadow: '0 4px 14px rgba(16, 185, 129, 0.3)',
+                }}
+              >
+                <span>Explore Smart Udhaar App</span>
+                <span>→</span>
+              </button>
+            </Link>
+          </div>
+        )}
+
+        {/* ── KWIEE & HARDWARE ── */}
+        {(activeTab === 'all' || activeTab === 'flagships' || activeTab === 'hardware') && (
+          <div
+            style={{
+              background: '#ffffff',
+              borderRadius: '24px',
+              border: '1.5px solid #e2e8f0',
+              padding: '36px 30px',
+              boxShadow: '0 10px 30px rgba(0, 0, 0, 0.04)',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+            }}
+          >
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+                <span
+                  style={{
+                    background: '#059669',
+                    color: '#ffffff',
+                    fontSize: '10.5px',
+                    fontWeight: 900,
+                    fontFamily: 'monospace',
+                    padding: '3px 8px',
+                    borderRadius: '4px',
+                  }}
+                >
+                  HARDWARE 01
+                </span>
+                <span style={{ color: '#64748b', fontSize: '11px', fontFamily: 'monospace', fontWeight: 700 }}>
+                  EMBEDDED SENSOR DEVICE
+                </span>
+              </div>
+
+              <h2 style={{ fontSize: '26px', fontWeight: 900, color: '#0f172a', marginBottom: '10px', letterSpacing: '-0.5px' }}>
+                Kwiee — ESP32 Sensor Buddy & Hardware
+              </h2>
+
+              <p style={{ color: '#475569', fontSize: '14.5px', lineHeight: 1.7, marginBottom: '20px' }}>
+                Physical desktop companion engineered with custom ESP32 firmware, VL53L0X Time-of-Flight distance sensor, DHT22 climate sensors, and real-time WiFi MQTT notification bridges on a 240x240 TFT screen.
+              </p>
+
+              {/* Hardware Spec Badges */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', marginBottom: '24px' }}>
+                <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '10px', borderRadius: '8px', textAlign: 'center' }}>
+                  <div style={{ fontSize: '17px', fontWeight: 900, color: '#059669' }}>ESP32</div>
+                  <div style={{ fontSize: '9.5px', color: '#64748b', fontFamily: 'monospace', fontWeight: 700 }}>DUAL-CORE CPU</div>
+                </div>
+                <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '10px', borderRadius: '8px', textAlign: 'center' }}>
+                  <div style={{ fontSize: '17px', fontWeight: 900, color: '#059669' }}>ToF 2m</div>
+                  <div style={{ fontSize: '9.5px', color: '#64748b', fontFamily: 'monospace', fontWeight: 700 }}>RANGE SENSOR</div>
+                </div>
+                <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '10px', borderRadius: '8px', textAlign: 'center' }}>
+                  <div style={{ fontSize: '17px', fontWeight: 900, color: '#059669' }}>WiFi/MQTT</div>
+                  <div style={{ fontSize: '9.5px', color: '#64748b', fontFamily: 'monospace', fontWeight: 700 }}>CLOUD BRIDGE</div>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '24px' }}>
+                {['ESP32-WROOM', 'VL53L0X Laser', 'DHT22 Temp/Hum', 'ST7789 TFT Display', 'C++ / Arduino'].map((tag) => (
+                  <span key={tag} style={{ background: '#f1f5f9', border: '1px solid #e2e8f0', color: '#475569', fontSize: '11px', padding: '3px 8px', borderRadius: '6px', fontFamily: 'monospace', fontWeight: 700 }}>
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <Link to="/kwiee" style={{ textDecoration: 'none' }}>
+              <button
+                style={{
+                  width: '100%',
+                  padding: '14px 20px',
+                  borderRadius: '10px',
+                  border: 'none',
+                  background: '#059669',
+                  color: '#ffffff',
+                  fontWeight: 900,
+                  fontSize: '14px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  boxShadow: '0 4px 14px rgba(5, 150, 105, 0.3)',
+                }}
+              >
+                <span>View Kwiee Hardware Specs</span>
+                <span>→</span>
+              </button>
+            </Link>
+          </div>
+        )}
+      </section>
+
+      {/* ── SECTION 4: BESPOKE CLIENT PLATFORMS (HIGH-DENSITY TECHNICAL GRID) ── */}
+      {(activeTab === 'all' || activeTab === 'bespoke') && (
+        <section
+          style={{
+            maxWidth: '1200px',
+            margin: '0 auto 60px',
+            padding: '0 24px',
+          }}
+        >
+          <div style={{ marginBottom: '28px' }}>
+            <span style={{ fontSize: '11px', fontWeight: 900, fontFamily: 'monospace', color: '#2563eb', letterSpacing: '1px' }}>
+              CUSTOM ENTERPRISE SYSTEMS
+            </span>
+            <h2 style={{ fontSize: '28px', fontWeight: 900, color: '#0f172a', marginTop: '6px' }}>
+              Bespoke Software & Pipeline Solutions
+            </h2>
+          </div>
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
+              gap: '20px',
+            }}
+          >
+            {[
+              {
+                id: 'crm',
+                title: 'Custom CRM & Deal Pipeline',
+                desc: 'Tailored customer lifecycle and deal pipeline dashboards with PostgreSQL database isolation, automated team alerts, and role-based permissions.',
+                tags: ['React 19', 'Node.js', 'PostgreSQL', 'REST API'],
+                metric: '247+ Active Deals',
+                sla: '14-Day Delivery',
+              },
+              {
+                id: 'ecom',
+                title: 'High-Throughput E-Commerce',
+                desc: 'Edge-rendered Next.js storefronts built to withstand traffic surges with Redis caching, Stripe Checkout, and automated shipping sync.',
+                tags: ['Next.js 15', 'Stripe', 'Redis Edge', 'CDN'],
+                metric: '<0.8s Page Load',
+                sla: 'Sub-second UX',
+              },
+              {
+                id: 'pipelines',
+                title: 'Autonomous n8n Orchestrations',
+                desc: 'Enterprise workflow automation eliminating manual operations. Webhook listeners, auto-invoice reconciliation, and Slack notifications.',
+                tags: ['n8n', 'Webhooks', 'REST APIs', 'PostgreSQL'],
+                metric: '8,400+ Daily Runs',
+                sla: 'Zero Human Lag',
+              },
+              {
+                id: 'saas',
+                title: 'Multi-Tenant SaaS Starter',
+                desc: 'Production-ready starter foundation featuring organization workspaces, Stripe subscription billing, Auth0 auth, and audit logging.',
+                tags: ['TypeScript', 'Auth0', 'Stripe Billing', 'Docker'],
+                metric: 'Multi-Tenant',
+                sla: '1-Week Staging',
+              },
+            ].map((sol) => (
+              <div
+                key={sol.id}
+                style={{
+                  background: '#ffffff',
+                  borderRadius: '16px',
+                  border: '1px solid #e2e8f0',
+                  padding: '24px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.02)',
+                }}
+              >
+                <div>
+                  <h3 style={{ fontSize: '18px', fontWeight: 900, color: '#0f172a', marginBottom: '8px' }}>
+                    {sol.title}
+                  </h3>
+                  <p style={{ color: '#475569', fontSize: '13.5px', lineHeight: 1.6, marginBottom: '16px' }}>
+                    {sol.desc}
+                  </p>
+                  <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '18px' }}>
+                    {sol.tags.map((t) => (
+                      <span key={t} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', color: '#64748b', fontSize: '10.5px', padding: '2px 7px', borderRadius: '4px', fontFamily: 'monospace' }}>
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div style={{ borderTop: '1px dashed #e2e8f0', paddingTop: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '11px', fontFamily: 'monospace' }}>
+                  <span style={{ color: '#0f172a', fontWeight: 800 }}>{sol.metric}</span>
+                  <span style={{ color: '#2563eb', fontWeight: 700 }}>{sol.sla}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ── SECTION 5: HIGH-IMPACT CUSTOM BUILD ACTION ── */}
+      <section
+        style={{
+          maxWidth: '1000px',
+          margin: '0 auto',
+          padding: '60px 32px',
+          background: '#0f172a',
+          borderRadius: '24px',
+          border: '1px solid #1e293b',
+          textAlign: 'center',
+          color: '#ffffff',
+          boxShadow: '0 25px 50px rgba(15, 23, 42, 0.25)',
+        }}
+      >
+        <span style={{ color: '#ff5733', fontSize: '11px', fontWeight: 900, fontFamily: 'monospace', letterSpacing: '2px' }}>
+          NEED A BESPOKE SYSTEM?
+        </span>
+
+        <h2 style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 900, color: '#ffffff', marginTop: '10px', marginBottom: '16px', letterSpacing: '-0.8px' }}>
+          Have a Custom Product or Hardware Requirement?
+        </h2>
+
+        <p style={{ color: '#94a3b8', fontSize: '16px', maxWidth: '580px', margin: '0 auto 32px', lineHeight: 1.6 }}>
+          We design, prototype, and build custom web platforms, mobile apps, and embedded hardware in fixed 4-week milestones with 100% IP ownership.
+        </p>
+
+        <button
+          onClick={openBookingModal}
+          className="btn-glow"
+          style={{
+            padding: '16px 40px',
+            borderRadius: '12px',
+            border: 'none',
+            fontSize: '15.5px',
+            fontWeight: 900,
+            cursor: 'pointer',
+            color: '#ffffff',
+            boxShadow: '0 4px 20px rgba(255, 87, 51, 0.4)',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+          }}
+        >
+          <span>Schedule Technical Discovery Call</span>
+          <span>→</span>
+        </button>
       </section>
     </div>
   )

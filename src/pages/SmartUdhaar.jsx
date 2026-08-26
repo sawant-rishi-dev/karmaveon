@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useKeyboardContext } from '../context/KeyboardContext'
+import HeroCodeAmbiance from '../components/HeroCodeAmbiance'
 
 export default function SmartUdhaar() {
   const { openBookingModal } = useKeyboardContext()
@@ -76,104 +77,112 @@ export default function SmartUdhaar() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#FDFBF7', color: '#0f172a', paddingBottom: '120px' }}>
+    <div style={{ minHeight: '100vh', background: 'transparent', color: '#0f172a', paddingBottom: '120px' }}>
       
       {/* ── SECTION 1: HERO ── */}
       <section
         style={{
-          padding: '90px 24px 60px',
+          width: '100%',
+          padding: '80px 24px 60px',
           textAlign: 'center',
-          maxWidth: '980px',
-          margin: '0 auto',
+          position: 'relative',
+          overflow: 'hidden',
+          boxShadow: '0 20px 40px -15px rgba(28, 25, 23, 0.07)',
+          borderBottom: '1px solid rgba(203, 213, 225, 0.6)',
+          marginBottom: '40px',
         }}
       >
-        <div
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            background: 'rgba(16, 185, 129, 0.08)',
-            border: '1px solid rgba(16, 185, 129, 0.25)',
-            borderRadius: '100px',
-            padding: '6px 18px',
-            marginBottom: '24px',
-            fontSize: '12px',
-            color: '#10b981',
-            letterSpacing: '1.5px',
-            textTransform: 'uppercase',
-            fontWeight: 800,
-          }}
-        >
-          <span>📱 OFFLINE-FIRST KIRANA POS & LEDGER</span>
-        </div>
+        <HeroCodeAmbiance preset="smartudhaar" />
 
-        <h1
-          style={{
-            fontSize: 'clamp(40px, 6.5vw, 72px)',
-            fontWeight: 900,
-            lineHeight: 1.08,
-            letterSpacing: '-1.5px',
-            marginBottom: '20px',
-            color: '#0f172a',
-          }}
-        >
-          Smart Udhaar App — <span className="gradient-text">SMS-Free Kirana Khata</span>
-        </h1>
-
-        <p
-          style={{
-            fontSize: 'clamp(18px, 2.5vw, 22px)',
-            fontWeight: 700,
-            color: '#334155',
-            maxWidth: '820px',
-            margin: '0 auto 16px',
-            lineHeight: 1.4,
-          }}
-        >
-          Manage customer credit (Udhaar), barcode billing, stock levels, and instant WhatsApp payment collection — all in one offline-first mobile app.
-        </p>
-
-        <p
-          style={{
-            fontSize: '16px',
-            color: '#64748b',
-            maxWidth: '640px',
-            margin: '0 auto 36px',
-            lineHeight: 1.6,
-          }}
-        >
-          Built specifically for Indian Kirana store owners. Works smoothly offline with local SQLite storage and auto-syncs with the cloud.
-        </p>
-
-        <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <button
-            onClick={scrollToDemo}
-            className="btn-glow"
+        <div style={{ maxWidth: '960px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
+          <div
             style={{
-              padding: '16px 36px',
-              borderRadius: '12px',
-              border: 'none',
-              fontSize: '16px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              background: 'rgba(16, 185, 129, 0.08)',
+              border: '1px solid rgba(16, 185, 129, 0.25)',
+              borderRadius: '100px',
+              padding: '6px 18px',
+              marginBottom: '24px',
+              fontSize: '12px',
+              color: '#10b981',
+              letterSpacing: '1.5px',
+              textTransform: 'uppercase',
               fontWeight: 800,
-              cursor: 'pointer',
-              color: '#ffffff',
             }}
           >
-            📱 Try Interactive Kirana Demo
-          </button>
-          <button
-            onClick={openBookingModal}
-            className="btn-outline"
+            <span>📱 OFFLINE-FIRST KIRANA POS & LEDGER</span>
+          </div>
+
+          <h1
             style={{
-              padding: '16px 32px',
-              borderRadius: '12px',
-              fontSize: '16px',
-              fontWeight: 800,
-              cursor: 'pointer',
+              fontSize: 'clamp(40px, 6.5vw, 72px)',
+              fontWeight: 900,
+              lineHeight: 1.08,
+              letterSpacing: '-1.5px',
+              marginBottom: '20px',
+              color: '#0f172a',
             }}
           >
-            Start 15-Day Free Trial →
-          </button>
+            Smart Udhaar App — <span className="gradient-text">SMS-Free Kirana Khata</span>
+          </h1>
+
+          <p
+            style={{
+              fontSize: 'clamp(18px, 2.5vw, 22px)',
+              fontWeight: 700,
+              color: '#334155',
+              maxWidth: '820px',
+              margin: '0 auto 16px',
+              lineHeight: 1.4,
+            }}
+          >
+            Manage customer credit (Udhaar), barcode billing, stock levels, and instant WhatsApp payment collection — all in one offline-first mobile app.
+          </p>
+
+          <p
+            style={{
+              fontSize: '16px',
+              color: '#64748b',
+              maxWidth: '640px',
+              margin: '0 auto 36px',
+              lineHeight: 1.6,
+            }}
+          >
+            Built specifically for Indian Kirana store owners. Works smoothly offline with local SQLite storage and auto-syncs with the cloud.
+          </p>
+
+          <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <button
+              onClick={scrollToDemo}
+              className="btn-glow"
+              style={{
+                padding: '16px 36px',
+                borderRadius: '12px',
+                border: 'none',
+                fontSize: '16px',
+                fontWeight: 800,
+                cursor: 'pointer',
+                color: '#ffffff',
+              }}
+            >
+              📱 Try Interactive Kirana Demo
+            </button>
+            <button
+              onClick={openBookingModal}
+              className="btn-outline"
+              style={{
+                padding: '16px 32px',
+                borderRadius: '12px',
+                fontSize: '16px',
+                fontWeight: 800,
+                cursor: 'pointer',
+              }}
+            >
+              Start 15-Day Free Trial →
+            </button>
+          </div>
         </div>
       </section>
 
@@ -517,65 +526,94 @@ export default function SmartUdhaar() {
         </div>
       </section>
 
-      {/* ── SECTION 3: KEY FEATURES GRID ── */}
-      <section style={{ maxWidth: '1100px', margin: '0 auto 100px', padding: '0 24px' }}>
+      {/* ── SECTION 3: TECHNICAL ARCHITECTURE & KIRANA CAPABILITIES ── */}
+      <section style={{ maxWidth: '1200px', margin: '0 auto 100px', padding: '0 24px' }}>
         <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-          <h2 style={{ fontSize: 'clamp(28px, 4vw, 42px)', fontWeight: 900, color: '#0f172a' }}>
-            Key Features & Capabilities
+          <span style={{ color: '#10b981', fontSize: '11px', fontWeight: 900, fontFamily: 'monospace', letterSpacing: '2px', textTransform: 'uppercase' }}>
+            ENGINEERED FOR DAILY KIRANA PEAK RUSH
+          </span>
+          <h2 style={{ fontSize: 'clamp(28px, 4vw, 42px)', fontWeight: 900, color: '#0f172a', marginTop: '8px' }}>
+            Core Systems & High-Velocity POS Architecture
           </h2>
-          <p style={{ color: '#64748b', fontSize: '16px', marginTop: '8px' }}>
-            Engineered for high-volume Kirana stores needing reliable credit tracking and fast billing.
+          <p style={{ color: '#64748b', fontSize: '16px', marginTop: '8px', maxWidth: '640px', margin: '8px auto 0' }}>
+            Built specifically to eliminate pen-and-paper credit books and slow barcode billing with zero reliance on cloud uptime.
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '24px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '20px' }}>
           {[
             {
-              icon: '📲',
-              title: 'Simple SMS-Free Authentication',
-              desc: 'Quick sign-in or registration with a 10-digit phone number and a 4-digit PIN. Multi-tenant store_id data isolation.',
+              badge: 'LOCAL STORAGE',
+              badgeColor: '#10b981',
+              title: 'Offline-First SQLite Transaction Engine',
+              desc: 'Every customer transaction, Udhaar entry, and stock adjustment is committed locally to expo-sqlite in under 5ms. The store keeps billing at full speed even with zero mobile signal.',
+              techTag: 'expo-sqlite 14.0 · Local ACID DB',
             },
             {
-              icon: '🧾',
-              title: 'Customer Ledger & Udhaar Management',
-              desc: 'Track running balances with visual status badges (Green: Clear, Yellow: Low due, Red: High due). One-tap WhatsApp payment reminders with pre-filled UPI links.',
+              badge: 'PAYMENT RECOVERY',
+              badgeColor: '#25D366',
+              title: '1-Tap WhatsApp Payment Collection',
+              desc: 'Generates automated WhatsApp debt collection messages containing dynamic, pre-filled UPI payment links (GPay, PhonePe, Paytm). Customers settle debts directly into the owner bank account.',
+              techTag: 'WhatsApp Business API · Dynamic UPI',
             },
             {
-              icon: '📷',
-              title: 'Barcode Scanning & "Scan & Sell"',
-              desc: 'Integrated barcode scanner powered by expo-camera. Real-time product lookup via local SQLite cache with fallback to Supabase cloud.',
+              badge: 'BARCODE POS',
+              badgeColor: '#0284c7',
+              title: 'Sub-Second Camera Barcode Scanner',
+              desc: 'Integrated expo-camera barcode recognition with instant local SQLite cache lookup. Automatic "Quick Add Product" prompt appears if an unrecognized barcode is scanned.',
+              techTag: 'expo-camera · 1D/2D Barcode Lookup',
             },
             {
-              icon: '📦',
-              title: 'Product & Inventory Management',
-              desc: 'Manage store products, prices, and stock levels. Instant "Add Product" prompt when an unrecognized barcode is scanned.',
+              badge: 'ZERO-SMS AUTH',
+              badgeColor: '#7c3aed',
+              title: 'SMS-Free 4-Digit PIN Authentication',
+              desc: 'Eliminates costly SMS OTP delays during peak morning rush. Kirana shop owners authenticate securely with a 10-digit mobile number and local hashed 4-digit PIN.',
+              techTag: 'Bcrypt PIN Hash · Multi-Tenant ID',
             },
             {
-              icon: '⚡',
-              title: 'Offline-First Architecture',
-              desc: 'Stores transactions locally using expo-sqlite so Kirana owners continue billing without internet. Automatically syncs with Supabase once online.',
+              badge: 'CLOUD SYNC',
+              badgeColor: '#f59e0b',
+              title: 'Background Cloud Sync with Supabase',
+              desc: 'Once internet connectivity is restored, the background worker automatically pushes offline SQLite transaction diffs to Supabase PostgreSQL with conflict resolution.',
+              techTag: 'Supabase PostgreSQL · Auto-Sync Worker',
             },
             {
-              icon: '📊',
-              title: 'Business Reports & Analytics',
-              desc: 'Outstanding Balances Report, Udhaar Aging Report (0–7d, 8–15d, 16–30d, 31–60d, 60+d), and Low-Stock Warnings.',
+              badge: 'RISK ANALYTICS',
+              badgeColor: '#ef4444',
+              title: 'Udhaar Aging & High-Risk Alert Reports',
+              desc: 'Categorizes store debt into clear aging buckets (0–7d, 8–15d, 16–30d, 31–60d, 60+d). Alerts owners to high-risk overdue accounts before extending further credit.',
+              techTag: 'Aging Ledger Matrix · Low-Stock Alerts',
             },
           ].map((f, i) => (
             <div
               key={i}
               style={{
                 background: '#ffffff',
-                border: '1px solid #e2e8f0',
-                borderRadius: '20px',
+                border: '1.5px solid #e2e8f0',
+                borderRadius: '16px',
                 padding: '28px 24px',
-                boxShadow: '0 8px 24px rgba(0,0,0,0.03)',
+                boxShadow: '0 4px 16px rgba(0,0,0,0.02)',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
               }}
             >
-              <div style={{ fontSize: '36px', marginBottom: '16px' }}>{f.icon}</div>
-              <h3 style={{ fontSize: '18px', fontWeight: 900, color: '#0f172a', marginBottom: '8px' }}>
-                {f.title}
-              </h3>
-              <p style={{ color: '#64748b', fontSize: '14px', lineHeight: 1.6 }}>{f.desc}</p>
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                  <span style={{ fontSize: '10.5px', fontWeight: 900, fontFamily: 'monospace', color: f.badgeColor, background: `${f.badgeColor}12`, border: `1px solid ${f.badgeColor}30`, padding: '2px 8px', borderRadius: '4px' }}>
+                    {f.badge}
+                  </span>
+                </div>
+                <h3 style={{ fontSize: '18px', fontWeight: 900, color: '#0f172a', marginBottom: '10px', lineHeight: 1.3 }}>
+                  {f.title}
+                </h3>
+                <p style={{ color: '#475569', fontSize: '14px', lineHeight: 1.65, margin: 0 }}>
+                  {f.desc}
+                </p>
+              </div>
+              <div style={{ marginTop: '20px', paddingTop: '12px', borderTop: '1px dashed #e2e8f0', fontSize: '11px', fontFamily: 'monospace', color: '#64748b' }}>
+                ⚡ {f.techTag}
+              </div>
             </div>
           ))}
         </div>

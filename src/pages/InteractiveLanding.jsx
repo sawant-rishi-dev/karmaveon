@@ -89,38 +89,6 @@ export default function InteractiveLanding() {
         }}
       />
 
-      {/* Floating Decorative Code Snippets (</>) */}
-      <div
-        style={{
-          position: 'absolute',
-          top: '120px',
-          left: '5%',
-          fontSize: '14px',
-          fontFamily: 'monospace',
-          color: '#94A3B8',
-          opacity: 0.6,
-          pointerEvents: 'none',
-          userSelect: 'none',
-        }}
-      >
-        &lt;HeroSection hijack="proactive" /&gt;
-      </div>
-      <div
-        style={{
-          position: 'absolute',
-          top: '280px',
-          right: '6%',
-          fontSize: '14px',
-          fontFamily: 'monospace',
-          color: '#94A3B8',
-          opacity: 0.6,
-          pointerEvents: 'none',
-          userSelect: 'none',
-        }}
-      >
-        const dwarf = new SoftwareEngineer(&#123; glasses: true &#125;);
-      </div>
-
       {/* ── Padding for Fixed Site Navbar ── */}
       <div style={{ paddingTop: '20px' }} />
 

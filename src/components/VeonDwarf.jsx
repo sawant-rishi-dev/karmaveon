@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 import DwarfCharacter from './DwarfCharacter'
+import { useKeyboardContext } from '../context/KeyboardContext'
 
 /**
  * VeonDwarf — The official AI/Software Engineer Dwarf Companion (VEON)
@@ -19,23 +20,42 @@ import DwarfCharacter from './DwarfCharacter'
  *    - Dives underground on transition and stands guard at bottom-left corner.
  */
 export default function VeonDwarf() {
+  const { openChatModal } = useKeyboardContext()
   const location = useLocation()
   const pathname = location.pathname
   const isHome = pathname === '/'
-  const isAbout = pathname === '/about' || pathname === '/interactive'
+  const isInteractive = pathname === '/interactive'
+
+  // ── Sync Mode on Route Change ────────────────────────────────
+  useEffect(() => {
+    const isHomePage = location.pathname === '/'
+    const isInteractivePage = location.pathname === '/interactive'
+
+    if (isHomePage) {
+      modeRef.current = 'home'
+      setMode('home')
+    } else if (isInteractivePage) {
+      modeRef.current = 'about'
+      setMode('about')
+    } else {
+      modeRef.current = 'corner'
+      setMode('corner')
+      updatePos({ x: 64, y: window.innerHeight - 80 })
+    }
+  }, [location.pathname])
 
   // ── State ─────────────────────────────────────────────────────
   const [pos, setPos]                         = useState({ x: 120, y: 350 })
   const [facing, setFacing]                   = useState('right')
   const [dwarfState, setDwarfState]           = useState('idle')
-  const [mode, setMode]                       = useState(isHome ? 'home' : isAbout ? 'about' : 'corner')
+  const [mode, setMode]                       = useState(isHome ? 'home' : isInteractive ? 'about' : 'corner')
   const [cursorPos, setCursorPos]             = useState({ x: 300, y: 300 })
   const [showFakeCursor, setShowFakeCursor]   = useState(false)
   const [dialogue, setDialogue]               = useState(null)
 
   // ── Refs ──────────────────────────────────────────────────────
   const posRef              = useRef({ x: 120, y: 350 })
-  const modeRef             = useRef(isHome ? 'home' : isAbout ? 'about' : 'corner')
+  const modeRef             = useRef(isHome ? 'home' : isInteractive ? 'about' : 'corner')
   const dwarfStateRef       = useRef('idle')
   const facingRef           = useRef('right')
   const cursorRef           = useRef({ x: 300, y: 300 })
@@ -334,8 +354,8 @@ export default function VeonDwarf() {
           updateDwarfState('idle')
           say('VEON activated! Ready to code. ⚡', 2500)
         }, 3000)
-      } else if (isAbout) {
-        // ON ABOUT SECTION: Sits on his dev table
+      } else if (isInteractive) {
+        // ON INTERACTIVE SECTION: Sits on his dev table
         updateMode('about')
         updateDwarfState('at_desk')
       } else {
@@ -352,7 +372,7 @@ export default function VeonDwarf() {
     prevPathRef.current = curr
 
     if (prev === '/' && curr !== '/') {
-      triggerExitAnimation(isAbout ? 'about' : 'corner')
+      triggerExitAnimation(isInteractive ? 'about' : 'corner')
     } else if (prev !== '/' && curr === '/') {
       hijackDoneRef.current = false
       isBusyRef.current = false
@@ -371,7 +391,7 @@ export default function VeonDwarf() {
         followAllowedRef.current = true
         updateDwarfState('idle')
       }, 3000)
-    } else if (isAbout) {
+    } else if (isInteractive) {
       updateMode('about')
       updateDwarfState('at_desk')
     } else {
@@ -379,7 +399,7 @@ export default function VeonDwarf() {
       updatePos({ x: 64, y: window.innerHeight - 80 })
       updateDwarfState('idle')
     }
-  }, [pathname, isAbout, isHome])
+  }, [pathname, isInteractive, isHome])
 
   // ── Mouse Tracking with Immediate Stop Detection ──────────────
   useEffect(() => {
@@ -517,15 +537,20 @@ export default function VeonDwarf() {
 
   return (
     <>
-      {/* ── VEON Dwarf Entity (Hidden on About page because VEON is sitting at his dev workstation) ── */}
-      {!isAbout && !isOffscreen && (
+      {/* ── VEON Dwarf Entity (Hidden on interactive page because VEON is sitting at his dev workstation) ── */}
+      {!isInteractive && !isOffscreen && (
         <div
+          onClick={() => {
+            if (openChatModal) openChatModal()
+          }}
+          title="Click to Chat with VEON AI!"
           style={{
             position: 'fixed',
             left: `${pos.x - 60 * scale}px`,
             top: `${pos.y - 70 * scale}px`,
             zIndex: 9990,
-            pointerEvents: 'none',
+            pointerEvents: 'auto',
+            cursor: 'pointer',
             willChange: 'transform, left, top',
             filter: isCorner
               ? 'drop-shadow(0 6px 12px rgba(0,0,0,0.12))'
@@ -533,7 +558,7 @@ export default function VeonDwarf() {
             transition: isCorner ? 'all 0.3s ease-out' : 'none',
           }}
         >
-          {/* Speech Dialogue Bubble */}
+          {/* Speech Dialogue Bubble (Clickable) */}
           {dialogue && (
             <div
               style={{
@@ -568,26 +593,31 @@ export default function VeonDwarf() {
             scale={scale}
           />
 
-          {/* Corner Badge Tag */}
-          {isCorner && !dialogue && (
+          {/* Interactive Chat Badge */}
+          {!dialogue && (
             <div
               style={{
                 position: 'absolute',
                 top: '-26px',
                 left: '50%',
                 transform: 'translateX(-50%)',
-                background: 'linear-gradient(135deg, #1E293B, #0F172A)',
-                color: '#38BDF8',
-                border: '1px solid rgba(56, 189, 248, 0.35)',
+                background: 'linear-gradient(135deg, #FF5733, #E11D48)',
+                color: '#FFFFFF',
+                border: '1px solid rgba(255, 255, 255, 0.3)',
                 padding: '2px 9px',
                 borderRadius: '12px',
                 fontSize: '9.5px',
                 fontWeight: 800,
                 whiteSpace: 'nowrap',
-                letterSpacing: '0.8px',
+                letterSpacing: '0.5px',
+                boxShadow: '0 2px 8px rgba(255, 87, 51, 0.4)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
               }}
             >
-              ⚡ VEON
+              <span>💬</span>
+              <span>CHAT WITH VEON</span>
             </div>
           )}
         </div>

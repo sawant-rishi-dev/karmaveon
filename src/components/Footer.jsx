@@ -4,101 +4,90 @@ export default function Footer() {
   const year = new Date().getFullYear()
 
   const riskReversals = [
-    { icon: '🔒', text: 'Full IP transfer. You own 100% of the code.' },
-    { icon: '🛡️', text: 'Signed NDAs available upon request.' },
-    { icon: '💳', text: 'Pay in milestones (50% upfront, 50% on delivery).' },
-    { icon: '🌍', text: 'Global delivery with fast response & seamless collaboration.' },
+    { icon: '🔒', text: '100% IP Transfer & Code Ownership' },
+    { icon: '🛡️', text: 'Mutual NDA Available Upon Request' },
+    { icon: '💳', text: 'Fixed Milestone Payments (50/50)' },
+    { icon: '⚡', text: 'Sub-4-Week Sprint Delivery Guarantee' },
   ]
 
   return (
     <footer
       style={{
         position: 'relative',
-        background: 'rgba(245, 243, 239, 0.95)',
-        borderTop: '1px solid rgba(226, 232, 240, 0.9)',
-        padding: '48px 32px 24px',
+        background: '#090d16',
+        borderTop: '1px solid #1e293b',
+        boxShadow: '0 -20px 50px rgba(0, 0, 0, 0.35)',
+        padding: '52px 28px 24px',
         zIndex: 10,
+        color: '#f8fafc',
         overflow: 'hidden',
       }}
     >
-      {/* Circuit board decoration */}
-      <div style={{ position: 'absolute', inset: 0, opacity: 0.08, pointerEvents: 'none' }}>
-        <svg width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
-          <defs>
-            <pattern id="circuit" width="80" height="80" patternUnits="userSpaceOnUse">
-              <line x1="0" y1="20" x2="30" y2="20" stroke="#2563eb" strokeWidth="1" />
-              <line x1="50" y1="20" x2="80" y2="20" stroke="#2563eb" strokeWidth="1" />
-              <line x1="0" y1="60" x2="20" y2="60" stroke="#0284c7" strokeWidth="1" />
-              <line x1="60" y1="60" x2="80" y2="60" stroke="#0284c7" strokeWidth="1" />
-              <line x1="30" y1="0" x2="30" y2="20" stroke="#2563eb" strokeWidth="1" />
-              <line x1="30" y1="40" x2="30" y2="80" stroke="#2563eb" strokeWidth="1" />
-              <line x1="60" y1="0" x2="60" y2="60" stroke="#7c3aed" strokeWidth="1" />
-              <line x1="60" y1="80" x2="60" y2="80" stroke="#7c3aed" strokeWidth="1" />
-              <circle cx="30" cy="20" r="3" fill="#2563eb" />
-              <circle cx="60" cy="60" r="3" fill="#0284c7" />
-              <circle cx="20" cy="60" r="2" fill="#7c3aed" />
-              <circle cx="50" cy="20" r="2" fill="#db2777" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#circuit)" />
-        </svg>
-      </div>
-
       <div
         style={{
           maxWidth: '1200px',
           margin: '0 auto',
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: '40px',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gap: '36px',
           position: 'relative',
           zIndex: 1,
         }}
       >
-        {/* Brand */}
+        {/* Brand Column */}
         <div>
-          <h3
-            style={{
-              fontWeight: 800,
-              fontSize: '20px',
-              letterSpacing: '2px',
-              background: 'linear-gradient(135deg, #0284c7, #7c3aed)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              marginBottom: '12px',
-            }}
-          >
-            KARMAVEON
-          </h3>
-          <p style={{ color: '#475569', fontSize: '13px', lineHeight: 1.7 }}>
-            High-Performance Apps & AI Automations for Modern Startups. Idea to launch in under 4 weeks.
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
+            <img
+              src="/karmaveon-logo.png"
+              alt="Karmaveon Logo"
+              style={{
+                width: '28px',
+                height: '28px',
+                borderRadius: '6px',
+                objectFit: 'contain',
+                boxShadow: '0 2px 8px rgba(0, 102, 255, 0.3)',
+              }}
+            />
+            <h3
+              style={{
+                fontWeight: 900,
+                fontSize: '19px',
+                letterSpacing: '1.5px',
+                color: '#ffffff',
+                margin: 0,
+              }}
+            >
+              KARMAVEON
+            </h3>
+          </div>
+          <p style={{ color: '#94a3b8', fontSize: '13.5px', lineHeight: 1.65, maxWidth: '280px' }}>
+            Engineering high-throughput web platforms, offline mobile apps, autonomous AI pipelines & bespoke hardware from cloud to chip.
           </p>
         </div>
 
-        {/* Navigation */}
+        {/* Navigation Column */}
         <div>
-          <h4 style={{ color: '#2563eb', fontSize: '12px', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '16px', fontWeight: 700 }}>
-            Navigation
+          <h4 style={{ color: '#38bdf8', fontSize: '11.5px', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '14px', fontWeight: 800, fontFamily: 'monospace' }}>
+            [Navigation]
           </h4>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {[
               ['/', 'Home'],
-              ['/solutions', 'Solutions'],
               ['/products', 'Products'],
-              ['/about', 'About'],
+              ['/services', 'Services'],
             ].map(([to, label]) => (
               <Link
                 key={to}
                 to={to}
                 style={{
-                  color: '#475569',
+                  color: '#cbd5e1',
                   textDecoration: 'none',
-                  fontSize: '14px',
+                  fontSize: '13.5px',
+                  fontWeight: 500,
                   transition: 'color 0.2s ease',
                 }}
-                onMouseEnter={(e) => { e.target.style.color = '#2563eb' }}
-                onMouseLeave={(e) => { e.target.style.color = '#475569' }}
+                onMouseEnter={(e) => { e.target.style.color = '#ff5733' }}
+                onMouseLeave={(e) => { e.target.style.color = '#cbd5e1' }}
               >
                 {label}
               </Link>
@@ -106,91 +95,98 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Services */}
+        {/* Capabilities Column */}
         <div>
-          <h4 style={{ color: '#2563eb', fontSize: '12px', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '16px', fontWeight: 700 }}>
-            Services
+          <h4 style={{ color: '#38bdf8', fontSize: '11.5px', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '14px', fontWeight: 800, fontFamily: 'monospace' }}>
+            [Engineering]
           </h4>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            {['Web Apps & SaaS', 'Mobile Development', 'n8n AI Automations', 'IoT Dashboards'].map((s) => (
-              <span key={s} style={{ color: '#475569', fontSize: '14px' }}>{s}</span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            {[
+              'Next.js 15 Web Platforms',
+              'Offline React Native Apps',
+              'Enterprise Vector RAG & LLMs',
+              'n8n Workflow Orchestration',
+              'ESP32 & GPU Compute Rigs',
+            ].map((s) => (
+              <span key={s} style={{ color: '#94a3b8', fontSize: '13.5px' }}>
+                {s}
+              </span>
             ))}
           </div>
         </div>
 
-        {/* Contact */}
+        {/* Direct Contact Column */}
         <div>
-          <h4 style={{ color: '#2563eb', fontSize: '12px', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '16px', fontWeight: 700 }}>
-            Contact
+          <h4 style={{ color: '#38bdf8', fontSize: '11.5px', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '14px', fontWeight: 800, fontFamily: 'monospace' }}>
+            [Direct Contact]
           </h4>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <a
-              href="mailto:karmaaveontechnologies@gmail.com"
-              style={{ color: '#475569', textDecoration: 'none', fontSize: '14px', fontWeight: 600 }}
+              href="mailto:contact@karmaveontechnologies.in"
+              style={{ color: '#ff5733', textDecoration: 'none', fontSize: '13.5px', fontWeight: 700 }}
             >
               contact@karmaveontechnologies.in
             </a>
             <a
               href="tel:+918237815495"
-              style={{ color: '#475569', textDecoration: 'none', fontSize: '14px', fontWeight: 600 }}
+              style={{ color: '#f8fafc', textDecoration: 'none', fontSize: '13.5px', fontWeight: 700 }}
             >
               +91 82378 15495
             </a>
-            <span style={{ color: '#64748b', fontSize: '13px' }}>
-              Available worldwide across flexible timezones.
+            <span style={{ color: '#64748b', fontSize: '12.5px' }}>
+              Worldwide delivery across US, EU & APAC timezones.
             </span>
           </div>
         </div>
       </div>
 
-      {/* ── High-Trust Risk Reversal Bar ── */}
+      {/* ── Single Thin Sleek Trust Badges Bar ── */}
       <div
         style={{
           maxWidth: '1200px',
           margin: '36px auto 0',
-          padding: '20px 24px',
-          borderRadius: '12px',
-          background: '#ffffff',
-          border: '1px solid rgba(226, 232, 240, 0.9)',
-          boxShadow: '0 4px 14px rgba(0, 0, 0, 0.02)',
+          padding: '12px 18px',
+          borderRadius: '8px',
+          background: '#020617',
+          border: '1px solid #1e293b',
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-          gap: '16px',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gap: '12px',
           position: 'relative',
           zIndex: 1,
         }}
       >
         {riskReversals.map((r, i) => (
-          <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span style={{ fontSize: '18px' }}>{r.icon}</span>
-            <span style={{ fontSize: '12px', fontWeight: 700, color: '#334155', lineHeight: 1.4 }}>
+          <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ fontSize: '14px' }}>{r.icon}</span>
+            <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#cbd5e1', fontFamily: 'monospace' }}>
               {r.text}
             </span>
           </div>
         ))}
       </div>
 
-      {/* Bottom bar */}
+      {/* Bottom Legal / Signature */}
       <div
         style={{
           maxWidth: '1200px',
-          margin: '24px auto 0',
-          paddingTop: '20px',
-          borderTop: '1px solid rgba(226, 232, 240, 0.8)',
+          margin: '20px auto 0',
+          paddingTop: '16px',
+          borderTop: '1px solid rgba(255, 255, 255, 0.06)',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
           flexWrap: 'wrap',
-          gap: '12px',
+          gap: '10px',
           position: 'relative',
           zIndex: 1,
         }}
       >
-        <span style={{ color: '#64748b', fontSize: '12px' }}>
+        <span style={{ color: '#64748b', fontSize: '11.5px' }}>
           © {year} Karmaveon Technologies. All rights reserved.
         </span>
-        <span style={{ color: '#94a3b8', fontSize: '12px' }}>
-          Built with ⚡ precision for Modern Startups.
+        <span style={{ color: '#38bdf8', fontSize: '11.5px', fontFamily: 'monospace' }}>
+          ⚡ Engineering Precision · Cloud to Chip
         </span>
       </div>
     </footer>

@@ -1,61 +1,6 @@
 import { useState, useEffect } from 'react'
-
-const SERVICES = [
-  {
-    id: 'web',
-    icon: '🌐',
-    title: 'Website Development',
-    tagline: 'From landing pages to full-scale web applications',
-    desc: 'We build what your business needs — performant, beautiful, and conversion-optimized. From high-converting marketing sites to complex SaaS platforms, we architect with modern stacks.',
-    accentColor: '#ff5733',
-    features: ['React / Next.js', 'SEO Optimized', 'Mobile First', 'CMS Integration', 'Sub-Second Speed'],
-    showcase: {
-      url: 'https://thirdeye.fun/',
-      title: 'Third Eye — Production Client Showcase',
-      desc: 'High-impact web application engineered for maximum user engagement and performance.',
-    },
-  },
-  {
-    id: 'mobile',
-    icon: '📱',
-    title: 'Mobile App Development',
-    tagline: 'Native & cross-platform apps that deliver',
-    desc: 'Seamless user experiences on iOS and Android. We design and develop mobile apps that users love — with smooth performance, offline SQLite capability, and pixel-perfect UI from day one.',
-    accentColor: '#7c3aed',
-    features: ['React Native (Expo 51)', 'iOS & Android', 'Offline SQLite Sync', '1-Tap WhatsApp Collections', 'Indian GST Engine'],
-    phoneSimulator: true,
-  },
-  {
-    id: 'automation',
-    icon: '⚡',
-    title: 'n8n Workflow Automation',
-    tagline: 'Repetitive tasks? We kill them',
-    desc: 'Automate your business processes end-to-end with n8n workflows. Free your team from manual work and let intelligent automation handle data pipelines, emails, CRMs, and real-time syncing.',
-    accentColor: '#db2777',
-    features: ['n8n Workflows', 'API Integrations', 'Webhook Triggers', 'Error Handling & Retries', 'Zero-Code Maintenance'],
-    automationCanvas: true,
-  },
-  {
-    id: 'llm',
-    icon: '🧠',
-    title: 'Custom LLMs & AI Agents',
-    tagline: 'Enterprise RAG, Fine-Tuning & Multi-Agent Systems',
-    desc: 'Turn generative AI into real business ROI. We architect domain-specific LLM pipelines, autonomous multi-agent reasoning workflows, semantic search (RAG) over proprietary data, and fine-tuned models with strict enterprise guardrails.',
-    accentColor: '#0284c7',
-    features: ['Custom RAG Pipelines', 'Autonomous Multi-Agents', 'Fine-Tuning (Llama 3 / Mistral)', 'Vector DBs (pgvector / Qdrant)', 'Zero-Hallucination Guardrails'],
-    llmVisualizer: true,
-  },
-  {
-    id: 'hardware',
-    icon: '🔌',
-    title: 'IoT, Arduino & Custom Hardware Engineering',
-    tagline: 'Embedded Systems, Custom PC Builds & Sensor Telemetry',
-    desc: 'Our engineering team designs and builds custom hardware tailored for your requirements: from Arduino and ESP32 microcontroller setups, smart sensors, and IoT cloud telemetry to bespoke high-performance PC workstation builds and GPU rigs for local AI compute.',
-    accentColor: '#059669',
-    features: ['Arduino & ESP32 Microcontrollers', 'Custom Sensor Arrays & PCB Prototyping', 'Real-Time MQTT Cloud Telemetry', 'Bespoke Workstation & GPU Rig Builds', 'Embedded Firmware & Hardware-Cloud Sync'],
-    hardwareVisualizer: true,
-  },
-]
+import { useKeyboardContext } from '../context/KeyboardContext'
+import HeroCodeAmbiance from '../components/HeroCodeAmbiance'
 
 // ── Interactive Kirana POS / Udhaar Mobile Simulator ─────────────
 function KiranaPhoneSimulator() {
@@ -93,12 +38,12 @@ function KiranaPhoneSimulator() {
       <div
         style={{
           width: '100%',
-          maxWidth: '260px',
-          height: '460px',
+          maxWidth: '280px',
+          height: '470px',
           background: '#090d16',
           borderRadius: '36px',
           border: '5px solid #1e293b',
-          boxShadow: '0 25px 50px -12px rgba(124, 58, 237, 0.22), 0 4px 16px rgba(0, 0, 0, 0.2)',
+          boxShadow: '0 25px 50px -12px rgba(124, 58, 237, 0.25), 0 4px 16px rgba(0, 0, 0, 0.3)',
           position: 'relative',
           overflow: 'hidden',
           display: 'flex',
@@ -109,7 +54,7 @@ function KiranaPhoneSimulator() {
           userSelect: 'none',
         }}
       >
-        {/* Dynamic Island / Status Bar */}
+        {/* Status Bar */}
         <div
           style={{
             padding: '8px 14px 4px',
@@ -122,7 +67,6 @@ function KiranaPhoneSimulator() {
           }}
         >
           <span style={{ fontSize: '10px', fontWeight: 800, color: '#94a3b8' }}>09:41</span>
-          {/* Pill notch */}
           <div
             style={{
               width: '56px',
@@ -134,31 +78,25 @@ function KiranaPhoneSimulator() {
               alignItems: 'center',
               justifyContent: 'flex-end',
               paddingRight: '6px',
-              gap: '4px',
             }}
           >
             <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#10b981' }} />
-            <div style={{ width: '3px', height: '3px', borderRadius: '50%', background: '#334155' }} />
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '9px', color: '#10b981', fontWeight: 700 }}>
             <span>⚡ SQLite</span>
           </div>
         </div>
 
-        {/* Store Title Bar & Auth Indicator */}
+        {/* Store Title Bar */}
         <div style={{ padding: '6px 12px', background: '#0f172a', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
             <div style={{ fontSize: '11px', fontWeight: 800, color: '#f8fafc', display: 'flex', alignItems: 'center', gap: '4px' }}>
               <span>🏪</span>
-              <span>Sharma Kirana POS</span>
+              <span>Kirana POS Terminal</span>
             </div>
             <span style={{ fontSize: '9px', background: 'rgba(16,185,129,0.15)', color: '#34d399', padding: '1px 6px', borderRadius: '4px', fontWeight: 700 }}>
-              PIN Auth ✓
+              Offline ✓
             </span>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '8px', color: '#94a3b8' }}>
-            <span>React Native · Expo 51</span>
-            <span style={{ color: '#38bdf8' }}>☁️ Supabase Cloud</span>
           </div>
         </div>
 
@@ -191,10 +129,8 @@ function KiranaPhoneSimulator() {
 
         {/* Screen Content Body */}
         <div style={{ flex: 1, padding: '8px 10px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          {/* ── TAB 1: OFFLINE-FIRST POS & BARCODE ── */}
           {activeTab === 'pos' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              {/* Barcode Camera Scanner Viewfinder */}
               <div
                 onClick={handleScan}
                 style={{
@@ -204,7 +140,6 @@ function KiranaPhoneSimulator() {
                   padding: '8px',
                   textAlign: 'center',
                   cursor: 'pointer',
-                  position: 'relative',
                 }}
               >
                 <div style={{ fontSize: '9px', color: '#a78bfa', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
@@ -216,7 +151,6 @@ function KiranaPhoneSimulator() {
                 </div>
               </div>
 
-              {/* Scanned Cart Items */}
               <div style={{ background: '#0f172a', borderRadius: '8px', padding: '6px 8px', border: '1px solid rgba(255,255,255,0.05)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '9px', fontWeight: 700, marginBottom: '2px' }}>
                   <span>Aashirvaad Atta 5kg</span>
@@ -227,30 +161,13 @@ function KiranaPhoneSimulator() {
                   <span>₹160</span>
                 </div>
                 {scannedItem && (
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '9px', fontWeight: 700, color: '#34d399', animation: 'fadeIn 0.2s ease' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '9px', fontWeight: 700, color: '#34d399' }}>
                     <span>+ Tata Salt 1kg</span>
                     <span>₹28</span>
                   </div>
                 )}
               </div>
 
-              {/* GST Tax Calculation Engine */}
-              <div style={{ background: '#1e293b', borderRadius: '8px', padding: '6px 8px', fontSize: '8.5px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', color: '#94a3b8', marginBottom: '2px' }}>
-                  <span>Subtotal (SQLite):</span>
-                  <span>{scannedItem ? '₹428.00' : '₹400.00'}</span>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', color: '#a78bfa', marginBottom: '2px' }}>
-                  <span>CGST (2.5%) + SGST (2.5%):</span>
-                  <span>{scannedItem ? '₹21.40' : '₹20.00'}</span>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 800, color: '#f8fafc', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '3px', marginTop: '2px' }}>
-                  <span>Grand Total:</span>
-                  <span style={{ color: '#34d399' }}>{scannedItem ? '₹449.40' : '₹420.00'}</span>
-                </div>
-              </div>
-
-              {/* Fast POS Action */}
               <button
                 onClick={handlePrintInvoice}
                 style={{
@@ -262,7 +179,6 @@ function KiranaPhoneSimulator() {
                   fontSize: '9px',
                   fontWeight: 800,
                   cursor: 'pointer',
-                  boxShadow: '0 4px 12px rgba(124, 58, 237, 0.4)',
                 }}
               >
                 {invoicePrinted ? '✓ GST Bill Saved & Printed!' : '⚡ Fast Print & Multi-Format GST'}
@@ -270,7 +186,6 @@ function KiranaPhoneSimulator() {
             </div>
           )}
 
-          {/* ── TAB 2: UDHAAR LEDGER & 1-TAP WHATSAPP ── */}
           {activeTab === 'udhaar' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
               <div style={{ background: '#0f172a', borderRadius: '8px', padding: '8px', border: '1px solid rgba(239, 68, 68, 0.3)' }}>
@@ -283,11 +198,6 @@ function KiranaPhoneSimulator() {
                 <div style={{ fontSize: '12px', fontWeight: 900, color: '#f87171', marginBottom: '4px' }}>
                   ₹2,450 Due
                 </div>
-                <div style={{ fontSize: '7.5px', color: '#94a3b8', marginBottom: '6px' }}>
-                  Last transaction: 08 Aug (Offline SQLite sync)
-                </div>
-
-                {/* 1-Tap WhatsApp Trigger */}
                 <button
                   onClick={handleSendReminder}
                   style={{
@@ -300,28 +210,14 @@ function KiranaPhoneSimulator() {
                     fontSize: '8.5px',
                     fontWeight: 800,
                     cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '4px',
                   }}
                 >
-                  <span>💬</span>
-                  <span>{reminderSent ? '✓ UPI Deep Link Dispatched!' : '1-Tap WhatsApp + Dynamic UPI'}</span>
+                  {reminderSent ? '✓ UPI Deep Link Dispatched!' : '💬 1-Tap WhatsApp + Dynamic UPI'}
                 </button>
-              </div>
-
-              {/* Second customer */}
-              <div style={{ background: '#0f172a', borderRadius: '8px', padding: '6px 8px', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '9px', fontWeight: 700 }}>
-                  <span>Vikas Sharma</span>
-                  <span style={{ color: '#34d399' }}>₹320 (Paid ✓)</span>
-                </div>
               </div>
             </div>
           )}
 
-          {/* ── TAB 3: MULTI-FORMAT GST INVOICE ENGINE ── */}
           {activeTab === 'gst' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
               <div style={{ background: '#0f172a', borderRadius: '8px', padding: '8px', border: '1px solid rgba(124, 58, 237, 0.3)' }}>
@@ -329,44 +225,17 @@ function KiranaPhoneSimulator() {
                   📄 GST INVOICE #GST-2026-084
                 </div>
                 <div style={{ fontSize: '8px', color: '#cbd5e1', lineHeight: 1.5, background: '#020617', padding: '6px', borderRadius: '6px', fontFamily: 'monospace' }}>
-                  <div>HSN: 1001 · Rate: 5%</div>
-                  <div>Taxable Value: ₹800.00</div>
-                  <div>CGST (2.5%): ₹20.00</div>
-                  <div>SGST (2.5%): ₹20.00</div>
+                  <div>HSN: 1001 · Taxable: ₹800.00</div>
                   <div style={{ color: '#34d399', fontWeight: 700 }}>Total: ₹840.00 (PAID)</div>
                 </div>
-                <div style={{ display: 'flex', gap: '4px', marginTop: '6px' }}>
-                  <span style={{ flex: 1, textAlign: 'center', background: '#1e293b', padding: '3px', borderRadius: '4px', fontSize: '7.5px', color: '#94a3b8' }}>
-                    🖨️ Thermal 3"
-                  </span>
-                  <span style={{ flex: 1, textAlign: 'center', background: '#1e293b', padding: '3px', borderRadius: '4px', fontSize: '7.5px', color: '#94a3b8' }}>
-                    📑 A4 PDF
-                  </span>
-                </div>
-              </div>
-
-              {/* Micro-SaaS Model Tag */}
-              <div style={{ background: 'rgba(124,58,237,0.1)', border: '1px solid rgba(124,58,237,0.2)', borderRadius: '6px', padding: '5px 8px', fontSize: '7.5px', color: '#c4b5fd' }}>
-                💎 Micro-SaaS Model · Unlimited Invoices Active
               </div>
             </div>
           )}
         </div>
 
-        {/* Phone Bottom Home Bar & Sync Pulse */}
-        <div style={{ padding: '6px 12px 10px', background: '#090d16', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '8px', color: '#64748b' }}>
-            <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 6px #10b981' }} />
-            <span>Local SQLite ⇄ Supabase Cloud Live</span>
-          </div>
-          <div
-            style={{
-              width: '50px',
-              height: '3px',
-              background: 'rgba(255, 255, 255, 0.25)',
-              borderRadius: '3px',
-            }}
-          />
+        {/* Home Indicator */}
+        <div style={{ padding: '6px 12px 10px', background: '#090d16', display: 'flex', justifyContent: 'center' }}>
+          <div style={{ width: '50px', height: '3px', background: 'rgba(255, 255, 255, 0.25)', borderRadius: '3px' }} />
         </div>
       </div>
     </div>
@@ -378,94 +247,83 @@ function N8nWorkflowVisualizer() {
   const [activeStep, setActiveStep] = useState(0)
 
   const steps = [
-    { name: 'Order Webhook', icon: '⚡', desc: 'Instant trigger from app' },
-    { name: 'Data Transform', icon: '⚙️', desc: 'JSON parsing & GST calc' },
-    { name: 'Supabase Sync', icon: '🐘', desc: 'Atomic Postgres transaction' },
-    { name: 'WhatsApp Alert', icon: '💬', desc: '1-Tap UPI receipt sent' },
+    { name: 'Order Webhook', icon: '⚡', desc: 'Instant POST event from mobile/web app' },
+    { name: 'Data Transform', icon: '⚙️', desc: 'JSON sanitization & automated GST split' },
+    { name: 'Supabase Sync', icon: '🐘', desc: 'Atomic PostgreSQL commit (sub-12ms)' },
+    { name: 'WhatsApp & Slack', icon: '💬', desc: '1-Tap UPI receipt + team dispatch alert' },
   ]
 
   return (
     <div
       style={{
-        background: '#0f172a',
+        background: '#090d16',
         borderRadius: '20px',
-        border: '1px solid rgba(219, 39, 119, 0.3)',
+        border: '1px solid #1e293b',
         padding: '24px',
-        boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
+        boxShadow: '0 20px 40px rgba(0,0,0,0.25)',
         display: 'flex',
         flexDirection: 'column',
         gap: '16px',
         width: '100%',
-        maxWidth: '480px',
-        margin: '0 auto',
       }}
     >
-      {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #1e293b', paddingBottom: '12px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <span style={{ fontSize: '18px' }}>⚡</span>
           <div>
-            <div style={{ fontSize: '13px', fontWeight: 800, color: '#f8fafc' }}>n8n Real-Time Automation Pipeline</div>
-            <div style={{ fontSize: '10px', color: '#94a3b8' }}>Zero human error · Sub-second execution</div>
+            <div style={{ fontSize: '14px', fontWeight: 900, color: '#f8fafc' }}>n8n Autonomous Orchestration Daemon</div>
+            <div style={{ fontSize: '11px', color: '#94a3b8', fontFamily: 'monospace' }}>34 Active Workflows · Zero Human Intervention</div>
           </div>
         </div>
-        <span style={{ fontSize: '10px', background: 'rgba(16,185,129,0.15)', color: '#34d399', padding: '2px 8px', borderRadius: '12px', fontWeight: 800 }}>
-          ● LIVE
+        <span style={{ fontSize: '10px', background: 'rgba(16,185,129,0.15)', color: '#34d399', padding: '3px 8px', borderRadius: '12px', fontWeight: 800, fontFamily: 'monospace' }}>
+          ● EXECUTING
         </span>
       </div>
 
-      {/* Nodes Flow */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '10px' }}>
         {steps.map((step, idx) => (
           <div
             key={step.name}
             onClick={() => setActiveStep(idx)}
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              padding: '10px 14px',
+              padding: '12px',
               borderRadius: '10px',
-              background: activeStep === idx ? 'rgba(219, 39, 119, 0.15)' : '#1e293b',
-              border: activeStep === idx ? '1px solid #db2777' : '1px solid rgba(255,255,255,0.06)',
+              background: activeStep === idx ? 'rgba(219, 39, 119, 0.15)' : '#0f172a',
+              border: activeStep === idx ? '1px solid #db2777' : '1px solid #1e293b',
               cursor: 'pointer',
               transition: 'all 0.2s ease',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <span style={{ fontSize: '16px' }}>{step.icon}</span>
-              <div>
-                <div style={{ fontSize: '12px', fontWeight: 700, color: '#f8fafc' }}>{step.name}</div>
-                <div style={{ fontSize: '10px', color: '#94a3b8' }}>{step.desc}</div>
-              </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+              <span>{step.icon}</span>
+              <span style={{ fontSize: '12px', fontWeight: 800, color: '#ffffff' }}>{step.name}</span>
             </div>
-            <span style={{ fontSize: '11px', color: '#34d399', fontWeight: 800 }}>
-              {activeStep === idx ? '⚡ Active' : '✓ Ready'}
-            </span>
+            <p style={{ fontSize: '11px', color: '#94a3b8', margin: 0, lineHeight: 1.4 }}>{step.desc}</p>
           </div>
         ))}
       </div>
 
-      {/* Footer Metrics */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', background: '#020617', padding: '10px 14px', borderRadius: '10px', fontSize: '11px' }}>
-        <span style={{ color: '#94a3b8' }}>Average Pipeline Latency:</span>
-        <span style={{ color: '#38bdf8', fontWeight: 800 }}>18ms (99.99% Uptime)</span>
+      <div style={{ background: '#020617', padding: '10px 14px', borderRadius: '8px', fontSize: '11px', fontFamily: 'monospace', color: '#38bdf8', display: 'flex', justifyContent: 'space-between' }}>
+        <span>&gt; pipeline.status: PASS (0 errors across 8,400 daily triggers)</span>
+        <span style={{ color: '#10b981' }}>Latency: 142ms</span>
       </div>
     </div>
   )
 }
 
-// ── Interactive Custom LLM & AI Agents Visualizer ────────────────
+// ── Interactive Custom LLM Visualizer ────────────────────────────
 function LlmAgentVisualizer() {
-  const [isRunning, setIsRunning] = useState(false)
-  const [activeStep, setActiveStep] = useState(2)
+  const [query] = useState('Retrieve Q3 gross margins & reconcile unpaid invoices')
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [tokens, setTokens] = useState('pgvector found 4 related chunks in 28ms · RAG guardrail confidence: 99.4%')
 
-  const handleRunAgent = () => {
-    setIsRunning(true)
-    setActiveStep(0)
-    setTimeout(() => setActiveStep(1), 700)
-    setTimeout(() => setActiveStep(2), 1400)
-    setTimeout(() => setIsRunning(false), 2000)
+  const handleSimulate = () => {
+    setIsProcessing(true)
+    setTokens('Querying pgvector embeddings...')
+    setTimeout(() => {
+      setTokens('pgvector match: [Store #104 ledger: ₹42,580 settled, ₹2,450 pending]. Synthesis complete (184 tokens @ 48 t/s).')
+      setIsProcessing(false)
+    }, 1200)
   }
 
   return (
@@ -473,246 +331,158 @@ function LlmAgentVisualizer() {
       style={{
         background: '#090d16',
         borderRadius: '20px',
-        border: '1px solid rgba(2, 132, 199, 0.35)',
-        padding: '24px',
-        boxShadow: '0 20px 40px rgba(0,0,0,0.18)',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '14px',
-        width: '100%',
-        maxWidth: '480px',
-        margin: '0 auto',
-        fontFamily: "'Inter', system-ui, sans-serif",
+        border: '1.5px solid #0284c7',
+        padding: '26px',
+        boxShadow: '0 20px 40px rgba(2, 132, 199, 0.15)',
+        color: '#ffffff',
       }}
     >
-      {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '12px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ fontSize: '18px' }}>🧠</span>
-          <div>
-            <div style={{ fontSize: '13px', fontWeight: 800, color: '#f8fafc' }}>Autonomous LLM Agent Reasoning</div>
-            <div style={{ fontSize: '10px', color: '#94a3b8' }}>RAG Engine + Strict Enterprise Guardrails</div>
-          </div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #1e293b', paddingBottom: '12px', marginBottom: '16px' }}>
+        <div>
+          <div style={{ fontSize: '14px', fontWeight: 900, color: '#38bdf8' }}>Custom AI Agent & Vector RAG Engine</div>
+          <div style={{ fontSize: '11px', color: '#94a3b8', fontFamily: 'monospace' }}>Llama-3-70B · pgvector · Private VPC Deployment</div>
         </div>
-        <span style={{ fontSize: '10px', background: 'rgba(2,132,199,0.2)', color: '#38bdf8', padding: '2px 8px', borderRadius: '12px', fontWeight: 800 }}>
-          Llama-3 / Claude
+        <span style={{ fontSize: '10.5px', background: 'rgba(2, 132, 199, 0.15)', color: '#38bdf8', padding: '3px 8px', borderRadius: '4px', fontWeight: 800, fontFamily: 'monospace' }}>
+          LOCAL INFERENCE
         </span>
       </div>
 
-      {/* User Query Prompt Box */}
-      <div style={{ background: '#0f172a', border: '1px solid #1e293b', borderRadius: '10px', padding: '10px 12px' }}>
-        <div style={{ fontSize: '9px', color: '#0284c7', fontWeight: 800, textTransform: 'uppercase', marginBottom: '2px' }}>
-          USER GOAL / AGENT TASK:
-        </div>
-        <div style={{ fontSize: '11px', color: '#f1f5f9', fontWeight: 600 }}>
-          "Analyze 14-day Khata balances, detect revenue leaks, and draft 1-tap WhatsApp collections."
-        </div>
+      <div style={{ background: '#020617', borderRadius: '10px', border: '1px solid #1e293b', padding: '12px', marginBottom: '14px' }}>
+        <div style={{ fontSize: '10px', color: '#64748b', fontFamily: 'monospace', marginBottom: '4px' }}>INPUT QUERY TO DOMAIN AGENT:</div>
+        <div style={{ fontSize: '13px', color: '#f8fafc', fontWeight: 700 }}>"{query}"</div>
       </div>
 
-      {/* Reasoning Steps */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-        {[
-          { label: '1. Semantic Vector Search', detail: 'Fetched 8 relevant ledger vectors from pgvector' },
-          { label: '2. Multi-Agent Reasoning', detail: 'Cross-validated GST compliance with local SQLite DB' },
-          { label: '3. Zero-Hallucination Guardrail', detail: '100% verified citation & UPI deep-link generation' },
-        ].map((step, idx) => (
-          <div
-            key={step.label}
-            style={{
-              padding: '6px 10px',
-              borderRadius: '8px',
-              background: activeStep >= idx ? 'rgba(2, 132, 199, 0.12)' : '#0f172a',
-              border: activeStep >= idx ? '1px solid rgba(2, 132, 199, 0.4)' : '1px solid rgba(255,255,255,0.04)',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
-            <div>
-              <div style={{ fontSize: '10.5px', fontWeight: 700, color: activeStep >= idx ? '#38bdf8' : '#64748b' }}>
-                {step.label}
-              </div>
-              <div style={{ fontSize: '9px', color: '#94a3b8' }}>{step.detail}</div>
-            </div>
-            <span style={{ fontSize: '11px', color: activeStep >= idx ? '#34d399' : '#475569', fontWeight: 800 }}>
-              {activeStep >= idx ? '✓' : '...'}
-            </span>
-          </div>
-        ))}
+      <div style={{ background: 'rgba(2, 132, 199, 0.08)', borderRadius: '10px', border: '1px solid rgba(2, 132, 199, 0.25)', padding: '14px', fontFamily: 'monospace', fontSize: '12px', color: '#38bdf8', marginBottom: '16px' }}>
+        <div style={{ color: '#94a3b8', fontSize: '10px', marginBottom: '4px' }}>AGENT REASONING & SYNTHESIS:</div>
+        <div>{tokens}</div>
       </div>
 
-      {/* Output preview */}
-      <div style={{ background: '#020617', padding: '10px 12px', borderRadius: '10px', border: '1px solid rgba(16,185,129,0.2)' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
-          <span style={{ fontSize: '9px', color: '#34d399', fontWeight: 800 }}>⚡ STRUCTURED OUTPUT READY:</span>
-          <span style={{ fontSize: '9px', color: '#64748b' }}>Confidence: 99.8%</span>
-        </div>
-        <div style={{ fontSize: '10px', color: '#cbd5e1', lineHeight: 1.5, fontFamily: 'monospace' }}>
-          ✓ Generated personalized WhatsApp dispatch for ₹2,450 balance with encoded UPI intent deep-link.
-        </div>
-      </div>
-
-      {/* Action Trigger */}
       <button
-        onClick={handleRunAgent}
-        disabled={isRunning}
+        onClick={handleSimulate}
+        disabled={isProcessing}
         style={{
-          background: isRunning ? '#0284c7' : 'linear-gradient(135deg, #0284c7, #0369a1)',
+          background: 'linear-gradient(135deg, #0284c7, #0369a1)',
           color: '#ffffff',
           border: 'none',
-          borderRadius: '10px',
-          padding: '9px',
-          fontSize: '11px',
+          borderRadius: '8px',
+          padding: '10px 18px',
+          fontSize: '12.5px',
           fontWeight: 800,
-          cursor: 'pointer',
-          boxShadow: '0 4px 14px rgba(2, 132, 199, 0.4)',
-          transition: 'all 0.2s ease',
+          cursor: isProcessing ? 'not-allowed' : 'pointer',
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '6px',
         }}
       >
-        {isRunning ? '⚡ Executing LLM Agent Pipeline...' : '⚡ Test Run Autonomous Agent'}
+        <span>{isProcessing ? '⚡ Processing Vector Chunks...' : '⚡ Test Agent Query Stream'}</span>
       </button>
     </div>
   )
 }
 
-// ── Interactive IoT, Arduino & Custom Hardware Visualizer ────────
+// ── Interactive Hardware Workbench Visualizer ────────────────────
 function HardwareIotVisualizer() {
-  const [relayOn, setRelayOn] = useState(false)
-  const [temp, setTemp] = useState(24.6)
   const [activeTab, setActiveTab] = useState('iot')
+  const [relayOn, setRelayOn] = useState(false)
+  const [temp, setTemp] = useState(24.7)
 
-  const toggleRelay = () => {
-    setRelayOn(!relayOn)
-    setTemp(prev => Number((prev + (relayOn ? -0.4 : 0.8)).toFixed(1)))
-  }
+  useEffect(() => {
+    const t = setInterval(() => {
+      setTemp((prev) => parseFloat((prev + (Math.random() - 0.5) * 0.2).toFixed(1)))
+    }, 2500)
+    return () => clearInterval(t)
+  }, [])
 
   return (
-    <div
-      style={{
-        background: '#090d16',
-        borderRadius: '20px',
-        border: '1px solid rgba(5, 150, 105, 0.35)',
-        padding: '24px',
-        boxShadow: '0 20px 40px rgba(0,0,0,0.18)',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '14px',
-        width: '100%',
-        maxWidth: '480px',
-        margin: '0 auto',
-        fontFamily: "'Inter', system-ui, sans-serif",
-      }}
-    >
-      {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '12px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ fontSize: '18px' }}>🔌</span>
-          <div>
-            <div style={{ fontSize: '13px', fontWeight: 800, color: '#f8fafc' }}>Custom Hardware & Embedded Hub</div>
-            <div style={{ fontSize: '10px', color: '#94a3b8' }}>Arduino · ESP32 · Custom PC Builds</div>
-          </div>
-        </div>
-        <span style={{ fontSize: '10px', background: 'rgba(5,150,105,0.2)', color: '#34d399', padding: '2px 8px', borderRadius: '12px', fontWeight: 800 }}>
-          ⚡ 115200 BAUD LIVE
-        </span>
-      </div>
-
-      {/* Mode Tabs */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
+    <div style={{ width: '100%', color: '#0f172a' }}>
+      <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
         <button
           onClick={() => setActiveTab('iot')}
           style={{
-            background: activeTab === 'iot' ? '#059669' : '#0f172a',
-            color: '#ffffff',
-            border: '1px solid rgba(255,255,255,0.08)',
-            padding: '6px',
+            padding: '8px 16px',
             borderRadius: '8px',
-            fontSize: '11px',
-            fontWeight: 700,
+            border: activeTab === 'iot' ? '1.5px solid #10b981' : '1px solid #e2e8f0',
+            background: activeTab === 'iot' ? '#10b981' : '#f8fafc',
+            color: activeTab === 'iot' ? '#ffffff' : '#475569',
+            fontSize: '12px',
+            fontWeight: 800,
             cursor: 'pointer',
+            transition: 'all 0.2s ease',
           }}
         >
-          📡 Arduino & IoT Sensors
+          🔌 ESP32 Microcontroller & Sensors
         </button>
         <button
-          onClick={() => setActiveTab('pc')}
+          onClick={() => setActiveTab('gpu')}
           style={{
-            background: activeTab === 'pc' ? '#059669' : '#0f172a',
-            color: '#ffffff',
-            border: '1px solid rgba(255,255,255,0.08)',
-            padding: '6px',
+            padding: '8px 16px',
             borderRadius: '8px',
-            fontSize: '11px',
-            fontWeight: 700,
+            border: activeTab === 'gpu' ? '1.5px solid #10b981' : '1px solid #e2e8f0',
+            background: activeTab === 'gpu' ? '#10b981' : '#f8fafc',
+            color: activeTab === 'gpu' ? '#ffffff' : '#475569',
+            fontSize: '12px',
+            fontWeight: 800,
             cursor: 'pointer',
+            transition: 'all 0.2s ease',
           }}
         >
-          🖥️ Custom PC & GPU Builds
+          🖥️ Bespoke GPU AI Workstation
         </button>
       </div>
 
       {activeTab === 'iot' ? (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          {/* Live Sensor Telemetry Gauges */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '8px' }}>
-            <div style={{ background: '#0f172a', border: '1px solid #1e293b', borderRadius: '10px', padding: '8px', textAlign: 'center' }}>
-              <div style={{ fontSize: '8px', color: '#94a3b8', fontWeight: 700 }}>DHT22 TEMP</div>
-              <div style={{ fontSize: '15px', fontWeight: 900, color: '#34d399', marginTop: '2px' }}>{temp}°C</div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
+            <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '12px 10px', borderRadius: '10px', textAlign: 'center' }}>
+              <div style={{ fontSize: '10px', color: '#64748b', fontFamily: 'monospace', fontWeight: 700 }}>DHT22 CLIMATE</div>
+              <div style={{ fontSize: '17px', fontWeight: 900, color: '#10b981', marginTop: '2px' }}>{temp}°C</div>
             </div>
-            <div style={{ background: '#0f172a', border: '1px solid #1e293b', borderRadius: '10px', padding: '8px', textAlign: 'center' }}>
-              <div style={{ fontSize: '8px', color: '#94a3b8', fontWeight: 700 }}>PRESSURE</div>
-              <div style={{ fontSize: '15px', fontWeight: 900, color: '#38bdf8', marginTop: '2px' }}>1014 hPa</div>
+            <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '12px 10px', borderRadius: '10px', textAlign: 'center' }}>
+              <div style={{ fontSize: '10px', color: '#64748b', fontFamily: 'monospace', fontWeight: 700 }}>VL53L0X TOF</div>
+              <div style={{ fontSize: '17px', fontWeight: 900, color: '#0284c7', marginTop: '2px' }}>382 mm</div>
             </div>
-            <div style={{ background: '#0f172a', border: '1px solid #1e293b', borderRadius: '10px', padding: '8px', textAlign: 'center' }}>
-              <div style={{ fontSize: '8px', color: '#94a3b8', fontWeight: 700 }}>RELAY PIN #12</div>
-              <div style={{ fontSize: '15px', fontWeight: 900, color: relayOn ? '#10b981' : '#64748b', marginTop: '2px' }}>
-                {relayOn ? 'ON' : 'OFF'}
-              </div>
+            <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '12px 10px', borderRadius: '10px', textAlign: 'center' }}>
+              <div style={{ fontSize: '10px', color: '#64748b', fontFamily: 'monospace', fontWeight: 700 }}>RELAY PIN 12</div>
+              <div style={{ fontSize: '17px', fontWeight: 900, color: relayOn ? '#10b981' : '#ef4444', marginTop: '2px' }}>{relayOn ? 'CLOSED' : 'OPEN'}</div>
             </div>
           </div>
 
-          {/* Pinout Status */}
-          <div style={{ background: '#020617', padding: '10px 12px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.06)', fontSize: '10px', fontFamily: 'monospace', color: '#cbd5e1', lineHeight: 1.5 }}>
-            <div style={{ color: '#34d399' }}>[ESP32 FIRMWARE] WiFi connected to MQTT broker ✓</div>
-            <div>[ADC 34] Analog input stream: 2.84V stable</div>
-            <div>[GPIO 12] Hardware switch state: {relayOn ? 'ACTIVE (Relay Closed)' : 'STANDBY (Open)'}</div>
+          <div style={{ background: '#090d16', padding: '14px', borderRadius: '10px', border: '1px solid #1e293b', fontSize: '11.5px', fontFamily: 'monospace', color: '#94a3b8' }}>
+            <div style={{ color: '#10b981' }}>&gt; I2C Bus @ 400kHz: VL53L0X (0x29) + DHT22 ACK ✓</div>
+            <div>&gt; MQTT Broker: Connected to hivemq.cloud over TLS</div>
+            <div style={{ color: relayOn ? '#10b981' : '#f59e0b', marginTop: '4px' }}>
+              &gt; Hardware Relay state: {relayOn ? 'ACTIVE (Power delivered)' : 'STANDBY'}
+            </div>
           </div>
 
-          {/* Hardware Toggle Action */}
           <button
-            onClick={toggleRelay}
+            onClick={() => setRelayOn((prev) => !prev)}
             style={{
-              background: relayOn ? 'linear-gradient(135deg, #10b981, #059669)' : 'linear-gradient(135deg, #059669, #047857)',
+              background: relayOn ? '#ef4444' : '#10b981',
               color: '#ffffff',
               border: 'none',
-              borderRadius: '10px',
-              padding: '9px',
-              fontSize: '11px',
+              borderRadius: '8px',
+              padding: '12px 16px',
+              fontSize: '12.5px',
               fontWeight: 800,
               cursor: 'pointer',
-              boxShadow: '0 4px 14px rgba(5, 150, 105, 0.4)',
-              transition: 'all 0.2s ease',
+              boxShadow: relayOn ? '0 4px 14px rgba(239, 68, 68, 0.3)' : '0 4px 14px rgba(16, 185, 129, 0.3)',
             }}
           >
-            {relayOn ? '⚡ Deactivate Arduino Relay Pin #12' : '⚡ Trigger Arduino Relay Pin #12 (Live Test)'}
+            {relayOn ? '⚡ Deactivate Relay Pin 12' : '⚡ Trigger Hardware Relay Pin 12 (Live Test)'}
           </button>
         </div>
       ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          {/* Custom PC Specs Box */}
-          <div style={{ background: '#0f172a', borderRadius: '10px', border: '1px solid #1e293b', padding: '12px' }}>
-            <div style={{ fontSize: '11px', fontWeight: 800, color: '#f8fafc', marginBottom: '6px' }}>
-              🖥️ Bespoke High-Performance PC Rig Build
-            </div>
-            <div style={{ fontSize: '10px', color: '#cbd5e1', lineHeight: 1.6, fontFamily: 'monospace' }}>
-              <div>• CPU: AMD Ryzen 9 7950X (16 Cores / 32 Threads)</div>
-              <div>• GPU: Dual Nvidia RTX 4090 24GB (AI Compute Rig)</div>
-              <div>• Memory: 128GB DDR5 6000MHz Low-Latency</div>
-              <div>• Cooling: Custom 360mm Liquid Loop · Zero Noise</div>
-            </div>
+        <div style={{ background: '#f8fafc', borderRadius: '12px', border: '1.5px solid #e2e8f0', padding: '18px', fontFamily: 'monospace', fontSize: '12px' }}>
+          <div style={{ color: '#059669', fontWeight: 800, marginBottom: '8px' }}>[BESPOKE GPU AI WORKSTATION RIG]</div>
+          <div style={{ color: '#334155', lineHeight: 1.8 }}>
+            <div>• CPU: AMD Ryzen 9 7950X (16-Core / 32-Thread @ 5.7GHz)</div>
+            <div>• GPU: Dual Nvidia RTX 4090 (48GB Total VRAM · CUDA 12.4)</div>
+            <div>• RAM: 128GB DDR5 6000MHz Low-Latency ECC</div>
+            <div>• Cooling: Custom 360mm Triple-Fan Liquid Loop · Zero Throttling</div>
           </div>
-          <div style={{ background: '#020617', padding: '8px 12px', borderRadius: '8px', fontSize: '10px', color: '#38bdf8', fontWeight: 700 }}>
-            ⚡ Benchmarked for Local LLMs, 3D Rendering & High-FPS Workstations
+          <div style={{ color: '#0284c7', marginTop: '10px', fontWeight: 700 }}>
+            ⚡ Benchmarked for On-Premise Llama-3-70B, 3D CAD & Local AI Compute
           </div>
         </div>
       )}
@@ -721,7 +491,8 @@ function HardwareIotVisualizer() {
 }
 
 export default function Services() {
-  // Scroll to anchor on mount — supports /services#hardware deep links
+  const { openBookingModal } = useKeyboardContext()
+
   useEffect(() => {
     const hash = window.location.hash
     if (hash) {
@@ -735,271 +506,461 @@ export default function Services() {
   }, [])
 
   return (
-    <div>
-      {/* ── Page Header ── */}
+    <div style={{ minHeight: '100vh', background: 'transparent', color: '#0f172a', paddingBottom: '100px' }}>
+      
+      {/* ── SECTION 1: HERO ── */}
       <section
         style={{
-          padding: '80px 24px 60px',
+          width: '100%',
+          padding: '70px 24px 50px',
           textAlign: 'center',
-          maxWidth: '800px',
-          margin: '0 auto',
+          position: 'relative',
+          overflow: 'hidden',
+          boxShadow: '0 20px 40px -15px rgba(28, 25, 23, 0.07)',
+          borderBottom: '1px solid rgba(203, 213, 225, 0.6)',
+          marginBottom: '50px',
         }}
       >
-        <p style={{ color: '#ff5733', fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', fontWeight: 700, marginBottom: '16px' }}>
-          What We Offer
-        </p>
-        <h1
-          style={{
-            fontSize: 'clamp(36px, 5vw, 60px)',
-            fontWeight: 900,
-            color: '#0f172a',
-            marginBottom: '20px',
-            lineHeight: 1.1,
-          }}
-        >
-          Core{' '}
-          <span className="circuit-underline gradient-text">Services</span>
-        </h1>
-        <p style={{ color: '#475569', fontSize: '18px', lineHeight: 1.7 }}>
-          We specialize in building custom software and hardware technology solutions that solve real business problems and scale as you grow.
-        </p>
-      </section>
+        <HeroCodeAmbiance preset="services" />
 
-      {/* ── Service Cards ── */}
-      <section
-        style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-          padding: '0 24px 100px',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '40px',
-        }}
-      >
-        {SERVICES.map((service, idx) => (
+        <div style={{ maxWidth: '960px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div
-            key={service.title}
-            id={service.id}
-            className="glass service-card"
             style={{
-              padding: '40px',
-              borderRadius: '24px',
-              background: '#ffffff',
-              border: '1px solid rgba(226, 232, 240, 0.9)',
-              boxShadow: '0 12px 36px rgba(0, 0, 0, 0.04)',
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 460px), 1fr))',
-              gap: '40px',
+              display: 'inline-flex',
               alignItems: 'center',
+              gap: '8px',
+              background: '#ffffff',
+              border: '1px solid #cbd5e1',
+              borderRadius: '100px',
+              padding: '5px 16px',
+              marginBottom: '20px',
+              fontSize: '11px',
+              fontWeight: 800,
+              fontFamily: 'monospace',
+              color: '#ff5733',
+              letterSpacing: '1px',
             }}
           >
-            {/* Left Side: Content & Features */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              {/* Tagline Badge */}
-              <div>
-                <span
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    padding: '6px 14px',
-                    borderRadius: '100px',
-                    background: `${service.accentColor}15`,
-                    border: `1px solid ${service.accentColor}40`,
-                    color: service.accentColor,
-                    fontSize: '11px',
-                    letterSpacing: '1px',
-                    fontWeight: 800,
-                    textTransform: 'uppercase',
-                  }}
-                >
-                  <span>{service.icon}</span>
-                  <span>{service.tagline}</span>
+            <span>FULL-STACK WEB · OFFLINE MOBILE · AI · HARDWARE</span>
+          </div>
+
+          <h1
+            style={{
+              fontSize: 'clamp(36px, 5.5vw, 64px)',
+              fontWeight: 900,
+              color: '#0f172a',
+              letterSpacing: '-1.8px',
+              lineHeight: 1.1,
+              marginBottom: '20px',
+            }}
+          >
+            Engineering Capabilities. Cloud to Chip.
+          </h1>
+
+          <p
+            style={{
+              color: '#475569',
+              fontSize: 'clamp(16px, 2vw, 19px)',
+              lineHeight: 1.6,
+              maxWidth: '720px',
+              margin: '0 auto',
+              fontWeight: 500,
+            }}
+          >
+            We build high-performance web platforms, offline mobile apps, autonomous AI pipelines, and bespoke hardware in-house.
+          </p>
+        </div>
+      </section>
+
+      {/* ── 1. WEBSITE DEVELOPMENT (FIRST) ── */}
+      <section
+        id="web"
+        style={{
+          maxWidth: '1200px',
+          margin: '0 auto 50px',
+          padding: '0 24px',
+        }}
+      >
+        <div
+          style={{
+            background: '#ffffff',
+            borderRadius: '24px',
+            border: '2px solid #ff5733',
+            padding: '40px 36px',
+            boxShadow: '0 20px 50px rgba(255, 87, 51, 0.08)',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 460px), 1fr))',
+            gap: '36px',
+            alignItems: 'center',
+          }}
+        >
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px' }}>
+              <span style={{ background: '#ff5733', color: '#ffffff', fontSize: '10.5px', fontWeight: 900, fontFamily: 'monospace', padding: '3px 10px', borderRadius: '4px' }}>
+                SERVICE 01
+              </span>
+              <span style={{ color: '#64748b', fontSize: '11px', fontFamily: 'monospace', fontWeight: 700 }}>
+                HIGH-THROUGHPUT WEB & SAAS
+              </span>
+            </div>
+
+            <h2 style={{ fontSize: 'clamp(28px, 3.5vw, 40px)', fontWeight: 900, color: '#0f172a', marginBottom: '14px', letterSpacing: '-0.5px' }}>
+              Website Development & Full-Stack SaaS Platforms
+            </h2>
+
+            <p style={{ color: '#475569', fontSize: '15px', lineHeight: 1.7, marginBottom: '24px' }}>
+              We build what your business needs — performant, beautiful, and conversion-optimized. From high-converting marketing engines to complex multi-tenant SaaS platforms, we architect with Next.js 15, React 19, and edge CDN delivery for sub-second speeds.
+            </p>
+
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '28px' }}>
+              {['Next.js 15 App Router', 'React 19', 'Tailwind CSS', 'PostgreSQL 16', 'Stripe Subscriptions', 'Sub-Second Edge'].map((t) => (
+                <span key={t} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', color: '#0f172a', fontSize: '11.5px', padding: '4px 10px', borderRadius: '6px', fontFamily: 'monospace', fontWeight: 700 }}>
+                  {t}
+                </span>
+              ))}
+            </div>
+
+            <button
+              onClick={openBookingModal}
+              className="btn-glow"
+              style={{
+                padding: '14px 28px',
+                borderRadius: '10px',
+                border: 'none',
+                fontSize: '14px',
+                fontWeight: 900,
+                cursor: 'pointer',
+                color: '#ffffff',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+              }}
+            >
+              <span>Build a Custom Web Platform</span>
+              <span>→</span>
+            </button>
+          </div>
+
+          {/* Third Eye Live Preview */}
+          <div
+            style={{
+              background: '#0f172a',
+              borderRadius: '18px',
+              border: '1px solid #334155',
+              overflow: 'hidden',
+              boxShadow: '0 20px 40px rgba(0,0,0,0.18)',
+            }}
+          >
+            <div style={{ background: '#1e293b', padding: '10px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #334155' }}>
+              <span style={{ fontSize: '11px', color: '#94a3b8', fontFamily: 'monospace' }}>🔒 https://thirdeye.fun/ (Live Client Platform)</span>
+              <a href="https://thirdeye.fun/" target="_blank" rel="noopener noreferrer" style={{ background: '#ff5733', color: '#fff', fontSize: '10px', fontWeight: 800, padding: '3px 8px', borderRadius: '4px', textDecoration: 'none' }}>
+                Visit Live ↗
+              </a>
+            </div>
+            <iframe src="https://thirdeye.fun/" title="Third Eye Client Showcase" style={{ width: '100%', height: '260px', border: 'none', display: 'block' }} />
+          </div>
+        </div>
+      </section>
+
+      {/* ── 2. MOBILE APP DEVELOPMENT (SECOND) ── */}
+      <section
+        id="mobile"
+        style={{
+          maxWidth: '1200px',
+          margin: '0 auto 50px',
+          padding: '0 24px',
+        }}
+      >
+        <div
+          style={{
+            background: '#ffffff',
+            borderRadius: '24px',
+            border: '2px solid #7c3aed',
+            padding: '40px 36px',
+            boxShadow: '0 20px 50px rgba(124, 58, 237, 0.08)',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 460px), 1fr))',
+            gap: '36px',
+            alignItems: 'center',
+          }}
+        >
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px' }}>
+              <span style={{ background: '#7c3aed', color: '#ffffff', fontSize: '10.5px', fontWeight: 900, fontFamily: 'monospace', padding: '3px 10px', borderRadius: '4px' }}>
+                SERVICE 02
+              </span>
+              <span style={{ color: '#64748b', fontSize: '11px', fontFamily: 'monospace', fontWeight: 700 }}>
+                NATIVE & CROSS-PLATFORM
+              </span>
+            </div>
+
+            <h2 style={{ fontSize: 'clamp(28px, 3.5vw, 40px)', fontWeight: 900, color: '#0f172a', marginBottom: '14px', letterSpacing: '-0.5px' }}>
+              Mobile App Development (iOS & Android)
+            </h2>
+
+            <p style={{ color: '#475569', fontSize: '15px', lineHeight: 1.7, marginBottom: '24px' }}>
+              Seamless native user experiences on iOS and Android built with React Native (Expo 51). Engineered for offline SQLite capability, optical camera barcode decoding, instant WhatsApp collection deep-links, and background cloud synchronization.
+            </p>
+
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '28px' }}>
+              {['React Native (Expo 51)', 'Offline SQLite Database', 'expo-camera Barcode POS', '1-Tap WhatsApp Collections', 'Indian GST Engine'].map((t) => (
+                <span key={t} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', color: '#0f172a', fontSize: '11.5px', padding: '4px 10px', borderRadius: '6px', fontFamily: 'monospace', fontWeight: 700 }}>
+                  {t}
+                </span>
+              ))}
+            </div>
+
+            <button
+              onClick={openBookingModal}
+              style={{
+                background: '#7c3aed',
+                color: '#ffffff',
+                border: 'none',
+                borderRadius: '10px',
+                padding: '14px 28px',
+                fontSize: '14px',
+                fontWeight: 900,
+                cursor: 'pointer',
+                boxShadow: '0 4px 20px rgba(124, 58, 237, 0.35)',
+              }}
+            >
+              Start Mobile App Build →
+            </button>
+          </div>
+
+          <KiranaPhoneSimulator />
+        </div>
+      </section>
+
+      {/* ── 3. CUSTOM LLMS & AI MULTI-AGENTS (THIRD) ── */}
+      <section
+        id="llm"
+        style={{
+          maxWidth: '1200px',
+          margin: '0 auto 50px',
+          padding: '0 24px',
+        }}
+      >
+        <div
+          style={{
+            background: '#ffffff',
+            borderRadius: '24px',
+            border: '2px solid #0284c7',
+            padding: '40px 36px',
+            boxShadow: '0 15px 40px rgba(2, 132, 199, 0.08)',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 460px), 1fr))',
+            gap: '40px',
+            alignItems: 'center',
+          }}
+        >
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px' }}>
+              <span style={{ background: '#0284c7', color: '#ffffff', fontSize: '10.5px', fontWeight: 900, fontFamily: 'monospace', padding: '3px 10px', borderRadius: '4px' }}>
+                SERVICE 03
+              </span>
+              <span style={{ color: '#64748b', fontSize: '11px', fontFamily: 'monospace', fontWeight: 700 }}>
+                ENTERPRISE VECTOR RAG & AGENTS
+              </span>
+            </div>
+
+            <h2 style={{ fontSize: 'clamp(28px, 3.5vw, 40px)', fontWeight: 900, color: '#0f172a', lineHeight: 1.15, marginBottom: '16px', letterSpacing: '-0.5px' }}>
+              Custom LLMs, Vector RAG & Autonomous Reasoning Agents
+            </h2>
+
+            <p style={{ color: '#475569', fontSize: '15px', lineHeight: 1.7, marginBottom: '24px' }}>
+              Turn generative AI into real business ROI. We architect domain-specific RAG retrieval pipelines over internal databases, fine-tune open-weights models (Llama 3, Mistral), and deploy autonomous multi-agent reasoning systems with zero-hallucination guardrails.
+            </p>
+
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '28px' }}>
+              {['pgvector Postgres', 'LangChain / LlamaIndex', 'Llama 3 70B', 'Private VPC Inference', 'Sub-100ms Search'].map((t) => (
+                <span key={t} style={{ background: '#f1f5f9', border: '1px solid #e2e8f0', color: '#0f172a', padding: '4px 10px', borderRadius: '6px', fontSize: '11.5px', fontFamily: 'monospace', fontWeight: 700 }}>
+                  {t}
+                </span>
+              ))}
+            </div>
+
+            <button
+              onClick={openBookingModal}
+              style={{
+                background: '#0284c7',
+                color: '#ffffff',
+                border: 'none',
+                borderRadius: '10px',
+                padding: '14px 28px',
+                fontSize: '14px',
+                fontWeight: 900,
+                cursor: 'pointer',
+                boxShadow: '0 4px 20px rgba(2, 132, 199, 0.35)',
+              }}
+            >
+              Scope AI Agent Architecture →
+            </button>
+          </div>
+
+          <LlmAgentVisualizer />
+        </div>
+      </section>
+
+      {/* ── 4. N8N WORKFLOW AUTOMATION (FOURTH) ── */}
+      <section
+        id="automation"
+        style={{
+          maxWidth: '1200px',
+          margin: '0 auto 50px',
+          padding: '0 24px',
+        }}
+      >
+        <div
+          style={{
+            background: '#ffffff',
+            borderRadius: '24px',
+            border: '2px solid #db2777',
+            padding: '40px 36px',
+            boxShadow: '0 15px 40px rgba(219, 39, 119, 0.08)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '24px',
+          }}
+        >
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px' }}>
+              <span style={{ background: '#db2777', color: '#ffffff', fontSize: '10.5px', fontWeight: 900, fontFamily: 'monospace', padding: '3px 10px', borderRadius: '4px' }}>
+                SERVICE 04
+              </span>
+              <span style={{ color: '#64748b', fontSize: '11px', fontFamily: 'monospace', fontWeight: 700 }}>
+                N8N ORCHESTRATION PIPELINES
+              </span>
+            </div>
+
+            <h2 style={{ fontSize: 'clamp(28px, 3.5vw, 40px)', fontWeight: 900, color: '#0f172a', lineHeight: 1.15, marginBottom: '14px', letterSpacing: '-0.5px' }}>
+              Autonomous Business Process Automations
+            </h2>
+
+            <p style={{ color: '#475569', fontSize: '15px', lineHeight: 1.7, maxWidth: '820px' }}>
+              Eliminate repetitive operational tasks with self-healing n8n pipelines: real-time webhook listeners, automated Stripe/UPI invoice reconciliation, and instant Slack/WhatsApp alerts with zero human delay.
+            </p>
+          </div>
+
+          <N8nWorkflowVisualizer />
+        </div>
+      </section>
+
+      {/* ── 5. HARDWARE & GPU COMPUTE RIGS ── */}
+      <section
+        id="hardware"
+        style={{
+          maxWidth: '1200px',
+          margin: '0 auto 60px',
+          padding: '0 24px',
+        }}
+      >
+        <div
+          style={{
+            background: '#ffffff',
+            borderRadius: '24px',
+            border: '2px solid #10b981',
+            padding: '40px 36px',
+            boxShadow: '0 20px 50px rgba(16, 185, 129, 0.08)',
+          }}
+        >
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 460px), 1fr))', gap: '40px', alignItems: 'center' }}>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px' }}>
+                <span style={{ background: '#10b981', color: '#ffffff', fontSize: '10.5px', fontWeight: 900, fontFamily: 'monospace', padding: '3px 10px', borderRadius: '4px' }}>
+                  SERVICE 05
+                </span>
+                <span style={{ color: '#64748b', fontSize: '11px', fontFamily: 'monospace', fontWeight: 700 }}>
+                  EMBEDDED SYSTEMS & GPU BUILDS
                 </span>
               </div>
 
-              {/* Title */}
-              <h2 style={{ fontSize: 'clamp(24px, 3.2vw, 36px)', fontWeight: 900, color: '#0f172a', lineHeight: 1.15 }}>
-                {service.title}
+              <h2 style={{ fontSize: 'clamp(28px, 3.5vw, 40px)', fontWeight: 900, color: '#0f172a', lineHeight: 1.15, marginBottom: '16px', letterSpacing: '-0.5px' }}>
+                IoT, Microcontrollers & Custom GPU AI Compute Rigs
               </h2>
 
-              {/* Description */}
-              <p style={{ color: '#475569', fontSize: '16px', lineHeight: 1.7 }}>
-                {service.desc}
+              <p style={{ color: '#475569', fontSize: '15px', lineHeight: 1.7, marginBottom: '24px' }}>
+                We bridge physical hardware with cloud intelligence. Our hardware engineers design custom ESP32/Arduino microcontroller firmware, sensor arrays (ToF laser, climate, ultrasonic), and assemble custom liquid-cooled GPU compute rigs for local LLM inference.
               </p>
 
-              {/* Feature Pills */}
-              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '4px' }}>
-                {service.features.map((f) => (
-                  <span
-                    key={f}
-                    style={{
-                      padding: '5px 12px',
-                      borderRadius: '8px',
-                      background: '#f8fafc',
-                      border: '1px solid #e2e8f0',
-                      color: '#334155',
-                      fontSize: '12px',
-                      fontWeight: 700,
-                    }}
-                  >
-                    {f}
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '28px' }}>
+                {['ESP32-WROOM', 'Arduino C++', 'VL53L0X Laser ToF', 'MQTT TLS 8883', 'Dual RTX 4090 Rigs', '360mm Liquid Loop'].map((t) => (
+                  <span key={t} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', color: '#0f172a', padding: '4px 10px', borderRadius: '6px', fontSize: '11.5px', fontFamily: 'monospace', fontWeight: 700 }}>
+                    {t}
                   </span>
                 ))}
               </div>
+
+              <button
+                onClick={openBookingModal}
+                style={{
+                  background: '#10b981',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: '10px',
+                  padding: '14px 28px',
+                  fontSize: '14px',
+                  fontWeight: 900,
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 20px rgba(16, 185, 129, 0.35)',
+                }}
+              >
+                Request Custom Hardware Build →
+              </button>
             </div>
 
-            {/* Right Side: Visual Showcase (Browser / Smartphone / Automation Canvas / LLM Visualizer / Hardware Visualizer) */}
-            <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-              {/* Case 1: Website Browser Showcase */}
-              {service.showcase && (
-                <div
-                  style={{
-                    background: '#0f172a',
-                    borderRadius: '18px',
-                    border: '1px solid rgba(255, 87, 51, 0.3)',
-                    boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
-                    overflow: 'hidden',
-                    width: '100%',
-                    maxWidth: '520px',
-                  }}
-                >
-                  {/* Browser Bar */}
-                  <div
-                    style={{
-                      background: '#1e293b',
-                      padding: '10px 16px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      borderBottom: '1px solid #334155',
-                    }}
-                  >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ef4444' }} />
-                      <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#f59e0b' }} />
-                      <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#10b981' }} />
-                    </div>
-
-                    <div
-                      style={{
-                        background: '#0f172a',
-                        borderRadius: '20px',
-                        padding: '4px 14px',
-                        fontSize: '11px',
-                        color: '#94a3b8',
-                        fontWeight: 600,
-                        border: '1px solid #334155',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                      }}
-                    >
-                      <span>🔒</span>
-                      <span style={{ color: '#f8fafc', fontWeight: 700 }}>https://thirdeye.fun/</span>
-                    </div>
-
-                    <a
-                      href={service.showcase.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        textDecoration: 'none',
-                        background: '#ff5733',
-                        color: '#ffffff',
-                        fontSize: '11px',
-                        fontWeight: 800,
-                        padding: '4px 10px',
-                        borderRadius: '6px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '4px',
-                      }}
-                    >
-                      Visit Live ↗
-                    </a>
-                  </div>
-
-                  {/* Browser Live Preview Body */}
-                  <div style={{ position: 'relative', background: '#090d16', minHeight: '260px' }}>
-                    <iframe
-                      src={service.showcase.url}
-                      title={service.showcase.title}
-                      style={{
-                        width: '100%',
-                        height: '260px',
-                        border: 'none',
-                        display: 'block',
-                      }}
-                    />
-                    <div
-                      style={{
-                        padding: '12px 18px',
-                        background: 'rgba(15, 23, 42, 0.95)',
-                        borderTop: '1px solid #334155',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                      }}
-                    >
-                      <div style={{ fontSize: '12px', color: '#10b981', fontWeight: 800 }}>
-                        ⚡ Production Client Showcase: Third Eye
-                      </div>
-                      <div style={{ fontSize: '11px', color: '#94a3b8' }}>
-                        Sub-second load speed · Custom Interactive UI
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Case 2: Mobile App Smartphone Simulator */}
-              {service.phoneSimulator && <KiranaPhoneSimulator />}
-
-              {/* Case 3: n8n Workflow Automation Canvas */}
-              {service.automationCanvas && <N8nWorkflowVisualizer />}
-
-              {/* Case 4: Custom LLM & AI Agents Reasoning Canvas */}
-              {service.llmVisualizer && <LlmAgentVisualizer />}
-
-              {/* Case 5: Custom Hardware, Arduino & IoT Visualizer */}
-              {service.hardwareVisualizer && <HardwareIotVisualizer />}
-            </div>
+            {/* Hardware Live Workbench UI */}
+            <HardwareIotVisualizer />
           </div>
-        ))}
+        </div>
       </section>
 
-      {/* ── CTA ── */}
+      {/* ── CLOSING SECTION: TECHNICAL ARCHITECTURE & FIXED SCOPING ── */}
       <section
         style={{
-          padding: '60px 24px 100px',
+          maxWidth: '1000px',
+          margin: '0 auto',
+          padding: '60px 32px',
+          background: '#0f172a',
+          borderRadius: '24px',
+          border: '1px solid #1e293b',
           textAlign: 'center',
-          borderTop: '1px solid rgba(226, 232, 240, 0.8)',
+          color: '#ffffff',
+          boxShadow: '0 25px 50px rgba(15, 23, 42, 0.3)',
         }}
       >
-        <h2 style={{ fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 800, color: '#0f172a', marginBottom: '16px' }}>
-          Need something custom?
+        <span style={{ color: '#10b981', fontSize: '11px', fontWeight: 900, fontFamily: 'monospace', letterSpacing: '2px' }}>
+          FIXED 4-WEEK SPRINT DELIVERY
+        </span>
+
+        <h2 style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 900, color: '#ffffff', marginTop: '10px', marginBottom: '16px', letterSpacing: '-0.8px' }}>
+          Have a Complex Software or Hardware Problem?
         </h2>
-        <p style={{ color: '#475569', marginBottom: '32px', fontSize: '16px' }}>
-          We go beyond the standard to engineer exactly what your business requires.
+
+        <p style={{ color: '#94a3b8', fontSize: '16px', maxWidth: '580px', margin: '0 auto 32px', lineHeight: 1.6 }}>
+          Book a 15-minute technical discovery call directly with our engineering lead. We'll map your system architecture, define deliverables, and provide a fixed-price 4-week proposal with 100% IP ownership.
         </p>
-        <a href="mailto:karmaaveontechnologies@gmail.com">
-          <button
-            className="btn-glow"
-            style={{
-              padding: '14px 36px',
-              borderRadius: '10px',
-              border: 'none',
-              fontSize: '15px',
-              fontWeight: 700,
-              cursor: 'pointer',
-              color: '#fff',
-              letterSpacing: '0.5px',
-            }}
-          >
-            Get in Touch
-          </button>
-        </a>
+
+        <button
+          onClick={openBookingModal}
+          className="btn-glow"
+          style={{
+            padding: '16px 40px',
+            borderRadius: '12px',
+            border: 'none',
+            fontSize: '15.5px',
+            fontWeight: 900,
+            cursor: 'pointer',
+            color: '#ffffff',
+            boxShadow: '0 4px 20px rgba(255, 87, 51, 0.4)',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+          }}
+        >
+          <span>Schedule Technical Discovery Call</span>
+          <span>→</span>
+        </button>
       </section>
     </div>
   )

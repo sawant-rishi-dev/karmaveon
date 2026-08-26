@@ -325,11 +325,11 @@ body {
   }
 
   .section-pad {
-    padding: 48px 16px !important;
+    padding: 40px 16px !important;
   }
 
   .service-card {
-    padding: 20px !important;
+    padding: 20px 16px !important;
     grid-template-columns: 1fr !important;
     gap: 20px !important;
   }
@@ -344,6 +344,41 @@ body {
     width: 100% !important;
   }
 
+  /* Touch screen friendly interactive buttons */
+  .btn-slide-theme {
+    background: linear-gradient(135deg, #FF5733, #E11D48) !important;
+    color: #ffffff !important;
+    border-color: #E11D48 !important;
+    padding: 12px 20px !important;
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .btn-slide-theme .slide-bg {
+    display: none !important;
+  }
+
+  .btn-slide-theme .slide-text {
+    position: static !important;
+    color: #ffffff !important;
+    transform: none !important;
+    font-weight: 800 !important;
+  }
+
+  .bento-grid-12 {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .bento-col-12,
+  .bento-col-6 {
+    grid-column: span 1 !important;
+  }
+
+  .bento-card-pad {
+    padding: 22px 18px !important;
+  }
+
   iframe {
     height: 220px !important;
   }
@@ -355,15 +390,199 @@ body {
   }
 
   h1 {
-    font-size: 32px !important;
-    letter-spacing: -0.5px !important;
+    font-size: 30px !important;
+    letter-spacing: -0.6px !important;
+    line-height: 1.15 !important;
   }
 
   h2 {
-    font-size: 24px !important;
+    font-size: 22px !important;
+    line-height: 1.2 !important;
   }
 
   .logo-text {
     font-size: 15px !important;
   }
+
+  input, select, textarea {
+    font-size: 16px !important; /* Prevents auto-zoom on Android/iOS focus */
+  }
+
+  button, a {
+    touch-action: manipulation;
+  }
 }
+
+/* ============================
+   Service Visualizer Micro-Animations
+   ============================ */
+@keyframes spinGpu {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes scanLaser {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes flowWire {
+  from {
+    stroke-dashoffset: 20;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes pulseDot {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1.3);
+    opacity: 1;
+  }
+}
+
+/* ============================
+   Infinite Tech Marquee Loop
+   ============================ */
+@keyframes marqueeLoop {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track:hover {
+  animation-play-state: paused !important;
+}
+/* ============================
+   Red Theme Slide-In Arrow Button
+   ============================ */
+.btn-slide-theme {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 13px 20px;
+  overflow: hidden;
+  font-weight: 800;
+  font-size: 14px;
+  border-radius: 12px;
+  border: 2px solid #FF5733;
+  color: #FF5733;
+  background: rgba(255, 87, 51, 0.04);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 8px rgba(255, 87, 51, 0.1);
+  text-decoration: none;
+}
+
+.btn-slide-theme .slide-bg {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: #ffffff;
+  background: linear-gradient(135deg, #FF5733, #E11D48);
+  transform: translateX(-100%);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1;
+}
+
+.btn-slide-theme:hover .slide-bg {
+  transform: translateX(0);
+}
+
+.btn-slide-theme .slide-text {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  height: 100%;
+  color: #FF5733;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2;
+}
+
+.btn-slide-theme:hover .slide-text {
+  transform: translateX(100%);
+}
+
+.btn-slide-theme .spacer-text {
+  position: relative;
+  visibility: hidden;
+  white-space: nowrap;
+}
+
+.btn-slide-theme:hover {
+  border-color: #E11D48;
+  box-shadow: 0 6px 20px rgba(255, 87, 51, 0.35);
+}
+
+/* ============================
+   Live Moving Dashboard Bar Animations
+   ============================ */
+@keyframes barStream {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes barGlowSweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(350%);
+  }
+}
+
+@keyframes barEqualizer {
+  0%, 100% {
+    transform: scaleY(0.4);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+/* ============================
+   Navigation Link Hover States
+   ============================ */
+.nav-link-btn:hover:not(.nav-link-active) {
+  color: #FF5733 !important;
+  background: rgba(255, 87, 51, 0.05) !important;
+}
+
+
