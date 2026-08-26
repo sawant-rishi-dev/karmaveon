@@ -55,13 +55,14 @@ export default function XRayHeroTitle() {
       {/* ── BASE LAYER: Solid Commanding Near-Black Headline ── */}
       <h1
         style={{
-          fontSize: 'clamp(36px, 5.8vw, 68px)',
+          fontSize: 'clamp(28px, 5.5vw, 64px)',
           fontWeight: 900,
-          lineHeight: 1.08,
-          letterSpacing: '-1.8px',
+          lineHeight: 1.12,
+          letterSpacing: '-1.2px',
           margin: 0,
           color: '#0f172a',
           textAlign: 'center',
+          wordBreak: 'normal',
         }}
       >
         Engineering High-Performance Web Platforms, AI Automations & Hardware Systems.
@@ -88,13 +89,14 @@ export default function XRayHeroTitle() {
         >
           <h1
             style={{
-              fontSize: 'clamp(36px, 5.8vw, 68px)',
+              fontSize: 'clamp(28px, 5.5vw, 64px)',
               fontWeight: 900,
-              lineHeight: 1.08,
-              letterSpacing: '-1.8px',
+              lineHeight: 1.12,
+              letterSpacing: '-1.2px',
               margin: 0,
               color: '#ffffff',
               textAlign: 'center',
+              wordBreak: 'normal',
             }}
           >
             We make{' '}
@@ -115,7 +117,7 @@ export default function XRayHeroTitle() {
         </div>
       )}
 
-      {/* ── High-Tech Floating Magnifying Lens Rim ── */}
+      {/* ── High-Tech Floating Magnifying Lens Rim (Pure Lens Ring, No Text) ── */}
       {isHovered && (
         <div
           style={{
@@ -130,28 +132,7 @@ export default function XRayHeroTitle() {
             pointerEvents: 'none',
             zIndex: 20,
           }}
-        >
-          {/* Target reticle crosshairs */}
-          <div
-            style={{
-              position: 'absolute',
-              top: '-12px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              background: '#0f172a',
-              border: '1px solid #38bdf8',
-              color: '#38bdf8',
-              fontSize: '9px',
-              fontWeight: 900,
-              fontFamily: 'monospace',
-              padding: '1px 6px',
-              borderRadius: '4px',
-              letterSpacing: '0.5px',
-            }}
-          >
-            X-RAY LENS
-          </div>
-        </div>
+        />
       )}
     </div>
   )

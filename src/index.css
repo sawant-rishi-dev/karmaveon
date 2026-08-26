@@ -346,23 +346,43 @@ body {
 
   /* Touch screen friendly interactive buttons */
   .btn-slide-theme {
+    position: relative !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     background: linear-gradient(135deg, #FF5733, #E11D48) !important;
     color: #ffffff !important;
-    border-color: #E11D48 !important;
-    padding: 12px 20px !important;
+    border: none !important;
+    border-radius: 10px !important;
+    padding: 13px 18px !important;
     width: 100% !important;
-    justify-content: center !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    box-shadow: 0 4px 14px rgba(255, 87, 51, 0.35) !important;
+    overflow: hidden !important;
   }
 
-  .btn-slide-theme .slide-bg {
+  .btn-slide-theme .slide-bg,
+  .btn-slide-theme .spacer-text {
     display: none !important;
   }
 
   .btn-slide-theme .slide-text {
     position: static !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
     color: #ffffff !important;
     transform: none !important;
     font-weight: 800 !important;
+    white-space: nowrap !important;
+  }
+
+  .metric-3-col {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 8px !important;
   }
 
   .bento-grid-12 {

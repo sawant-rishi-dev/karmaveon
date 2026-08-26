@@ -20,7 +20,7 @@ function SpecialtyCard({ item, isLarge }) {
         background: isHovered ? '#ffffff' : '#fafaf9',
         border: `1.5px solid ${isHovered ? item.color : '#e2e8f0'}`,
         borderRadius: '16px',
-        padding: isLarge ? '32px 28px' : '26px 22px',
+        padding: isLarge ? '28px 24px' : '22px 18px',
         boxShadow: isHovered
           ? `0 16px 36px -8px ${item.color}25, 0 4px 12px rgba(0,0,0,0.04)`
           : '0 2px 10px rgba(0,0,0,0.02)',
@@ -37,12 +37,12 @@ function SpecialtyCard({ item, isLarge }) {
     >
       <div>
         {/* Top Header: Icon + Category Badge */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', flexWrap: 'wrap', marginBottom: '14px' }}>
           <ServiceAnimatedIcon type={item.type} isHovered={isHovered} color={item.color} />
           
           <span
             style={{
-              fontSize: '10.5px',
+              fontSize: '10px',
               fontWeight: 800,
               fontFamily: 'monospace',
               color: item.color,
@@ -51,17 +51,18 @@ function SpecialtyCard({ item, isLarge }) {
               padding: '3px 8px',
               borderRadius: '4px',
               letterSpacing: '0.5px',
+              whiteSpace: 'nowrap',
             }}
           >
             {item.categoryBadge}
           </span>
         </div>
 
-        <h3 style={{ fontSize: '18px', fontWeight: 900, color: '#0f172a', letterSpacing: '-0.3px', marginBottom: '8px' }}>
+        <h3 style={{ fontSize: '17px', fontWeight: 900, color: '#0f172a', letterSpacing: '-0.3px', marginBottom: '8px', lineHeight: 1.3 }}>
           {item.title}
         </h3>
 
-        <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.6, margin: 0 }}>
+        <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.6, margin: 0 }}>
           {item.desc}
         </p>
       </div>
@@ -69,12 +70,14 @@ function SpecialtyCard({ item, isLarge }) {
       {/* Bottom Technical Spec Footer */}
       <div
         style={{
-          marginTop: '20px',
-          paddingTop: '12px',
+          marginTop: '18px',
+          paddingTop: '10px',
           borderTop: '1px dashed #e2e8f0',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: '6px',
           fontSize: '11px',
           fontFamily: 'monospace',
           color: '#64748b',
@@ -364,22 +367,22 @@ export default function Home() {
               </p>
 
               {/* Metrics Grid */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', marginBottom: '24px' }}>
-                <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '12px', borderRadius: '10px', textAlign: 'center' }}>
-                  <div style={{ fontSize: '18px', fontWeight: 900, color: '#ff5733' }}>&lt; 2 sec</div>
-                  <div style={{ fontSize: '10px', color: '#64748b', fontFamily: 'monospace', fontWeight: 700 }}>SCAN TO ORDER</div>
+              <div className="metric-3-col" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', marginBottom: '22px' }}>
+                <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '12px 8px', borderRadius: '10px', textAlign: 'center' }}>
+                  <div style={{ fontSize: '17px', fontWeight: 900, color: '#ff5733' }}>&lt; 2 sec</div>
+                  <div style={{ fontSize: '10px', color: '#64748b', fontFamily: 'monospace', fontWeight: 700, whiteSpace: 'nowrap' }}>SCAN TO ORDER</div>
                 </div>
-                <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '12px', borderRadius: '10px', textAlign: 'center' }}>
-                  <div style={{ fontSize: '18px', fontWeight: 900, color: '#10b981' }}>0%</div>
-                  <div style={{ fontSize: '10px', color: '#64748b', fontFamily: 'monospace', fontWeight: 700 }}>COMMISSION</div>
+                <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '12px 8px', borderRadius: '10px', textAlign: 'center' }}>
+                  <div style={{ fontSize: '17px', fontWeight: 900, color: '#10b981' }}>0%</div>
+                  <div style={{ fontSize: '10px', color: '#64748b', fontFamily: 'monospace', fontWeight: 700, whiteSpace: 'nowrap' }}>COMMISSION</div>
                 </div>
-                <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '12px', borderRadius: '10px', textAlign: 'center' }}>
-                  <div style={{ fontSize: '18px', fontWeight: 900, color: '#2563eb' }}>+40%</div>
-                  <div style={{ fontSize: '10px', color: '#64748b', fontFamily: 'monospace', fontWeight: 700 }}>TABLE TURNOVER</div>
+                <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '12px 8px', borderRadius: '10px', textAlign: 'center' }}>
+                  <div style={{ fontSize: '17px', fontWeight: 900, color: '#2563eb' }}>+40%</div>
+                  <div style={{ fontSize: '10px', color: '#64748b', fontFamily: 'monospace', fontWeight: 700, whiteSpace: 'nowrap' }}>TURNOVER</div>
                 </div>
               </div>
 
-              <Link to="/qr-bites" style={{ textDecoration: 'none' }}>
+              <Link to="/qr-bites" style={{ textDecoration: 'none', width: '100%' }}>
                 <button className="btn-slide-theme">
                   <span className="slide-bg">
                     <svg style={{ width: '20px', height: '20px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -401,22 +404,23 @@ export default function Home() {
                 background: '#090d16',
                 borderRadius: '16px',
                 border: '1px solid #1e293b',
-                padding: '24px',
+                padding: '20px',
                 color: '#ffffff',
                 fontFamily: 'monospace',
+                overflow: 'hidden',
               }}
             >
-              <div style={{ fontSize: '12px', color: '#38bdf8', borderBottom: '1px solid #1e293b', paddingBottom: '8px', marginBottom: '14px', fontWeight: 700 }}>
-                ⚡ LIVE RESTAURANT TRANSACTION TELEMETRY
+              <div style={{ fontSize: '11.5px', color: '#38bdf8', borderBottom: '1px solid #1e293b', paddingBottom: '8px', marginBottom: '12px', fontWeight: 700 }}>
+                ⚡ LIVE RESTAURANT TELEMETRY
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '12px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '11.5px' }}>
                 <div style={{ color: '#94a3b8' }}>[1] Customer scans Table #04 QR with camera</div>
                 <div style={{ color: '#94a3b8' }}>[2] WebApp instant loads (320ms) · Zero App store</div>
                 <div style={{ color: '#10b981', background: 'rgba(16, 185, 129, 0.1)', padding: '8px', borderRadius: '6px' }}>
                   [3] Order Confirmed: Margherita Pizza x1 (₹249)
                 </div>
-                <div style={{ color: '#f59e0b' }}>[4] WebSocket payload dispatched to Kitchen KDS (Table 04)</div>
-                <div style={{ color: '#38bdf8' }}>[5] Analytics stream: Daily total +₹249 (₹42,580 Live)</div>
+                <div style={{ color: '#f59e0b' }}>[4] WebSocket payload dispatched to KDS</div>
+                <div style={{ color: '#38bdf8' }}>[5] Live total +₹249 (₹42,580 stream)</div>
               </div>
             </div>
           </div>
@@ -442,19 +446,19 @@ export default function Home() {
                   OFFLINE-FIRST MOBILE
                 </span>
               </div>
-              <h3 style={{ fontSize: '20px', fontWeight: 900, color: '#0f172a', marginBottom: '8px' }}>
+              <h3 style={{ fontSize: '20px', fontWeight: 900, color: '#0f172a', marginBottom: '8px', letterSpacing: '-0.3px' }}>
                 Smart Udhaar — Kirana POS & Ledger
               </h3>
               <p style={{ color: '#475569', fontSize: '14px', lineHeight: 1.6, marginBottom: '18px' }}>
                 React Native & SQLite offline-first POS. Kirana shop owners scan product barcodes, manage customer credit ledgers without internet, and dispatch 1-tap WhatsApp collection links.
               </p>
-              <div style={{ display: 'flex', gap: '16px', fontSize: '12px', fontFamily: 'monospace', color: '#64748b', marginBottom: '20px' }}>
+              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', fontSize: '11.5px', fontFamily: 'monospace', color: '#64748b', marginBottom: '20px' }}>
                 <span>💾 SQLite Local DB</span>
                 <span>📶 100% Offline Speed</span>
                 <span>💬 1-Tap WhatsApp</span>
               </div>
             </div>
-            <Link to="/smart-udhaar" style={{ textDecoration: 'none' }}>
+            <Link to="/smart-udhaar" style={{ textDecoration: 'none', width: '100%' }}>
               <button className="btn-slide-theme">
                 <span className="slide-bg">
                   <svg style={{ width: '20px', height: '20px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -491,19 +495,19 @@ export default function Home() {
                   HARDWARE & EMBEDDED
                 </span>
               </div>
-              <h3 style={{ fontSize: '20px', fontWeight: 900, color: '#0f172a', marginBottom: '8px' }}>
+              <h3 style={{ fontSize: '20px', fontWeight: 900, color: '#0f172a', marginBottom: '8px', letterSpacing: '-0.3px' }}>
                 Kwiee — ESP32 Sensor Buddy & GPU Rig
               </h3>
               <p style={{ color: '#475569', fontSize: '14px', lineHeight: 1.6, marginBottom: '18px' }}>
                 Full-stack physical hardware: ESP32 microcontrollers, ToF proximity sensors, TFT displays, and custom-assembled GPU AI workstations engineered for on-premise LLM inference.
               </p>
-              <div style={{ display: 'flex', gap: '16px', fontSize: '12px', fontFamily: 'monospace', color: '#64748b', marginBottom: '20px' }}>
+              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', fontSize: '11.5px', fontFamily: 'monospace', color: '#64748b', marginBottom: '20px' }}>
                 <span>🔌 ESP32 / Arduino</span>
                 <span>🖥️ Custom GPU Rigs</span>
                 <span>📡 MQTT Telemetry</span>
               </div>
             </div>
-            <Link to="/kwiee" style={{ textDecoration: 'none' }}>
+            <Link to="/kwiee" style={{ textDecoration: 'none', width: '100%' }}>
               <button className="btn-slide-theme">
                 <span className="slide-bg">
                   <svg style={{ width: '20px', height: '20px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
