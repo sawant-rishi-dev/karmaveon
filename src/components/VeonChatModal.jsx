@@ -189,19 +189,6 @@ export default function VeonChatModal({ isOpen, onClose }) {
             <div>
               <div style={{ fontSize: '15px', fontWeight: 800, color: '#F8FAFC', display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <span>VEON</span>
-                <span
-                  style={{
-                    fontSize: '9.5px',
-                    fontWeight: 800,
-                    color: '#38BDF8',
-                    background: 'rgba(56, 189, 248, 0.15)',
-                    padding: '2px 6px',
-                    borderRadius: '6px',
-                    border: '1px solid rgba(56, 189, 248, 0.3)',
-                  }}
-                >
-                  ⚡ xAI Grok Engine
-                </span>
               </div>
               <div style={{ fontSize: '11px', color: '#94A3B8' }}>Karmaveon AI Tech Architect</div>
             </div>
