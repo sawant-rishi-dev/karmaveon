@@ -119,7 +119,7 @@ export default function Home() {
         <HeroCodeAmbiance preset="home" />
 
         <div style={{ maxWidth: '1100px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          {/* Availability Badge */}
+        {/* Availability Badge */}
         <div
           style={{
             display: 'inline-flex',
@@ -128,66 +128,83 @@ export default function Home() {
             background: '#ffffff',
             border: '1px solid #cbd5e1',
             borderRadius: '100px',
-            padding: '6px 16px',
-            marginBottom: '24px',
-            fontSize: '12px',
+            padding: '6px 14px',
+            marginBottom: '20px',
+            fontSize: '11px',
             color: '#0f172a',
-            letterSpacing: '0.8px',
+            letterSpacing: '0.6px',
             fontWeight: 800,
             boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
+            maxWidth: '100%',
+            textAlign: 'center',
           }}
         >
-          <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 8px #10b981' }} />
+          <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 8px #10b981', flexShrink: 0 }} />
           <span>ACCEPTING Q1/Q2 FAST-TRACK MILESTONE BUILDS</span>
         </div>
 
         {/* Interactive Magnifying X-Ray Headline */}
-        <div style={{ marginBottom: '24px' }}>
+        <div style={{ marginBottom: '20px', width: '100%' }}>
           <XRayHeroTitle />
         </div>
 
         {/* Crisp Sub-headline */}
         <p
           style={{
-            fontSize: 'clamp(16px, 2vw, 20px)',
+            fontSize: 'clamp(15px, 2vw, 19px)',
             color: '#334155',
             fontWeight: 500,
-            lineHeight: 1.6,
+            lineHeight: 1.65,
             maxWidth: '780px',
-            margin: '0 auto 36px',
+            margin: '0 auto 30px',
+            padding: '0 12px',
           }}
         >
           Full-stack engineering from cloud to chip. We build high-throughput SaaS platforms, offline-first mobile apps, autonomous AI pipelines, and custom hardware — launched in under 4 weeks.
         </p>
 
         {/* Hero CTA Hierarchy */}
-        <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', marginBottom: '20px' }}>
+        <div
+          className="mobile-stack"
+          style={{
+            display: 'flex',
+            gap: '14px',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginBottom: '22px',
+            width: '100%',
+            maxWidth: '600px',
+            margin: '0 auto 22px',
+          }}
+        >
           <button
             onClick={openBookingModal}
             className="btn-glow"
             style={{
-              padding: '16px 36px',
+              padding: '15px 32px',
               borderRadius: '12px',
               border: 'none',
-              fontSize: '16px',
+              fontSize: '15px',
               fontWeight: 900,
               cursor: 'pointer',
               color: '#ffffff',
               boxShadow: '0 8px 24px rgba(255, 87, 51, 0.4)',
               display: 'inline-flex',
               alignItems: 'center',
+              justifyContent: 'center',
               gap: '8px',
             }}
           >
-            <span>Book a Technical Discovery Call</span>
-            <span style={{ fontSize: '18px' }}>→</span>
+            <span>Book Technical Discovery Call</span>
+            <span style={{ fontSize: '17px' }}>→</span>
           </button>
 
           <Link to="/products" style={{ textDecoration: 'none' }}>
             <button
               className="btn-outline"
               style={{
-                padding: '16px 28px',
+                padding: '15px 26px',
                 borderRadius: '12px',
                 fontSize: '15px',
                 fontWeight: 800,
@@ -195,6 +212,9 @@ export default function Home() {
                 border: '1.5px solid #cbd5e1',
                 color: '#0f172a',
                 background: '#ffffff',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
             >
               <span>Explore Products & Hardware</span>
@@ -205,20 +225,22 @@ export default function Home() {
         {/* Technical Trust Line */}
         <div
           style={{
-            fontSize: '12.5px',
+            fontSize: '12px',
             color: '#64748b',
             fontFamily: 'monospace',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '18px',
+            gap: '12px',
             flexWrap: 'wrap',
+            padding: '0 12px',
+            lineHeight: 1.8,
           }}
         >
           <span>⚡ 4-WEEK SPRINT DELIVERY</span>
-          <span>•</span>
+          <span style={{ opacity: 0.5 }}>•</span>
           <span>🔒 100% FULL IP OWNERSHIP</span>
-          <span>•</span>
+          <span style={{ opacity: 0.5 }}>•</span>
           <span>🛡️ MUTUAL NDA EXECUTED</span>
         </div>
 
