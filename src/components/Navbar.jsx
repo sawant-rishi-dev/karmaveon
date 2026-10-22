@@ -32,6 +32,17 @@ export default function Navbar() {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   }
 
+  const handleClassesClick = (e) => {
+    setMobileMenuOpen(false)
+    if (location.pathname === '/classes') {
+      e.preventDefault()
+      const enrollEl = document.getElementById('enroll')
+      if (enrollEl) {
+        enrollEl.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }
+  }
+
   return (
     <>
       <nav
@@ -57,42 +68,28 @@ export default function Navbar() {
         <Link
           to="/"
           onClick={handleNavClick}
+          aria-label="Karmaveon Home"
           style={{
             textDecoration: 'none',
             display: 'flex',
             alignItems: 'center',
-            gap: '10px',
             flexShrink: 0,
           }}
         >
           {/* Official Karmaveon Circuit Logo */}
           <img
             src="/karmaveon-logo.png"
-            alt="Karmaveon Logo"
+            alt="Karmaveon"
             style={{
-              width: '32px',
-              height: '32px',
-              borderRadius: '7px',
+              width: '36px',
+              height: '36px',
+              borderRadius: '8px',
               objectFit: 'contain',
               flexShrink: 0,
-              boxShadow: '0 2px 8px rgba(0, 102, 255, 0.25)',
+              boxShadow: '0 2px 10px rgba(0, 102, 255, 0.25)',
+              transition: 'transform 0.2s ease',
             }}
           />
-          <span
-            style={{
-              fontWeight: 900,
-              fontSize: '18px',
-              letterSpacing: '1.2px',
-              background: 'linear-gradient(135deg, #0284c7, #2563eb)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              whiteSpace: 'nowrap',
-              fontFamily: "'Outfit', 'Inter', system-ui, sans-serif",
-            }}
-          >
-            KARMAVEON
-          </span>
         </Link>
 
         {/* Desktop Nav Links using standard NavLink */}
@@ -125,6 +122,34 @@ export default function Navbar() {
 
         {/* Right CTA + Mobile Toggle */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
+          <Link
+            to="/classes#enroll"
+            onClick={handleClassesClick}
+            className="classes-nav-btn"
+            style={{
+              textDecoration: 'none',
+              padding: '0 16px',
+              height: '36px',
+              borderRadius: '100px',
+              border: '1px solid rgba(245, 158, 11, 0.45)',
+              background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+              color: '#ffffff',
+              fontSize: '12.5px',
+              fontWeight: 800,
+              letterSpacing: '0.2px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '6px',
+              whiteSpace: 'nowrap',
+              boxShadow: '0 2px 10px rgba(245, 158, 11, 0.35)',
+              transition: 'all 0.2s ease',
+            }}
+          >
+            <span style={{ fontSize: '13px' }}>🎓</span>
+            <span>Join Karmaveon Classes</span>
+          </Link>
+
           <button
             className="btn-glow desktop-cta-btn"
             style={{
@@ -243,7 +268,35 @@ export default function Navbar() {
               ))}
             </div>
 
-            <div style={{ marginTop: '12px' }}>
+            <div style={{ marginTop: '10px' }}>
+              <Link
+                to="/classes#enroll"
+                onClick={handleClassesClick}
+                style={{
+                  textDecoration: 'none',
+                  width: '100%',
+                  minHeight: '44px',
+                  padding: '12px 18px',
+                  borderRadius: '10px',
+                  border: '1px solid rgba(245, 158, 11, 0.45)',
+                  background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                  color: '#ffffff',
+                  fontSize: '14.5px',
+                  fontWeight: 800,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  boxShadow: '0 4px 14px rgba(245, 158, 11, 0.35)',
+                  boxSizing: 'border-box',
+                }}
+              >
+                <span style={{ fontSize: '16px' }}>🎓</span>
+                <span>Join Karmaveon Classes</span>
+              </Link>
+            </div>
+
+            <div style={{ marginTop: '10px' }}>
               <button
                 className="btn-glow"
                 style={{

@@ -56,6 +56,19 @@ const SNIPPET_PRESETS = {
     'n8n.daemon.running()',
     'sub_second.pipeline.ready()',
   ],
+  classes: [
+    'arduino.pinMode(LED_BUILTIN, OUTPUT);',
+    'Serial.begin(115200); // Vasco da Gama',
+    'esp32.wifi.connect("Karmaveon-Lab");',
+    'python.cv2.VideoCapture(0) # Applied AI',
+    'std::vector<int> dsa.solve(); // C++ STL',
+    'SpringApplication.run(Backend.class); // Java',
+    'const [state, setState] = useState() # React',
+    'raspi.gpio.setup(18, GPIO.OUT)',
+    'mqtt.publish("classes/telemetry", payload)',
+    'hackathon.mentor.review({ status: "READY" })',
+    'Batch_01.admissions("OPEN_NOW")',
+  ],
 }
 
 const COLORS = ['#2563eb', '#ff5733', '#059669', '#7c3aed', '#0284c7']

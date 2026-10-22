@@ -1,0 +1,1091 @@
+{
+  "schools": [
+    {
+      "name": "Aninha Educational Institute of Higher Secondary (Science & Arts)",
+      "place": "Margao",
+      "type": "Science / Arts"
+    },
+    {
+      "name": "Arts, Science and Commerce Higher Secondary School",
+      "place": "Siolim, Bardez",
+      "type": "Arts / Science / Commerce"
+    },
+    {
+      "name": "Auxilium High School",
+      "place": "Caranzalem, Panaji",
+      "type": "State Board"
+    },
+    {
+      "name": "Bharatiya Vidya Bhavan's Narayan Bandekar School",
+      "place": "Panaji",
+      "type": "CBSE"
+    },
+    {
+      "name": "Bhatikar Model High School",
+      "place": "Margao",
+      "type": "State Board"
+    },
+    {
+      "name": "Bloomz International School",
+      "place": "Margao",
+      "type": "CBSE"
+    },
+    {
+      "name": "Crescent Primary & Nursery School",
+      "place": "Fatorda",
+      "type": "CBSE"
+    },
+    {
+      "name": "Daffodils Primary School",
+      "place": "Panaji",
+      "type": "CBSE"
+    },
+    {
+      "name": "Deepvihar Higher Secondary School",
+      "place": "Ponda",
+      "type": "Vocational"
+    },
+    {
+      "name": "Divine Mercy School",
+      "place": "Mapusa",
+      "type": "State Board"
+    },
+    {
+      "name": "Dnyan Prasarak Vidyalaya",
+      "place": "Mapusa",
+      "type": "State Board"
+    },
+    {
+      "name": "Don Bosco High School",
+      "place": "Panaji",
+      "type": "State Board"
+    },
+    {
+      "name": "Dr. T.B. Cunha Government Higher Secondary School",
+      "place": "Panaji",
+      "type": "State Board"
+    },
+    {
+      "name": "Eden Primary & Pre-Primary School",
+      "place": "Mapusa",
+      "type": "ICSE"
+    },
+    {
+      "name": "Edify School Goa",
+      "place": "Goa",
+      "type": "CBSE"
+    },
+    {
+      "name": "Epheginia English School",
+      "place": "Santa Cruz",
+      "type": "State Board"
+    },
+    {
+      "name": "Fr. Agnel Higher Secondary School (also offers lower classes)",
+      "place": "Pilar / Ponda",
+      "type": "State Board"
+    },
+    {
+      "name": "Fr. Agnel Multipurpose Higher Secondary School",
+      "place": "Verna",
+      "type": "Science / Vocational"
+    },
+    {
+      "name": "Government Higher Secondary School, Bicholim",
+      "place": "Bicholim",
+      "type": "Arts / Science / Commerce"
+    },
+    {
+      "name": "Government Higher Secondary School, Cacora",
+      "place": "Cacora, Curchorem",
+      "type": "Arts / Commerce"
+    },
+    {
+      "name": "Government Higher Secondary School, Canacona",
+      "place": "Canacona",
+      "type": "Arts / Commerce / Vocational"
+    },
+    {
+      "name": "Government Higher Secondary School, Khandola",
+      "place": "Khandola, Marcel",
+      "type": "Arts / Science / Commerce"
+    },
+    {
+      "name": "Government Higher Secondary School, Pernem",
+      "place": "Pernem",
+      "type": "Arts / Commerce"
+    },
+    {
+      "name": "Government Higher Secondary School, Quepem",
+      "place": "Quepem",
+      "type": "Arts / Science / Commerce"
+    },
+    {
+      "name": "Government Higher Secondary School, Sanquelim",
+      "place": "Sanquelim",
+      "type": "Arts / Commerce"
+    },
+    {
+      "name": "Government Higher Secondary School, Valpoi / Sattari",
+      "place": "Honda, Sattari",
+      "type": "Arts / Commerce"
+    },
+    {
+      "name": "Government Primary School",
+      "place": "Multiple villages",
+      "type": "State Board"
+    },
+    {
+      "name": "Green Meadows School",
+      "place": "Goa",
+      "type": "State Board"
+    },
+    {
+      "name": "Holy Cross High School",
+      "place": "Siolim",
+      "type": "State Board"
+    },
+    {
+      "name": "Holy Family High School",
+      "place": "Porvorim",
+      "type": "State Board"
+    },
+    {
+      "name": "Infant Jesus Higher Secondary School (Science)",
+      "place": "Colva",
+      "type": "Science"
+    },
+    {
+      "name": "K.B. Hedgewar High School",
+      "place": "Asnoda, Bardez",
+      "type": "State Board"
+    },
+    {
+      "name": "Kendriya Vidyalaya",
+      "place": "Vasco da Gama",
+      "type": "CBSE"
+    },
+    {
+      "name": "Keshav Smruti Higher Secondary School",
+      "place": "Dabolim, Vasco",
+      "type": "Science / Commerce"
+    },
+    {
+      "name": "Kids Camp Play School & Day Care",
+      "place": "Porvorim",
+      "type": "Pre-Primary"
+    },
+    {
+      "name": "L.D. Samant Memorial High School",
+      "place": "Mapusa",
+      "type": "State Board"
+    },
+    {
+      "name": "Lemon Tree Child Foundation School",
+      "place": "Taleigao",
+      "type": "ICSE"
+    },
+    {
+      "name": "Little Flower of Jesus High School",
+      "place": "Calangute",
+      "type": "State Board"
+    },
+    {
+      "name": "Little Lambs Primary School",
+      "place": "Taleigao",
+      "type": "State Board"
+    },
+    {
+      "name": "Lourdes Convent",
+      "place": "Saligao",
+      "type": "CBSE / ICSE"
+    },
+    {
+      "name": "Loyola High School",
+      "place": "Margao",
+      "type": "State Board"
+    },
+    {
+      "name": "M&N English High School",
+      "place": "Margao",
+      "type": "CBSE"
+    },
+    {
+      "name": "Madkaikar Higher Secondary School of Arts and Science",
+      "place": "Goa",
+      "type": "State Board"
+    },
+    {
+      "name": "Mae De Deus High School",
+      "place": "Saligao / Panaji",
+      "type": "CBSE"
+    },
+    {
+      "name": "Mahila & Nutan English High School",
+      "place": "Margao",
+      "type": "State Board"
+    },
+    {
+      "name": "Manovikas High School",
+      "place": "Margao",
+      "type": "State Board"
+    },
+    {
+      "name": "Maria Bambina Convent High School",
+      "place": "Margao",
+      "type": "State Board"
+    },
+    {
+      "name": "Mark Fernandes Memorial High School",
+      "place": "Calangute",
+      "type": "State Board"
+    },
+    {
+      "name": "Mary Immaculate School",
+      "place": "Panaji",
+      "type": "State Board"
+    },
+    {
+      "name": "Mata Secondary School",
+      "place": "Vasco da Gama",
+      "type": "State Board"
+    },
+    {
+      "name": "Mother of Mercy English High School",
+      "place": "Goa",
+      "type": "CBSE"
+    },
+    {
+      "name": "Mount Litera Zee School",
+      "place": "Goa",
+      "type": "CBSE"
+    },
+    {
+      "name": "Mushtifund Higher Secondary School",
+      "place": "Panaji",
+      "type": "Science / Commerce"
+    },
+    {
+      "name": "Mushtifund Primary School",
+      "place": "Panaji",
+      "type": "State Board"
+    },
+    {
+      "name": "Mushtifund Saunstha",
+      "place": "Panaji",
+      "type": "State Board"
+    },
+    {
+      "name": "Navy Children School",
+      "place": "Vasco da Gama",
+      "type": "CBSE"
+    },
+    {
+      "name": "New Goa High School",
+      "place": "Mapusa",
+      "type": "State Board"
+    },
+    {
+      "name": "New Goa's G.S. Amonkar Vidya Mandir",
+      "place": "Mapusa",
+      "type": "State Board"
+    },
+    {
+      "name": "Nisha's Play School",
+      "place": "Porvorim",
+      "type": "Pre-Primary"
+    },
+    {
+      "name": "Our Lady of Desterro High School",
+      "place": "Vasco da Gama",
+      "type": "State Board"
+    },
+    {
+      "name": "Our Lady of Snows High School",
+      "place": "Raia",
+      "type": "State Board"
+    },
+    {
+      "name": "People's High School",
+      "place": "Panaji",
+      "type": "State Board"
+    },
+    {
+      "name": "People's Higher Secondary School",
+      "place": "Panaji",
+      "type": "Arts / Science / Commerce / Vocational"
+    },
+    {
+      "name": "Podar International School",
+      "place": "Goa",
+      "type": "CBSE"
+    },
+    {
+      "name": "Posh English High School",
+      "place": "Goa",
+      "type": "State Board"
+    },
+    {
+      "name": "R.M. Salgaocar Higher Secondary School",
+      "place": "Margao",
+      "type": "Science / Commerce"
+    },
+    {
+      "name": "Regina Mundi High School",
+      "place": "Chicalim",
+      "type": "State Board"
+    },
+    {
+      "name": "River House Academy",
+      "place": "Canacona",
+      "type": "International / Expat"
+    },
+    {
+      "name": "Rosary Higher Secondary School",
+      "place": "Navelim / Margao",
+      "type": "Arts / Commerce / Science"
+    },
+    {
+      "name": "S.S. Samiti's English High School",
+      "place": "Ponda",
+      "type": "State Board"
+    },
+    {
+      "name": "S.S. Samiti's Higher Secondary (Ponda)",
+      "place": "Ponda",
+      "type": "State Board"
+    },
+    {
+      "name": "Sacred Heart School",
+      "place": "Anjuna",
+      "type": "State Board"
+    },
+    {
+      "name": "Santa Cruz Higher Secondary School",
+      "place": "Santa Cruz",
+      "type": "CBSE"
+    },
+    {
+      "name": "Saraswat Vidhyalaya High School",
+      "place": "Mapusa",
+      "type": "State Board"
+    },
+    {
+      "name": "Saviour of the World High School",
+      "place": "Carmona",
+      "type": "State Board"
+    },
+    {
+      "name": "Sharada Mandir School",
+      "place": "Panaji",
+      "type": "ICSE"
+    },
+    {
+      "name": "Shree Damodar Higher Secondary School of Science",
+      "place": "Margao",
+      "type": "Science"
+    },
+    {
+      "name": "Shri Shantadurga High School",
+      "place": "Bicholim",
+      "type": "State Board"
+    },
+    {
+      "name": "St. Andrew's Higher Secondary School",
+      "place": "Vasco da Gama",
+      "type": "Science / Commerce / Arts"
+    },
+    {
+      "name": "St. Andrew's Higher Secondary School (also offers 1-10)",
+      "place": "Vasco da Gama",
+      "type": "State Board"
+    },
+    {
+      "name": "St. Anthony High School",
+      "place": "Guirim",
+      "type": "State Board"
+    },
+    {
+      "name": "St. Britto High School",
+      "place": "Mapusa",
+      "type": "State Board"
+    },
+    {
+      "name": "St. Francis Xavier Convent",
+      "place": "Mapusa",
+      "type": "State Board"
+    },
+    {
+      "name": "St. Francis Xavier High School",
+      "place": "Siolim",
+      "type": "State Board"
+    },
+    {
+      "name": "St. Francis Xavier Higher Secondary (also offers 11-12)",
+      "place": "Siolim",
+      "type": "State Board"
+    },
+    {
+      "name": "St. John of the Cross High School",
+      "place": "Goa",
+      "type": "State Board"
+    },
+    {
+      "name": "St. Joseph High School",
+      "place": "Calangute",
+      "type": "State Board"
+    },
+    {
+      "name": "St. Joseph's High School",
+      "place": "Arpora",
+      "type": "State Board"
+    },
+    {
+      "name": "St. Mary's Convent High School",
+      "place": "Mapusa",
+      "type": "State Board"
+    },
+    {
+      "name": "St. Michael's Convent High School",
+      "place": "Anjuna",
+      "type": "State Board"
+    },
+    {
+      "name": "St. Theresa High School",
+      "place": "Candolim",
+      "type": "State Board"
+    },
+    {
+      "name": "Stepping Stone Primary School",
+      "place": "Goa",
+      "type": "State Board"
+    },
+    {
+      "name": "The European School of Goa",
+      "place": "Goa",
+      "type": "International"
+    },
+    {
+      "name": "The Gera School",
+      "place": "Goa",
+      "type": "CBSE"
+    },
+    {
+      "name": "The King's School",
+      "place": "Margao",
+      "type": "CBSE"
+    },
+    {
+      "name": "The Mapusa High School",
+      "place": "Mapusa",
+      "type": "State Board"
+    },
+    {
+      "name": "The Progress High School",
+      "place": "Goa",
+      "type": "State Board"
+    },
+    {
+      "name": "Tiny Steps School",
+      "place": "Saligao",
+      "type": "ICSE"
+    },
+    {
+      "name": "Vidya Vikas Academy",
+      "place": "Margao",
+      "type": "CBSE"
+    },
+    {
+      "name": "Vidya Vruddhi School",
+      "place": "Goa",
+      "type": "State Board"
+    },
+    {
+      "name": "Vocational Higher Secondary School",
+      "place": "Shiroda, Ponda",
+      "type": "Vocational"
+    },
+    {
+      "name": "Yuwak Sangh High School",
+      "place": "Margao",
+      "type": "State Board"
+    }
+  ],
+  "colleges": [
+    {
+      "name": "Agnel Institute of Engineering and Management",
+      "place": "Assagao",
+      "type": "Engineering / Mgmt"
+    },
+    {
+      "name": "All India Institute of Ayurveda, Goa",
+      "place": "Goa",
+      "type": "Ayurveda"
+    },
+    {
+      "name": "Aninha Educational Institute of Higher Secondary (Science & Arts)",
+      "place": "Margao",
+      "type": "Science / Arts"
+    },
+    {
+      "name": "Arts, Science and Commerce Higher Secondary School",
+      "place": "Siolim, Bardez",
+      "type": "Arts / Science / Commerce"
+    },
+    {
+      "name": "Bharateeya Sanskriti Prabodhini's Gomantak Ayurveda Mahavidyalaya & Research Centre",
+      "place": "Shiroda",
+      "type": "Ayurveda"
+    },
+    {
+      "name": "Birla Institute of Technology & Science, Pilani — Goa Campus (BITS Goa)",
+      "place": "Zuarinagar, Vasco",
+      "type": "Deemed University — Engg/Science/Pharm/Mgmt"
+    },
+    {
+      "name": "CSIR — National Institute of Oceanography",
+      "place": "Dona Paula",
+      "type": "Oceanography Research"
+    },
+    {
+      "name": "Carmel College for Women",
+      "place": "Nuvem, Salcete",
+      "type": "Arts / Science / Commerce (Women)"
+    },
+    {
+      "name": "Central Coastal Agricultural Research Institute (ICAR)",
+      "place": "Old Goa",
+      "type": "Agricultural Research"
+    },
+    {
+      "name": "Cuncolim Educational Society's College of Arts & Commerce",
+      "place": "Cuncolim",
+      "type": "Arts / Commerce"
+    },
+    {
+      "name": "Deepvihar Higher Secondary School",
+      "place": "Ponda",
+      "type": "Vocational"
+    },
+    {
+      "name": "Dempo Charities Trust Dhempe College of Arts & Science",
+      "place": "Miramar, Panaji",
+      "type": "Arts / Science"
+    },
+    {
+      "name": "Dempo Charities Trust's S.S. Dempo College of Commerce & Economics",
+      "place": "Panaji",
+      "type": "Commerce / Economics"
+    },
+    {
+      "name": "Diocesan Society of Education's Rosary College of Commerce & Arts",
+      "place": "Navelim",
+      "type": "Commerce / Arts"
+    },
+    {
+      "name": "Directorate of Archives and Archaeology",
+      "place": "Panaji",
+      "type": "Archives / Heritage Research"
+    },
+    {
+      "name": "Dnyan Prabodhini Mandal's Shree Mallikarjun & Shri Chetan Manju Desai College",
+      "place": "Devali, Canacona",
+      "type": "Arts / Commerce"
+    },
+    {
+      "name": "Dnyanprassarak Mandal's College",
+      "place": "Mapusa",
+      "type": "Arts / Science / Commerce"
+    },
+    {
+      "name": "Dnyanvardhini Divyang Training College",
+      "place": "Goa",
+      "type": "Divyang / Special Education"
+    },
+    {
+      "name": "Don Bosco College",
+      "place": "Panjim",
+      "type": "Arts / Commerce"
+    },
+    {
+      "name": "Don Bosco College of Agriculture",
+      "place": "Sulcorna",
+      "type": "Agriculture"
+    },
+    {
+      "name": "Don Bosco College of Engineering",
+      "place": "Fatorda",
+      "type": "Engineering"
+    },
+    {
+      "name": "Dr. T.B. Cunha Government Higher Secondary School",
+      "place": "Panaji",
+      "type": "Government / All Streams"
+    },
+    {
+      "name": "Fishery Survey of India",
+      "place": "Mormugao",
+      "type": "Fisheries Research"
+    },
+    {
+      "name": "Fr. Agnel College of Arts & Commerce",
+      "place": "Ponda",
+      "type": "Arts / Commerce"
+    },
+    {
+      "name": "Fr. Agnel Multipurpose Higher Secondary School",
+      "place": "Verna",
+      "type": "Science / Vocational"
+    },
+    {
+      "name": "Ganpat Parsekar College of Education",
+      "place": "Pernem / Arambol",
+      "type": "Education (B.Ed.)"
+    },
+    {
+      "name": "Goa College of Agriculture",
+      "place": "Old Goa",
+      "type": "Agriculture"
+    },
+    {
+      "name": "Goa College of Architecture",
+      "place": "Panaji",
+      "type": "Government Autonomous — Architecture"
+    },
+    {
+      "name": "Goa College of Art",
+      "place": "Panaji",
+      "type": "Fine Art — Government"
+    },
+    {
+      "name": "Goa College of Engineering (GEC)",
+      "place": "Farmagudi, Ponda",
+      "type": "Government — Engineering (affiliated to GU)"
+    },
+    {
+      "name": "Goa College of Home Science",
+      "place": "Panaji",
+      "type": "Home Science"
+    },
+    {
+      "name": "Goa College of Hospitality & Culinary Education",
+      "place": "Porvorim",
+      "type": "Hospitality / Culinary"
+    },
+    {
+      "name": "Goa College of Music",
+      "place": "Panaji",
+      "type": "Music — Government"
+    },
+    {
+      "name": "Goa College of Pharmacy",
+      "place": "Panaji",
+      "type": "Pharmacy — Government"
+    },
+    {
+      "name": "Goa Dental College and Hospital (GDCH)",
+      "place": "Bambolim",
+      "type": "Dental — Government"
+    },
+    {
+      "name": "Goa Engineering College (GEC)",
+      "place": "Farmagudi, Ponda",
+      "type": "Engineering — Government"
+    },
+    {
+      "name": "Goa Institute of Management (GIM)",
+      "place": "Sanquelim",
+      "type": "Autonomous — Management"
+    },
+    {
+      "name": "Goa Medical College (GMC)",
+      "place": "Bambolim",
+      "type": "Medical — Government"
+    },
+    {
+      "name": "Goa University",
+      "place": "Taleigao Plateau, Panaji",
+      "type": "State University — General"
+    },
+    {
+      "name": "Goa Vidyaprasarak Mandal's Dr. Dada Vaidya College of Education",
+      "place": "Ponda",
+      "type": "Education (B.Ed.)"
+    },
+    {
+      "name": "Goa Vidyaprasarak Mandal's Gopal Govind Poy Raiturcar College of Commerce & Economics",
+      "place": "Panaji",
+      "type": "Commerce / Economics"
+    },
+    {
+      "name": "Government College of Arts, Science & Commerce, Quepem",
+      "place": "Quepem",
+      "type": "Arts / Science / Commerce"
+    },
+    {
+      "name": "Government College of Arts, Science & Commerce, Sanquelim",
+      "place": "Sanquelim",
+      "type": "Arts / Science / Commerce"
+    },
+    {
+      "name": "Government College of Arts, Science and Commerce, Khandola",
+      "place": "Khandola, Marcel",
+      "type": "Arts / Science / Commerce"
+    },
+    {
+      "name": "Government College of Commerce & Economics, Borda-Margao",
+      "place": "Borda, Margao",
+      "type": "Commerce / Economics"
+    },
+    {
+      "name": "Government Higher Secondary School, Bicholim",
+      "place": "Bicholim",
+      "type": "Arts / Science / Commerce"
+    },
+    {
+      "name": "Government Higher Secondary School, Cacora",
+      "place": "Cacora, Curchorem",
+      "type": "Arts / Commerce"
+    },
+    {
+      "name": "Government Higher Secondary School, Canacona",
+      "place": "Canacona",
+      "type": "Arts / Commerce / Vocational"
+    },
+    {
+      "name": "Government Higher Secondary School, Khandola",
+      "place": "Khandola, Marcel",
+      "type": "Arts / Science / Commerce"
+    },
+    {
+      "name": "Government Higher Secondary School, Pernem",
+      "place": "Pernem",
+      "type": "Arts / Commerce"
+    },
+    {
+      "name": "Government Higher Secondary School, Quepem",
+      "place": "Quepem",
+      "type": "Arts / Science / Commerce"
+    },
+    {
+      "name": "Government Higher Secondary School, Sanquelim",
+      "place": "Sanquelim",
+      "type": "Arts / Commerce"
+    },
+    {
+      "name": "Government Higher Secondary School, Valpoi / Sattari",
+      "place": "Honda, Sattari",
+      "type": "Arts / Commerce"
+    },
+    {
+      "name": "Government Polytechnic, Bicholim",
+      "place": "Valshi, Bicholim",
+      "type": "Polytechnic (Diploma) — incl. Mining"
+    },
+    {
+      "name": "Government Polytechnic, Cacora",
+      "place": "Cacora, Curchorem",
+      "type": "Polytechnic (Diploma)"
+    },
+    {
+      "name": "Government Polytechnic, Panaji",
+      "place": "Altinho, Panaji",
+      "type": "Polytechnic (Diploma)"
+    },
+    {
+      "name": "Government Polytechnic, Ponda (Farmagudi)",
+      "place": "Farmagudi, Ponda",
+      "type": "Polytechnic (Diploma)"
+    },
+    {
+      "name": "Harmal Panchakroshi Shikshan Mandal's College of Nursing",
+      "place": "Harmal",
+      "type": "Nursing"
+    },
+    {
+      "name": "India International University of Legal Education and Research",
+      "place": "Goa",
+      "type": "Private University — Legal Education"
+    },
+    {
+      "name": "Indian Institute of Technology Goa (IIT Goa)",
+      "place": "Canacona / Farmagudi",
+      "type": "Institute of National Importance — Engineering"
+    },
+    {
+      "name": "Indian Institute of Technology — Extension Centre (if applicable)",
+      "place": "Goa",
+      "type": "Engineering (Extension)"
+    },
+    {
+      "name": "Infant Jesus Higher Secondary School (Science)",
+      "place": "Colva",
+      "type": "Science"
+    },
+    {
+      "name": "Institute of Hotel Management, Catering Technology & Applied Nutrition (IHM)",
+      "place": "Porvorim",
+      "type": "Central — Hotel Management"
+    },
+    {
+      "name": "Institute of Nursing Education",
+      "place": "Bambolim",
+      "type": "Nursing — Government"
+    },
+    {
+      "name": "Institute of Psychiatry and Human Behaviour",
+      "place": "Bambolim",
+      "type": "Psychiatry"
+    },
+    {
+      "name": "J.D. Institute of Fashion Technology",
+      "place": "Panaji",
+      "type": "Fashion / Design"
+    },
+    {
+      "name": "Kala Academy's College of Theatre Arts",
+      "place": "Panaji",
+      "type": "Theatre / Performing Arts"
+    },
+    {
+      "name": "Kamaxi College of Culinary Arts",
+      "place": "Margao",
+      "type": "Culinary Arts"
+    },
+    {
+      "name": "Keshav Smruti Higher Secondary School",
+      "place": "Dabolim, Vasco",
+      "type": "Science / Commerce"
+    },
+    {
+      "name": "MES College of Arts & Commerce",
+      "place": "Zuarinagar, Vasco",
+      "type": "Arts / Commerce"
+    },
+    {
+      "name": "Madkaikar Higher Secondary School of Arts and Science",
+      "place": "Goa",
+      "type": "Arts / Science"
+    },
+    {
+      "name": "Mandre College of Commerce, Economics and Management",
+      "place": "Goa",
+      "type": "Commerce / Economics / Mgmt"
+    },
+    {
+      "name": "Mushtifund Higher Secondary School",
+      "place": "Panaji",
+      "type": "Science / Commerce"
+    },
+    {
+      "name": "National Centre for Polar and Ocean Research (NCPOR)",
+      "place": "Vasco da Gama",
+      "type": "Polar / Ocean Research"
+    },
+    {
+      "name": "National Institute of Hydrography",
+      "place": "Dona Paula",
+      "type": "Hydrography / Naval"
+    },
+    {
+      "name": "National Institute of Malaria Research (ICMR)",
+      "place": "Panaji",
+      "type": "Medical Research"
+    },
+    {
+      "name": "National Institute of Technology Goa (NIT Goa)",
+      "place": "Canacona",
+      "type": "Institute of National Importance — Engineering"
+    },
+    {
+      "name": "Naval Special Warfare and Tactical Training Center",
+      "place": "Goa",
+      "type": "Naval Training"
+    },
+    {
+      "name": "Nirmala Institute of Education",
+      "place": "Panaji",
+      "type": "Education (B.Ed.)"
+    },
+    {
+      "name": "Padre Conceição College of Engineering (PCCE)",
+      "place": "Verna",
+      "type": "Engineering"
+    },
+    {
+      "name": "Parul University, Goa Campus",
+      "place": "Goa",
+      "type": "Private University"
+    },
+    {
+      "name": "Parvatibai Chowgule College",
+      "place": "Margao",
+      "type": "Arts / Science / Commerce"
+    },
+    {
+      "name": "People's Higher Secondary School",
+      "place": "Panaji",
+      "type": "Arts / Science / Commerce / Vocational"
+    },
+    {
+      "name": "Ponda Education Society's College of Education",
+      "place": "Ponda",
+      "type": "Education (B.Ed.)"
+    },
+    {
+      "name": "Ponda Education Society's Rajaram & Tarabai Bandekar College of Pharmacy",
+      "place": "Ponda",
+      "type": "Pharmacy"
+    },
+    {
+      "name": "Ponda Education Society's Shri Ravi S. Naik College of Arts & Science",
+      "place": "Ponda",
+      "type": "Arts / Science"
+    },
+    {
+      "name": "R.M. Salgaocar Higher Secondary School",
+      "place": "Margao",
+      "type": "Science / Commerce"
+    },
+    {
+      "name": "Ramanatha Crisna Pai Raikar School of Agriculture",
+      "place": "Ponda",
+      "type": "Agriculture"
+    },
+    {
+      "name": "Rosary Higher Secondary School",
+      "place": "Navelim / Margao",
+      "type": "Arts / Commerce / Science"
+    },
+    {
+      "name": "S.S. Samiti's Higher Secondary (Ponda)",
+      "place": "Ponda",
+      "type": "State Board"
+    },
+    {
+      "name": "Sai Nursing Institute",
+      "place": "Goa",
+      "type": "Nursing"
+    },
+    {
+      "name": "Sant Sohirobanath Ambiye Government College of Arts & Commerce",
+      "place": "Pernem",
+      "type": "Arts / Commerce"
+    },
+    {
+      "name": "Santa Cruz Higher Secondary School",
+      "place": "Santa Cruz",
+      "type": "CBSE"
+    },
+    {
+      "name": "Saraswat Vidyalaya's Sridora Caculo College of Commerce & Management Studies",
+      "place": "Mapusa",
+      "type": "Commerce / Mgmt"
+    },
+    {
+      "name": "Sateri Pisani Education Society's Gopal Gaonkar Memorial Goa Multi-Faculty College",
+      "place": "Dabolim / Kavalem",
+      "type": "Multi-Faculty"
+    },
+    {
+      "name": "Shree Damodar Higher Secondary School of Science",
+      "place": "Margao",
+      "type": "Science"
+    },
+    {
+      "name": "Shree Rayeshwar Institute of Engineering and Information Technology",
+      "place": "Shiroda",
+      "type": "Engineering / IT"
+    },
+    {
+      "name": "Shri Kamaxshi Devi Homeopathic Medical College & Hospital",
+      "place": "Shiroda",
+      "type": "Homeopathic Medical"
+    },
+    {
+      "name": "St. Andrew's Higher Secondary School",
+      "place": "Vasco da Gama",
+      "type": "Science / Commerce / Arts"
+    },
+    {
+      "name": "St. Francis Xavier Higher Secondary (also offers 11-12)",
+      "place": "Siolim",
+      "type": "State Board"
+    },
+    {
+      "name": "St. Joseph Vaz Educational Society's St. Joseph Vaz College",
+      "place": "Cortalim",
+      "type": "Arts / Science"
+    },
+    {
+      "name": "St. Xavier's College",
+      "place": "Mapusa / Arpora",
+      "type": "Arts / Science / Commerce"
+    },
+    {
+      "name": "Swami Brahmanand Mahavidyalayam",
+      "place": "Goa",
+      "type": "Arts / Commerce"
+    },
+    {
+      "name": "Swami Vivekanand Vidyaprasarak Mandal's College of Commerce",
+      "place": "Borda, Margao",
+      "type": "Commerce"
+    },
+    {
+      "name": "Syngenta Biosciences Pvt. Ltd.",
+      "place": "Corlim",
+      "type": "Biosciences Research"
+    },
+    {
+      "name": "Thomas Stephens Konknni Kendr",
+      "place": "Alto Porvorim",
+      "type": "Konkani Language Research"
+    },
+    {
+      "name": "V.M. Salgaocar College of Law",
+      "place": "Miramar, Panaji",
+      "type": "Law"
+    },
+    {
+      "name": "V.M. Salgaocar Institute of International Hospitality Education",
+      "place": "Manora",
+      "type": "Hospitality"
+    },
+    {
+      "name": "Vidya Prabodhini College of Commerce, Education, Computer & Management",
+      "place": "Porvorim",
+      "type": "Commerce / Education / Mgmt"
+    },
+    {
+      "name": "Vidya Vikas Mandal's Govind Ramnath Kare College of Law",
+      "place": "Margao",
+      "type": "Law"
+    },
+    {
+      "name": "Vidya Vikas Mandal's Shree Damodar College of Commerce & Economics",
+      "place": "Margao",
+      "type": "Commerce / Economics"
+    },
+    {
+      "name": "Vocational Higher Secondary School",
+      "place": "Shiroda, Ponda",
+      "type": "Vocational"
+    },
+    {
+      "name": "Vrundavan Institute of Nursing Education",
+      "place": "Goa",
+      "type": "Nursing"
+    },
+    {
+      "name": "Xavier Centre of Historical Research",
+      "place": "Alto Porvorim",
+      "type": "Historical Research"
+    },
+    {
+      "name": "Zantye Brothers Educational Foundation's Narayan Zantye College of Commerce",
+      "place": "Bicholim",
+      "type": "Commerce"
+    }
+  ]
+}

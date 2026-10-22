@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Allow: /classes
+
+Sitemap: https://www.karmaveontechnologies.in/sitemap.xml
