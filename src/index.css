@@ -324,6 +324,10 @@ body {
     display: none !important;
   }
 
+  .classes-nav-btn {
+    display: none !important;
+  }
+
   .section-pad {
     padding: 40px 16px !important;
   }

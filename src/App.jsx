@@ -7,12 +7,14 @@ import QRBites from './pages/QRBites'
 import SmartUdhaar from './pages/SmartUdhaar'
 import Kwiee from './pages/Kwiee'
 import InteractiveLanding from './pages/InteractiveLanding'
+import Classes from './pages/Classes'
 
 export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
+        <Route path="classes" element={<Classes />} />
         <Route path="products" element={<Products />} />
         <Route path="services" element={<Services />} />
         <Route path="qr-bites" element={<QRBites />} />
